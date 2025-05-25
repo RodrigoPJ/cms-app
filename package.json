@@ -1,0 +1,20 @@
+{
+  "name": "cms-app",
+  "version": "1.0.0",
+  "description": "system for content management",
+  "main": "index.js",
+  "scripts": {
+    "start": "./start.sh",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RodrigoPJ/cms-app.git"
+  },
+  "author": "Rod P",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RodrigoPJ/cms-app/issues"
+  },
+  "homepage": "https://github.com/RodrigoPJ/cms-app#readme"
+}

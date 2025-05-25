@@ -1,0 +1,1 @@
+instruction on how to deploy the front end both for local development as well as for prod deeployment
