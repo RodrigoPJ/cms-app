@@ -4,6 +4,7 @@ import { useAppSelector } from "../utils/store/hooks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faUserTie } from "@fortawesome/free-solid-svg-icons";
 import { faBell } from "@fortawesome/free-regular-svg-icons";
+import squares from "../assets/squares.svg"
 
 export function Header() {
   const content = navBar;
@@ -40,12 +41,7 @@ export function Header() {
               </div>
           <div className="hidden md:flex px-2 flex-row items-center gap-2 text-xl font-bold text-primary">
             <Link className="flex gap-2" to="home">
-              <svg className="w-6 h-6 fill-primary" viewBox="0 0 24 24">
-                <rect x="3" y="3" width="7" height="7" rx="1" />
-                <rect x="14" y="3" width="7" height="7" rx="1" />
-                <rect x="3" y="14" width="7" height="7" rx="1" />
-                <rect x="14" y="14" width="7" height="7" rx="1" />
-              </svg>
+              <img className="w-6 h-6 fill-primary" src={squares} alt="Company logo" />
               MyCMS
             </Link>
           </div>
