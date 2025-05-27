@@ -4,6 +4,7 @@ import { log } from "console";
 import { User } from "../db-config/entity/UserAuth";
 import validateUser from "../utils/validators/userValidator";
 import { UserAccount } from "../db-config/entity/UserAccount";
+import { Encrypt } from "../utils/encryption/Encrypt";
 
 const saveNewUser = async (req: Request, res: Response) => {
    const hasjsonheaders = req.headers["content-type"];
@@ -15,12 +16,14 @@ const saveNewUser = async (req: Request, res: Response) => {
     const displayErrors = {...validatorErrors.map(el=>el.constraints)}
     res.status(400).json(displayErrors);
   }else{
+    const encryption = Encrypt.encryptpass;
     const user = new User();
     const { age, firstName, lastName, password, email } = reqBody;
+    const encryptedPassword = await encryption(password);
     user.age = age;
     user.firstName = firstName;
     user.lastName = lastName;
-    user.password = password;
+    user.password = encryptedPassword;
     user.email = email;
     const existingUser = await AppDataSource.manager.find(User, {
       where: { email: email },
@@ -35,8 +38,6 @@ const saveNewUser = async (req: Request, res: Response) => {
       const savedAccount = await manager.save(newUserAccount);
       user.account = savedAccount.id;
       const savedData = await manager.save(user);
-      
-
       res.status(200).json({savedData, savedAccount});
     }
   }

@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import { AppDataSource } from "../db-config/data-source";
 import { log } from "console";
 import { User } from "../db-config/entity/UserAuth";
+import { Encrypt } from "../utils/encryption/Encrypt";
+import * as dotenv from 'dotenv';
 
 const loginUser = async (req: Request, res: Response) => {
   log(req.headers["user-agent"]);
@@ -21,8 +23,10 @@ const loginUser = async (req: Request, res: Response) => {
       if (user.length > 1) {
         res.status(401).send("duplicate user");
       } else if (user.length === 1) {
-        if (user[0].password === password) {
-          res.status(200).json({loggedIn: true});
+        const comparepassword = Encrypt.comparepassword(user[0].password, password)
+        if (comparepassword) {
+          const token = await Encrypt.generateToken(user[0].email)
+          res.cookie('token_bearer', token).status(200).json({loggedIn: true});
         }else {
           res.status(401).send('wrong password')
         }
