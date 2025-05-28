@@ -7,7 +7,8 @@ import {
   IsDate,
   Min,
   Max,
-} from 'class-validator';
+  IsStrongPassword,
+} from "class-validator";
 
 export class UserClass {
   @Length(1, 24)
@@ -24,7 +25,8 @@ export class UserClass {
   @IsEmail()
   email: string;
 
-  @Length(5,178)
+  @Length(5, 178)
+  @IsStrongPassword()
   password: string;
 
   @IsDate()
@@ -36,7 +38,7 @@ export class UserClass {
   id: number;
 }
 
-const validateUser = async(user: UserClass)=>{
+const validateUser = async (user: UserClass) => {
   const newUser = new UserClass();
   newUser.age = user.age;
   newUser.email = user.email;
@@ -44,10 +46,8 @@ const validateUser = async(user: UserClass)=>{
   newUser.lastName = user.lastName;
   newUser.createDate = user.createDate;
   newUser.password = user.password;
-
   const validateUser = await validate(newUser);
-  
   return validateUser;
-}
+};
 
 export default validateUser;

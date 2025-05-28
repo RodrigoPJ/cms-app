@@ -6,7 +6,7 @@ import { User } from "../db-config/entity/UserAuth";
 
 const getAllUsers = async (req: Request, res: Response)=>{
   const repository = AppDataSource.getRepository(User);
-  const allUsers = await repository.find({})
+  const allUsers = await repository.query('SELECT * FROM public."user"')
   log(req.headers["user-agent"])
   res.status(200).json(allUsers);
 }

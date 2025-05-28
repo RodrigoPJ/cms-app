@@ -1,5 +1,4 @@
 import { Entity, Column, OneToOne, PrimaryColumn, Relation, PrimaryGeneratedColumn } from "typeorm";
-import  {User} from "./UserAuth";
 
 export class Projects{
   projects: Project[]

@@ -3,7 +3,9 @@ import * as bcrypt from "bcrypt";
 import * as dotenv from "dotenv";
 
 dotenv.config();
+
 const { JWT_SECRET = "" } = process.env;
+
 export class Encrypt {
   static async encryptpass(password: string) {
     return bcrypt.hashSync(password, 12);
