@@ -1,3 +1,7 @@
+Table project_list {
+  id uuid [primary key] 
+  name varchar
+}
 
 Table user_content {
   id uuid [primary key]
@@ -5,24 +9,120 @@ Table user_content {
   user varchar
   dateCreated timestamp
   userType varchar
-  projects uuid
+  projects uuid [ref: - project_list.id]
 }
 
-Table projects {
+Table project_item {
   id uuid [primary key]
-  user uuid
-  name varchar
-  dateCreated timestamp
-  type varchar
-}
-
-Table node {
-  id uuid [primary key]
-  projectId uuid
+  projectListId uuid [ref: > project_list.id]
   content varchar
-  namee varchar
-  title: varchar
+  name varchar
+  
+}
+Table project_content {
+  id uuid [primary key]
+  type varchar
+  title varchar
   body varchar
+  properties varchar
+  projectItemId uuid [ref: > project_item.id]
 }
 
-refs
+
+// entitites from chatgpt
+// import {
+//   Entity,
+//   PrimaryGeneratedColumn,
+//   Column,
+//   CreateDateColumn,
+//   ManyToOne,
+//   OneToMany,
+//   JoinColumn,
+// } from 'typeorm';
+
+// // ── UserContent ───────────────────────────────────────────────────────────────
+
+// @Entity({ name: 'user_content' })
+// export class UserContent {
+//   @PrimaryGeneratedColumn('uuid')
+//   id: string;
+
+//   @Column({ type: 'varchar' })
+//   userName: string;
+
+//   @Column('uuid')
+//   user: string;
+
+//   @CreateDateColumn({ type: 'timestamp' })
+//   dateCreated: Date;
+
+//   @Column({ type: 'varchar' })
+//   userType: string;
+
+//   // FK → project_list.id
+//   @Column('uuid')
+//   projects: string;
+
+//   @ManyToOne(() => ProjectList, pl => pl.userContents, { onDelete: 'CASCADE' })
+//   @JoinColumn({ name: 'projects' })
+//   projectList: ProjectList;
+// }
+// // ── ProjectList ────────────────────────────────────────────────────────────────
+// @Entity({ name: 'project_list' })
+// export class ProjectList {
+//   @PrimaryGeneratedColumn('uuid')
+//   id: string;
+
+//   @Column({ type: 'varchar' })
+//   name: string;
+
+//   // One ProjectList can have many ProjectItems
+//   @OneToMany(() => ProjectItem, item => item.projectList)
+//   items: ProjectItem[];
+
+
+
+// // ── ProjectItem ───────────────────────────────────────────────────────────────
+// @Entity({ name: 'project_item' })
+// export class ProjectItem {
+//   @PrimaryGeneratedColumn('uuid')
+//   id: string;
+
+//   @Column('uuid')
+//   projectListId: string;
+
+//   @Column({ type: 'varchar' })
+//   content: string;
+
+//   @Column({ type: 'varchar' })
+//   name: string;
+
+//   @OneToMany(() => ProjectContent, pc => pc.projectItem)
+//   contents: ProjectContent[];
+// }
+
+// // ── ProjectContent ────────────────────────────────────────────────────────────
+// @Entity({ name: 'project_content' })
+// export class ProjectContent {
+//   @PrimaryGeneratedColumn('uuid')
+//   id: string;
+
+//   @Column({ type: 'varchar' })
+//   type: string;
+
+//   @Column({ type: 'varchar' })
+//   title: string;
+
+//   @Column({ type: 'varchar' })
+//   body: string;
+
+//   @Column({ type: 'varchar' })
+//   properties: string;
+
+//   @Column('uuid')
+//   projectItemId: string;
+
+//   @ManyToOne(() => ProjectItem, pi => pi.contents, { onDelete: 'CASCADE' })
+//   @JoinColumn({ name: 'projectItemId' })
+//   projectItem: ProjectItem;
+// }

@@ -1,4 +1,4 @@
-import { AppDataSource } from "./db-config/data-source";
+import { AppDataSource } from "./database/db-config/data-source";
 import { log } from "console";
 import app from "./app";
 import dotenv from 'dotenv';

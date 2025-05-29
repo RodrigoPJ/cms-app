@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
-import validateNewUser from "../utils/validators/validateNewUser";
+import validateNewUser from "../../utils/validators/validateNewUser";
 import { log } from "console";
-import { UserContent } from "../db-config/entity/UserContent";
-import { AppDataSource } from "../db-config/data-source";
+import { UserContent } from "../../database/db-config/entity/UserContent";
+import { AppDataSource } from "../../database/db-config/data-source";
+import { ProjectList } from "../../database/db-config/entity/ProjectList";
 
 const createNewUser = async (req: Request, res: Response) => {
   const body = req.body;
@@ -13,16 +14,23 @@ const createNewUser = async (req: Request, res: Response) => {
   } else {
     const { firstName, user } = body;
     if (typeof firstName === "string" && typeof user === "string") {
+      const projectList = new ProjectList();
+      projectList.name = firstName;
+      const savedProjectList = await AppDataSource.getRepository(
+        ProjectList
+      ).save(projectList);
       const newUser = new UserContent();
       newUser.dateCreated = new Date().toISOString();
-      newUser.projects = "[]";
       newUser.user = user;
       newUser.userName = firstName;
       newUser.userType = "free";
+      newUser.projects = savedProjectList.id;
       const savedUser = await AppDataSource.getRepository(UserContent).save(
         newUser
       );
-      res.status(200).json({id: savedUser.id});
+      res
+        .status(200)
+        .json(savedUser);
     } else {
       res.status(400).json({ message: "Bad payload" });
     }

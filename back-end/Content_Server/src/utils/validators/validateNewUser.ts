@@ -12,7 +12,7 @@ const validateNewUser = async (user: RequestUser) => {
   newUser.firstName = user.firstName;
   newUser.user = user.user;
   const validateUser = await validate(newUser);
-  return  validateUser;
+  return validateUser;
 };
 
 export default validateNewUser;
