@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { AppDataSource } from "../db-config/data-source";
-import { User } from "../db-config/entity/UserAuth";
+import { User } from "../db-config/entity/user";
 import { Encrypt } from "../utils/encryption/Encrypt";
 
 const resetPassword = async (req: Request, res: Response) => {

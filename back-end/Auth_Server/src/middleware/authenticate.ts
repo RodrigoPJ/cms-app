@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { log } from "console";
 import { Encrypt } from "../utils/encryption/Encrypt";
 import { AppDataSource } from "../db-config/data-source";
-import { User } from "../db-config/entity/UserAuth";
+import { User } from "../db-config/entity/user";
 import { JWebToken } from "../utils/validators/jwtValidator";
 import { validate } from "class-validator";
 
@@ -41,6 +41,8 @@ const authenticate = async (req: Request, res: Response, next:NextFunction) => {
                 where: { email: tokenMail },
               });
               if (user) {
+                const newToken = await Encrypt.generateToken(tokenMail);
+                res.cookie('bearer_token', newToken);
                 next();
               } else {
                 res

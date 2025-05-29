@@ -1,0 +1,28 @@
+
+Table user_content {
+  id uuid [primary key]
+  userName varchar
+  user varchar
+  dateCreated timestamp
+  userType varchar
+  projects uuid
+}
+
+Table projects {
+  id uuid [primary key]
+  user uuid
+  name varchar
+  dateCreated timestamp
+  type varchar
+}
+
+Table node {
+  id uuid [primary key]
+  projectId uuid
+  content varchar
+  namee varchar
+  title: varchar
+  body varchar
+}
+
+refs

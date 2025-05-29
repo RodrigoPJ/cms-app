@@ -1,19 +1,17 @@
 import { Request, Response } from "express";
 import { AppDataSource } from "../db-config/data-source";
-import { User } from "../db-config/entity/UserAuth";
+import { User } from "../db-config/entity/user";
 import { Encrypt } from "../utils/encryption/Encrypt";
 import { log } from "console";
 
 const loginUser = async (req: Request, res: Response) => {
   const { email, password } = req.body;
   log("login");
-  const user = await AppDataSource.getRepository(User)
-    .createQueryBuilder("user")
-    .leftJoinAndSelect("user.account", "useraccount")
-    .where({
-      email: email,
-    })
-    .getMany();
+  const user = await AppDataSource.getRepository(User).find({
+    where: {
+      email
+    }
+  });
   if (user.length > 1) {
     res.status(401).send("user duplicated");
   } else if (user.length === 1) {

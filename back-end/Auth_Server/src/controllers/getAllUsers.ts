@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { AppDataSource } from "../db-config/data-source";
 import { log } from "console";
-import { User } from "../db-config/entity/UserAuth";
+import { User } from "../db-config/entity/user";
 import { TypeORMError } from "typeorm";
 
 const getAllUsers = async (req: Request, res: Response) => {

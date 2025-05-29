@@ -1,9 +1,8 @@
 import { Request, Response } from "express";
 import { AppDataSource } from "../db-config/data-source";
 import { log } from "console";
-import { User } from "../db-config/entity/UserAuth";
+import { User } from "../db-config/entity/user";
 import validateUser from "../utils/validators/userValidator";
-import { UserAccount } from "../db-config/entity/UserAccount";
 import { Encrypt } from "../utils/encryption/Encrypt";
 
 const saveNewUser = async (req: Request, res: Response) => {
@@ -17,33 +16,53 @@ const saveNewUser = async (req: Request, res: Response) => {
       const displayErrors = { ...validatorErrors.map((el) => el.constraints) };
       res.status(400).json(displayErrors);
     } else {
-      const encryption = Encrypt.encryptpass;
-      const user = new User();
       const { age, firstName, lastName, password, email } = req.body;
-      const encryptedPassword = await encryption(password);
-      user.age = age;
-      user.firstName = firstName;
-      user.lastName = lastName;
-      user.password = encryptedPassword;
-      user.email = email;
       const existingUser = await AppDataSource.manager.find(User, {
         where: { email: email },
       });
       if (existingUser.length >= 1) {
         res.status(303).send("existing account for that email");
       } else {
-        const newUserAccount = new UserAccount();
-        newUserAccount.projects = JSON.stringify([]);
-        newUserAccount.type = "free";
-        const manager = AppDataSource.manager;
-        const savedAccount = await manager.save(newUserAccount);
-        user.account = savedAccount.id;
-        const savedData = await manager.save(user);
-        const savedUser = {
-          savedEmail: savedData.email,
-          account: savedData.account
-        };
-        res.status(200).json({ savedUser});
+        const encryption = Encrypt.encryptpass;
+        const encryptedPassword = await encryption(password);
+        const user = new User();
+        user.age = age;
+        user.firstName = firstName;
+        user.lastName = lastName;
+        user.password = encryptedPassword;
+        user.email = email;
+        const rawResponse = await fetch("http://localhost:3001/uiprofile", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            firstName,
+            user: user.email,
+          }),
+        });
+        if (rawResponse.status !== 200) {
+          res.status(302).send("bad request for uiprofile service");
+        } else {
+          const parsedUser: any = await rawResponse.json();
+          if (parsedUser.id) {
+            user.account = parsedUser.id;
+            const savedData = await AppDataSource.manager.save(user);
+            if (savedData) {
+              const savedUser = {
+                user: savedData.email,
+                firstName: savedData.firstName,
+                account: savedData.account,
+              };
+              res.status(200).json(savedUser);
+            } else {
+              res.status(402).send("content server couldnt save");
+            }
+          } else {
+            res.status(402).send("content server didnt gave an id");
+          }
+        }
       }
     }
   } catch (error) {

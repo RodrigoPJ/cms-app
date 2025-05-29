@@ -3,23 +3,20 @@ import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 @Entity()
 export class UserContent {
   @PrimaryGeneratedColumn("uuid")
-  id: number;
+  id: string;
 
-  @Column()
+  @Column('varchar')
   user: string;
 
-  @Column()
+  @Column('varchar')
   userName: string;
 
-  @Column()
-  dateCreated: number;
+  @Column('timestamp')
+  dateCreated: string;
 
-  @Column()
-  accountId: string;
-
-  @Column()
+  @Column('varchar')
   userType: string;
 
-  @Column()
+  @Column('varchar')
   projects: string;
 }

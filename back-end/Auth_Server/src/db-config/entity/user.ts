@@ -1,5 +1,4 @@
 import { Entity, PrimaryGeneratedColumn, Column, JoinColumn, OneToOne, Relation} from "typeorm";
-import { UserAccount } from "./UserAccount";
 
 @Entity()
 export class User {
@@ -21,7 +20,6 @@ export class User {
   @Column()
   email:string;
 
-  @OneToOne(()=>UserAccount)
-  @JoinColumn()
+  @Column('uuid')
   account: string;
 }
