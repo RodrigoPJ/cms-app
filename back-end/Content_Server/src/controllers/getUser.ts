@@ -20,7 +20,7 @@ const getUser = async (req: Request, res: Response) => {
         log(userAccount.id);
         res.status(200).json(userAccount);
       } else {
-        res.status(200).json({ message: "Account not found in db" });
+        res.status(400).json({ message: "Account not found in db" });
       }
     } else {
       res.status(404).send("no account in request");
