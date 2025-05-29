@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { log } from "console";
 import { Encrypt } from "../utils/encryption/Encrypt";
 import { AppDataSource } from "../db-config/data-source";
@@ -6,7 +6,7 @@ import { User } from "../db-config/entity/UserAuth";
 import { JWebToken } from "../utils/validators/jwtValidator";
 import { validate } from "class-validator";
 
-const authenticate = async (req: Request, res: Response) => {
+const authenticate = async (req: Request, res: Response, next:NextFunction) => {
   const cookies = req.cookies;
   log(req.headers["user-agent"]);
   if (typeof cookies === "object") {
@@ -41,7 +41,7 @@ const authenticate = async (req: Request, res: Response) => {
                 where: { email: tokenMail },
               });
               if (user) {
-                res.status(200).json({ auth: true });
+                next();
               } else {
                 res
                   .clearCookie("token_bearer")

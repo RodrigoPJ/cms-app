@@ -10,15 +10,15 @@ async function UserPassParser(req: Request, res: Response, next: NextFunction) {
     if (validationErrors.length > 0) {
       const displayErrors = { ...validationErrors.map((el) => el.constraints) };
       res.status(400).json(displayErrors);
-    }
-    if (
-      typeof req.body?.email === "string" &&
-      typeof req.body?.password === "string"
-    ) {
-      next();
     } else {
-      res.status(401).send("incorrect credentials");
-
+      if (
+        typeof req.body?.email === "string" &&
+        typeof req.body?.password === "string"
+      ) {
+        next();
+      } else {
+        res.status(401).send("incorrect credentials");
+      }
     }
   } else {
     res.status(400).send("no json content");

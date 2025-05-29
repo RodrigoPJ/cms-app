@@ -63,6 +63,8 @@ This project is a RESTful backend API built using **Express** and **TypeORM** wi
    DB_PASS=your_password    # database password
    DB_NAME=postgres         # database name
    PORT=3000                # application port
+   environment=local        # running environment
+   JWT_SECRET="secret word"
    ```
 
 ## Database Setup

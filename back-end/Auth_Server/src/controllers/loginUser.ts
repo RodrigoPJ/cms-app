@@ -20,7 +20,12 @@ const loginUser = async (req: Request, res: Response) => {
     const comparepassword = Encrypt.comparepassword(user[0].password, password);
     if (comparepassword) {
       const token = await Encrypt.generateToken(user[0].email);
-      res.cookie("token_bearer", token).status(200).json(user[0]);
+      const newUser = {
+        account:user[0].account,
+        firstName: user[0].firstName,
+        user: user[0].email,
+      };
+      res.cookie("token_bearer", token).status(200).json(newUser);
     } else {
       res.status(401).send("wrong password");
     }
