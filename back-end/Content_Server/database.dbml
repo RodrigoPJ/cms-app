@@ -1,0 +1,25 @@
+Table user {
+  id uuid [primary key , ref: < project_item.user]
+  userName varchar
+  user varchar
+  dateCreated timestamp
+  userType varchar
+  projects uuid 
+}
+
+Table project_item {
+  id uuid [primary key , ref: < project_content.projectId]
+  user uuid 
+  content varchar
+  name varchar
+  isActive boolean
+}
+
+Table project_content {
+  id uuid [primary key]
+  type varchar
+  title varchar
+  body varchar
+  properties varchar
+  projectId uuid 
+}

@@ -8,7 +8,7 @@ class AuthService{
     this.isLogged = this.hasLogged();
   }
   persistLogin(name:string ) {
-    localStorage.setItem('cms-app', JSON.stringify({user: name}))
+    localStorage.setItem('cms-app', JSON.stringify({user: name}));
   }
 
   hasLogged() {

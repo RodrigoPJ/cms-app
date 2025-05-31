@@ -1,216 +1,115 @@
-# Backend API with Express, TypeORM, and PostgreSQL
+# Back-End Microservices Overview
 
-## Table of Contents
-
-- [Description](#description)
-- [Features](#features)
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Database Setup](#database-setup)
-- [Running the Application](#running-the-application)
-- [Available Scripts](#available-scripts)
-- [API Endpoints](#api-endpoints)
-- [Project Structure](#project-structure)
-- [Data Models](#data-models)
-- [Validation](#validation)
-- [License](#license)
-
-## Description
-
-This project is a RESTful backend API built using **Express** and **TypeORM** with **PostgreSQL** as the database. It provides basic user management functionality, including account creation, user listing, and authentication.
-
-## Features
-
-- User registration with server‑side validation
-- User login (email + password)
-- One‑to‑one relation between `User` and `UserAccount`
-- Database migrations and schema synchronization
-- Built in TypeScript for type safety
-- Environment‑based configuration
-
-## Prerequisites
-
-- Node.js (>= 16)
-- npm or yarn
-- PostgreSQL (>= 10)
-
-## Installation
-
-1. Clone the repository:
-   ```bash
-   git clone <repository-url>
-   cd back-end
-   ```
-2. Install dependencies:
-   ```bash
-   npm install
-   # or
-   yarn install
-   ```
-
-## Configuration
-
-1. Copy the provided `.env` file or create a new one in the project root:
-   ```bash
-   cp .env.example .env
-   ```
-2. Update the values to match your environment:
-   ```dotenv
-   DB_HOST=localhost        # database host
-   DB_PORT=5666             # database port
-   DB_USER=postgres         # database user
-   DB_PASS=your_password    # database password
-   DB_NAME=postgres         # database name
-   PORT=3000                # application port
-   ```
-
-## Database Setup
-
-1. Ensure your PostgreSQL server is running and the database specified in `DB_NAME` exists.
-2. Run database migrations:
-   ```bash
-   npm run migration:generate
-   npm run migration:run
-   ```
-   Or rely on automatic synchronization (not recommended for production):
-   - The `AppDataSource` is configured with `synchronize: true` and will auto‑create tables on startup.
-
-## Running the Application
-
-- **Development mode** (with live reload):
-  ```bash
-  npm run dev
-  ```
-- **Production mode**:
-  ```bash
-  npm run build
-  node dist/server.js
-  ```
-
-## Available Scripts
-
-| Command                      | Description                                 |
-| ---------------------------- | ------------------------------------------- |
-| `npm run dev`                | Start server with nodemon & ts-node         |
-| `npm run build`              | Compile TypeScript to JavaScript in `dist/` |
-| `npm run migration:generate` | Generate a new migration (specify name)     |
-| `npm run migration:run`      | Apply pending migrations to the database    |
-| `npm run typeorm`            | Run any TypeORM CLI command                 |
-
-## API Endpoints
-
-### GET `/api/getUsers`
-
-- **Description**: Retrieve all registered users.
-- **Response**: 200 OK
-  ```json
-  [
-    {
-      "id": "uuid",
-      "firstName": "John",
-      "lastName": "Doe",
-      "age": 30,
-      "email": "john.doe@example.com",
-      "account": "<UserAccount id>"
-    }
-  ]
-  ```
-
-### POST `/api/add-user`
-
-- **Description**: Create a new user with an associated account.
-- **Headers**: `Content-Type: application/json`
-- **Body**:
-  ```json
-  {
-    "firstName": "Jane",
-    "lastName": "Smith",
-    "age": 25,
-    "email": "jane.smith@example.com",
-    "password": "securePassword123",
-    "createDate": "2025-05-01T00:00:00.000Z"
-  }
-  ```
-- **Response**: 200 OK
-  ```json
-  {
-    "savedData": { /* UserAuth entity */ },
-    "savedAccount": { /* UserAccount entity */ }
-  }
-  ```
-- **Errors**:
-  - 400 Bad Request — validation errors
-  - 404 Not Found — missing JSON content
-
-### POST `/api/login`
-
-- **Description**: Authenticate a user.
-- **Headers**: `Content-Type: application/json`
-- **Body**:
-  ```json
-  {
-    "email": "jane.smith@example.com",
-    "password": "securePassword123"
-  }
-  ```
-- **Response**:
-  - 200 OK — login successful (returns user data)
-  - 401 Unauthorized — incorrect credentials
-  - 404 Not Found — user not found
-
-## Project Structure
+Within this `back-end/` directory, you’ll find two standalone Node.js microservices that collectively support the CMS App front-end:
 
 ```
 back-end/
-├── src/
-│   ├── app.ts               # Express application setup
-│   ├── server.ts            # DB initialization & server start
-│   ├── db-config/
-│   │   ├── data-source.ts   # TypeORM DataSource configuration
-│   │   └── entity/
-│   │       ├── UserAuth.ts  # User entity definition
-│   │       └── UserAccount.ts # Account entity definition
-│   ├── migrations/          # TypeORM migration scripts
-│   ├── controllers/         # Request handlers
-│   │   ├── saveNewUser.ts
-│   │   ├── getAllUsers.ts
-│   │   └── loginUser.ts
-│   ├── routes/              # Route definitions
-│   └── utils/
-│       └── validators/      # class-validator schemas
-├── dist/                    # Compiled JS output
-├── .env                     # Environment variables
-├── tsconfig.json            # TypeScript config
-├── package.json
-└── README.md                # <-- You are here
+├── auth-server/         # Authentication & User Management
+├── content-server/      # CMS Content Management
+└── README.md            # High-level overview (this file)
 ```
 
-## Data Models
+Each service follows a similar structure (Express + TypeScript + TypeORM + PostgreSQL) but focuses on distinct domain responsibilities.
 
-- **User** (`UserAuth` entity)
+---
+## 1. Service Summaries
 
-  - `id`: uuid (primary key)
-  - `firstName`, `lastName`: string
-  - `age`: number
-  - `email`, `password`: string
-  - `account`: relation to `UserAccount`
+| Service             | Description                                                       | Port  | Database      | Main Technologies                          |
+| ------------------- | ----------------------------------------------------------------- | ----- | ------------- | -------------------------------------------|
+| **Auth Server**     | User signup/login, JWT issuance & refresh tokens, profile APIs    | 4000  | cms_auth      | Express, TypeORM, PostgreSQL, Bcrypt, JWT   |
+| **Content Server**  | CRUD operations for pages/posts, file uploads, pagination, RBAC   | 5000  | cms_content   | Express, TypeORM, PostgreSQL, Multer, RBAC  |
 
-- **UserAccount** (`UserAccount` entity)
+---
+## 2. Interaction Workflow
 
-  - `id`: uuid (primary key)
-  - `type`: string (e.g., `free`)
-  - `projects`: JSON stringified project list
+1. **Authentication**
+   - Front-End → Auth Server: `POST /auth/register` or `POST /auth/login`
+   - Auth Server → Front-End: `200 OK` + `{ accessToken, refreshToken? }`
+2. **Content Access**
+   - Front-End includes `Authorization: Bearer <accessToken>` header on content requests
+   - Front-End → Content Server: any protected endpoint (e.g., `GET /content/pages`)
+   - Content Server validates JWT (via secret or public key) before granting access
 
-## Validation
+```mermaid
+sequenceDiagram
+    participant FE as Front-End
+    participant AS as Auth Server
+    participant CS as Content Server
 
-User input is validated using `class-validator`:
+    FE->>AS: POST /auth/login {email, password}
+    AS-->>FE: 200 {accessToken}
+    FE->>CS: GET /content/pages (Bearer token)
+    CS-->>FE: 200 {pages list}
+```
 
-- `firstName` & `lastName`: length 1–24 characters
-- `age`: integer within configured range
-- `email`: valid email format
-- `password`: length and complexity constraints
+---
+## 3. Quickstart Setup
 
-## License
+### Clone & Install
+```bash
+git clone <repo-url>
+cd back-end
+# Install both services
+for svc in auth-server content-server; do (
+  cd "$svc" && npm install
+); done
+```
 
-This project is licensed under the **ISC** License. Feel free to use and modify as needed.
+### Configuration
+Copy each `.env.example` to `.env` and customize:
+
+- **Auth Server** (`auth-server/.env`)
+  ```env
+  PORT=4000
+  DB_HOST=localhost
+  DB_PORT=5432
+  DB_USER=postgres
+  DB_PASS=<your_password>
+  DB_NAME=cms_auth
+  JWT_SECRET=<your_jwt_secret>
+  JWT_EXPIRATION=1h
+  ```
+
+- **Content Server** (`content-server/.env`)
+  ```env
+  PORT=5000
+  DB_HOST=localhost
+  DB_PORT=5432
+  DB_USER=postgres
+  DB_PASS=<your_password>
+  DB_NAME=cms_content
+  JWT_PUBLIC_KEY_PATH=../auth-server/keys/public.pem
+  ```
+
+### Run Database Migrations
+```bash
+cd auth-server && npm run migration:run
+cd ../content-server && npm run migration:run
+```
+
+### Start Services
+```bash
+# In separate terminals or via process manager
+cd auth-server && npm run dev
+cd content-server && npm run dev
+```
+- **Auth**: http://localhost:4000
+- **Content**: http://localhost:5000
+
+---
+## 4. Production & Deployment
+- **Docker**: Each service includes a `Dockerfile`.
+- **CI/CD**: Pipeline per service: lint → test → build → push → deploy.
+- **Secrets Management**: Use secure vaults for env vars and JWT keys.
+
+---
+## 5. Observability & Health
+- **Logging**: Structured via Winston/Pino.
+- **Health Checks**: `GET /health` for each service.
+- **Metrics**: Integrate Prometheus or APM.
+
+---
+## 6. Documentation
+For full API routes, schemas, and examples:
+- [Auth Server README](auth-server/README.md)
+- [Content Server README](content-server/README.md)
