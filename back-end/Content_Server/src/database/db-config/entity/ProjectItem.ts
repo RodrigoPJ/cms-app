@@ -7,7 +7,7 @@ export class ProjectItem {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-// this is the product listId
+// this is the projecct Id
   @Column()
   @ManyToOne(() => User, user => user.id )
   accountId: string;
@@ -17,6 +17,9 @@ export class ProjectItem {
 
   @Column('varchar')
   name: string;
+
+  @Column('boolean')
+  isActive: boolean;
 
   @OneToMany(() => ProjectContent, cont => cont.id)
   @JoinColumn()

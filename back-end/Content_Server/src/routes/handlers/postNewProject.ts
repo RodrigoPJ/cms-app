@@ -12,7 +12,7 @@ const createNewProject = async (req: Request, res: Response) => {
     const body: ProjectValidator = req.body;
     const validProject: ProjectValidator | ValidationError[] = await validateNewProjectItem(body);
     if (
-      "projectListId" in validProject &&
+      "accountId" in validProject &&
       validProject.name &&
       typeof validProject.contentType === "string"
     ) {

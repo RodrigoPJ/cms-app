@@ -9,7 +9,8 @@ export class ProjectRequest {
   projectId: string;
 }
 
-const validateProjecId = async (
+const 
+validateProjectId = async (
   payload: ProjectRequest
 ): Promise<ValidationError[]> => {
   const goodRequest = new ProjectRequest();
@@ -18,4 +19,4 @@ const validateProjecId = async (
   return isValid;
 };
 
-export default validateProjecId;
+export default validateProjectId;

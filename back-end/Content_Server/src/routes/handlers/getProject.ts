@@ -1,49 +1,31 @@
 import { Request, Response } from "express";
 import { log } from "console";
-import { AppDataSource } from "../../database/db-config/data-source";
-import validateProjecId, {
-  ProjectRequest,
-} from "../../utils/validators/validateProjectId";
-import { ProjectItem } from "../../database/db-config/entity/ProjectItem";
+import validateProjectId from "../../utils/validators/validatePrrojectId";
+import findContents from "../../database/controllers/findContents";
 
 const getProject = async (req: Request, res: Response) => {
   log(req.headers["user-agent"]);
-  log("retrieving project and filling content");
-
-  const body = req.body;
-  if (body) {
-    try {
-      const validationErrors = await validateProjecId(body);
-      log('validation errors',validationErrors.length)
+  log("retrieving contents of project");
+  try {
+    const body = req.body;
+    if (body) {
+      const validationErrors = await validateProjectId(body);
+      log("validation errors", validationErrors.length);
       if (validationErrors.length > 0) {
-        res.status(402).json({...validationErrors.map(e => e.constraints)})
-      }else {
-        const projectId:string = body.projectId;
-        if (projectId) {
-        const savedProject = await AppDataSource.getRepository(
-          ProjectItem
-        ).findOne({
-          where: {
-            id: projectId,
-          },
-        });
-        if (savedProject) {
-          res.status(200).json(savedProject);
-        }else {
-          res.status(402).send("db didn't find any project with that id");
-
-        }
+        res.status(402).json({ ...validationErrors.map((e) => e.constraints) });
       } else {
-        res.status(402).send("bad payload");
+        const projectId: string = body.projectId;
+        const savedContents = await findContents(projectId);
+        if (savedContents) res.status(200).send(savedContents);
+        else {
+          res.status(404).send('no contents saved for that project')
+        }
       }
-      }
-      
-    } catch (error) {
-      //log(error)
-      res.status(500).send(error);
+    } else {
+      res.status(402).send("bad payload");
     }
-  } else {
-    res.status(403).send("bad request, no body");
+  } catch (e) {
+    res.status(400).json(e)
   }
 };
 

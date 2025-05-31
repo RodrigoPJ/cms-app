@@ -1,8 +1,7 @@
 import { RequestHandler, Request, Response } from "express";
 import validateContentRequest from "../../utils/validators/validateNewContent";
-import { AppDataSource } from "../../database/db-config/data-source";
-import { ProjectList } from "../../database/db-config/entity/ProjectList";
 import saveContent from "../../database/controllers/saveContent";
+import { log } from "console";
 
 const postContent: RequestHandler | null = async (req: Request, res: Response) => {
   const reqBody = req.body;
@@ -29,7 +28,7 @@ const postContent: RequestHandler | null = async (req: Request, res: Response) =
       }
     }
   } catch (error) {
-    res.status(403).send(JSON.stringify(error));
+    res.status(403).send(error);
   }
 };
 

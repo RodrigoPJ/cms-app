@@ -17,7 +17,7 @@ export class ProjectContent {
   @Column("varchar")
   title: string;
 
-  @Column("timestamp")
+  @Column("varchar")
   body: string;
 
   @Column("varchar")

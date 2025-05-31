@@ -1,43 +1,45 @@
 import { Router } from 'express';
-import createNewUSer from './handlers/createNewUser';
-import getAllUsers from './handlers/getAllUsers';
+import postNewUSer from './handlers/postNewUser';
+import getAllUsers from './handlers/admin/getAllUsers';
 import getUser from './handlers/getUser';
-import createNewProject from './handlers/createNewProject';
+import postNewProject from './handlers/postNewProject';
 import getProject from './handlers/getProject';
-import getAllContents from './handlers/getAllcontents';
-import getAllProjects from './handlers/getAllProjects';
+import getAllContents from './handlers/admin/getAllcontents';
+import getAllProjects from './handlers/admin/getAllProjects';
 import postContent from './handlers/postContent';
-import getProjectList from './handlers/getProjectList';
 
 const routes = Router();
 
+// Auth / Admin only routes
+
 // routes for admin check and status of server
-routes.get('/admin/get-users', getAllUsers);
+routes.get('/admin/get-all-users', getAllUsers);
 routes.get('/admin/get-all-content', getAllContents);
 routes.get('/admin/get-all-projects', getAllProjects);
 
-
 // routes for creating and retrieving an account
+// this one is meant to be consumed only by the auth server, receives user data, creates and returns an accountId
+routes.post('/ui-profile',  postNewUSer);
 
-// this one is meant to be consumed only by the auth server 
-routes.post('/uiprofile',  createNewUSer);
+// Client Side routes
 
-// this one feeds the client with the account information on the user
-routes.get('/uiprofile', getUser);
+// this one feeds the client the user element with list of projects for the requested accountId
+routes.get('/ui-profile', getUser);
 
-//Project creation
-routes.post('/new-project', createNewProject);
+//Project creation providing accountId
+routes.post('/new-project', postNewProject);
 
-//  gets the list of projects for a given user
-routes.get('/projects', getProjectList);
+// returns the contents for  a specific  projectId
+routes.get('/project', getProject)
 
-
-//  creates a content node  for prof¡ject  given
+//  creates a content node  for any project given
 routes.post('/project-content', postContent);
 
-// get content for given project
- routes.get('/project-content', getProject);
+// update given content node
 // routes.put('/project-content');
+
+
+ //routes.get('/project-content', );
 // routes.delete('/project-content');
 
 

@@ -4,7 +4,6 @@ import { AppDataSource } from "../../database/db-config/data-source";
 import { TypeORMError } from "typeorm";
 import { User } from "../../database/db-config/entity/User";
 import { ProjectItem } from "../../database/db-config/entity/ProjectItem";
-import { ProjectContent } from "../../database/db-config/entity/ProjectContent";
 
 const getUser = async (req: Request, res: Response) => {
   log(req.headers["user-agent"]);
@@ -16,28 +15,15 @@ const getUser = async (req: Request, res: Response) => {
       ).findOne({
         where: {
           id: account,
-        },
-        relations: {
-          projectListId:true
         }
       });
+      const projects = await AppDataSource.getRepository(ProjectItem).find({
+        where: {
+          accountId: account
+        }
+      })
       if (userAccount) {
-        if(userAccount.projectListId.id) {
-          const listOfProjects = await  AppDataSource.getRepository(ProjectContent).find({
-            where:{
-              id: userAccount.projectListId.id
-            }
-          });
-          log(userAccount.projectListId);
-        const complementedUser = {
-          ...userAccount,
-          listOfProjects
-        }
-        res.status(200).json(complementedUser);
-        } else {
-          res.status(400).json();
-        }
-        
+        res.status(200).json({userAccount, projects});
       } else {
         res.status(400).json({ message: "Account not found in db" });
       }
@@ -50,7 +36,8 @@ const getUser = async (req: Request, res: Response) => {
       log((error as TypeORMError).stack);
       res.status(400).json((error as TypeORMError).message);
     } else {
-      res.status(404).send("not found");
+      log(error)
+      res.status(404).send(error);
     }
   }
 };

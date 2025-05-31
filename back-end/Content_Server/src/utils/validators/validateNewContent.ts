@@ -1,4 +1,4 @@
-import { validate, IsEmail, IsUUID, IsString, IsObject } from "class-validator";
+import { validate, IsEmail, IsUUID, IsString, IsObject, IsOptional } from "class-validator";
 
 export class ContentRequest {
   @IsString()
@@ -15,6 +15,9 @@ export class ContentRequest {
 
   @IsUUID()
   projectItemId: string;
+
+  @IsOptional()
+  id?: string;
 }
 
 const validateContentRequest = async (user: ContentRequest) => {

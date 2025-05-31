@@ -3,7 +3,6 @@ import { DataSource } from "typeorm"
 import { User } from "./entity/User"
 import dotenv from 'dotenv';
 import { ProjectContent } from "./entity/ProjectContent";
-import { ProjectList } from "./entity/ProjectList";
 import { ProjectItem } from "./entity/ProjectItem";
 
 dotenv.config();
@@ -18,6 +17,6 @@ export const AppDataSource = new DataSource({
    password: process.env.DB_PASS,
    database: process.env.DB_NAME,
    synchronize: true,
-   entities: [User, ProjectContent, ProjectList, ProjectItem],
+   entities: [User, ProjectContent, ProjectItem],
    migrations: [`${__dirname}/**/migrations/*.{ts,js}`]
 });

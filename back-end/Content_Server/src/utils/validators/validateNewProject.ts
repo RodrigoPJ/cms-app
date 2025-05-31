@@ -3,7 +3,7 @@ import { validate, IsUUID, IsString, ValidationError } from "class-validator";
 
 export class ProjectValidator {
   @IsUUID()
-  projectListId: string;
+  accountId: string;
 
   @IsString()
   contentType: string;
@@ -16,7 +16,7 @@ export class ProjectValidator {
 
 const validateNewProjectItem = async (item:ProjectValidator): Promise<ProjectValidator | ValidationError[]>=>{
     const project = new ProjectValidator();
-    project.projectListId = item.projectListId;
+    project.accountId = item.accountId;
     project.name = item.name;
     project.contentType = item.contentType;
     const ValidationErrors = await validate(project);
