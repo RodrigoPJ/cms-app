@@ -4,7 +4,7 @@ import { AppDataSource } from "../../database/db-config/data-source";
 import { ProjectList } from "../../database/db-config/entity/ProjectList";
 import saveContent from "../../database/controllers/saveContent";
 
-const newContent: RequestHandler = async (req: Request, res: Response) => {
+const postContent: RequestHandler | null = async (req: Request, res: Response) => {
   const reqBody = req.body;
   try {
     const validationErrors = await validateContentRequest(reqBody);
@@ -21,8 +21,9 @@ const newContent: RequestHandler = async (req: Request, res: Response) => {
       ) {
         const savedContent =  await saveContent({
           type, title, body, properties, projectItemId 
-        })
-        res.status(200).send(savedContent);
+        });
+        if (savedContent) res.status(200).send(savedContent);
+        res.status(400).send("bad request");
       } else {
         res.status(400).send("bad request");
       }
@@ -32,4 +33,4 @@ const newContent: RequestHandler = async (req: Request, res: Response) => {
   }
 };
 
-export default newContent;
+export default postContent;

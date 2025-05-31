@@ -1,33 +1,30 @@
-Table project_list {
-  id uuid [primary key] 
-  name varchar
-}
-
-Table user_content {
-  id uuid [primary key]
+Table user {
+  id uuid [primary key , ref: < project_item.user]
   userName varchar
   user varchar
   dateCreated timestamp
   userType varchar
-  projects uuid [ref: - project_list.id]
+  projects uuid 
 }
 
 Table project_item {
-  id uuid [primary key]
-  projectListId uuid [ref: > project_list.id]
+  id uuid [primary key , ref: < project_content.projectId]
+  user uuid 
   content varchar
   name varchar
-  
 }
+
 Table project_content {
   id uuid [primary key]
   type varchar
   title varchar
   body varchar
   properties varchar
-  projectItemId uuid [ref: > project_item.id]
+  projectId uuid 
 }
 
+
+// [ref: > project_item.id]
 
 // entitites from chatgpt
 // import {

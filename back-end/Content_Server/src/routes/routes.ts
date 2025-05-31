@@ -6,7 +6,7 @@ import createNewProject from './handlers/createNewProject';
 import getProject from './handlers/getProject';
 import getAllContents from './handlers/getAllcontents';
 import getAllProjects from './handlers/getAllProjects';
-import newContent from './handlers/newContent';
+import postContent from './handlers/postContent';
 import getProjectList from './handlers/getProjectList';
 
 const routes = Router();
@@ -32,8 +32,8 @@ routes.post('/new-project', createNewProject);
 routes.get('/projects', getProjectList);
 
 
-//  create the first content node of a prroject
-routes.post('/project-content', newContent);
+//  creates a content node  for prof¡ject  given
+routes.post('/project-content', postContent);
 
 // get content for given project
  routes.get('/project-content', getProject);

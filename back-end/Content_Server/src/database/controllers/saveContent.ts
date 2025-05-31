@@ -18,6 +18,11 @@ const saveContent = async (content: ContentRequest) => {
       newContent.title = content.title;
       newContent.type = content.type;
       const savedContent = await AppDataSource.getRepository(ProjectContent).save(newContent);
+      if (savedContent) {
+        return savedContent;
+      }else {
+        return null;
+      }
     }
   } catch (error) {
     throw new Error (JSON.stringify(error))

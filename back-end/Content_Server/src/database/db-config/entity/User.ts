@@ -4,9 +4,9 @@ import {
   Column,
   JoinColumn,
   CreateDateColumn,
-  OneToOne,
+  OneToMany,
 } from "typeorm";
-import { ProjectList } from "./ProjectList";
+import { ProjectItem } from "./ProjectItem";
 
 @Entity()
 export class User {
@@ -25,8 +25,8 @@ export class User {
   @Column("varchar")
   userType: string;
 
-  // FK → project_list.id
-  @OneToOne(() => ProjectList)
+  // FK → project_item.id
+  @OneToMany(() => ProjectItem, item => item.id)
   @JoinColumn()
-  projectListId: ProjectList;
+  projectListId: ProjectItem[];
 }
