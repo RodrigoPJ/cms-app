@@ -3,11 +3,10 @@ import {
   PrimaryGeneratedColumn,
   Column,
   ManyToOne,
-  JoinColumn,
 } from "typeorm";
 import { ProjectItem } from "./ProjectItem";
 
-@Entity({ name: "project_content" })
+@Entity()
 export class ProjectContent {
   @PrimaryGeneratedColumn("uuid")
   id: string;
@@ -25,9 +24,6 @@ export class ProjectContent {
   properties: string;
 
   @Column("uuid")
+  @ManyToOne(()=>ProjectItem, item => item.id)
   projectItemId: string;
-
-  @ManyToOne(() => ProjectItem, (pi) => pi.contents, { onDelete: "CASCADE" })
-  @JoinColumn({ name: "projectItemId" })
-  projectItem: ProjectItem;
 }

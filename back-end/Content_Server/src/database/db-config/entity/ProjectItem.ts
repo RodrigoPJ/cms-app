@@ -1,20 +1,23 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, JoinColumn } from "typeorm";
 import { ProjectContent } from "./ProjectContent";
+import { ProjectList } from "./ProjectList";
 
-@Entity({ name: "project_item" })
+@Entity()
 export class ProjectItem {
   @PrimaryGeneratedColumn("uuid")
+  @OneToMany(() => ProjectContent, content => content.projectItemId)
+  @JoinColumn()
   id: string;
 
-  @Column("uuid")
+// this is the product listId
+  @Column()
+  @ManyToOne(() => ProjectList, projectList => projectList.id )
   projectListId: string;
 
-  @Column({ type: "varchar" })
+  @Column('varchar')
   contentType: string;
 
-  @Column({ type: "varchar" })
+  @Column('varchar')
   name: string;
 
-  @OneToMany(() => ProjectContent, (pc) => pc.projectItem)
-  contents: ProjectContent[];
 }

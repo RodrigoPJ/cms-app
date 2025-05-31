@@ -1,15 +1,19 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, OneToMany, JoinColumn } from "typeorm";
+import { User } from "./User";
 import { ProjectItem } from "./ProjectItem";
 
-@Entity({ name: 'project_list' })
+@Entity()
 export class ProjectList {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn('uuid')
+  @OneToMany(()=> ProjectItem, item => item.projectListId)
+  @JoinColumn()
   id: string;
 
-  @Column({ type: 'varchar' })
+  @Column()
   name: string;
 
-  // One ProjectList can have many ProjectItems
-   @OneToMany(() => ProjectItem, item => item.projectListId)
-   items: ProjectItem[];
+// this should be the user content id
+  @Column()
+  @OneToOne(()=> User, user=>user.id)
+   user: string;
 }

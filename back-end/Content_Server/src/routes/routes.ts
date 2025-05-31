@@ -1,13 +1,21 @@
 import { Router } from 'express';
 import createNewUSer from './handlers/createNewUser';
-import getAllUsers from './handlers/getAll';
+import getAllUsers from './handlers/getAllUsers';
 import getUser from './handlers/getUser';
 import createNewProject from './handlers/createNewProject';
+import getProject from './handlers/getProject';
+import getAllContents from './handlers/getAllcontents';
+import getAllProjects from './handlers/getAllProjects';
+import newContent from './handlers/newContent';
+import getProjectList from './handlers/getProjectList';
 
 const routes = Router();
 
 // routes for admin check and status of server
 routes.get('/admin/get-users', getAllUsers);
+routes.get('/admin/get-all-content', getAllContents);
+routes.get('/admin/get-all-projects', getAllProjects);
+
 
 // routes for creating and retrieving an account
 
@@ -17,14 +25,20 @@ routes.post('/uiprofile',  createNewUSer);
 // this one feeds the client with the account information on the user
 routes.get('/uiprofile', getUser);
 
-//Project creation and handling
-routes.post('/newProject', createNewProject);
+//Project creation
+routes.post('/new-project', createNewProject);
 
-// project content
-routes.post('/project-content');
-routes.get('/project-content');
-routes.put('/project-content');
-routes.delete('/project-content');
+//  gets the list of projects for a given user
+routes.get('/projects', getProjectList);
+
+
+//  create the first content node of a prroject
+routes.post('/project-content', newContent);
+
+// get content for given project
+ routes.get('/project-content', getProject);
+// routes.put('/project-content');
+// routes.delete('/project-content');
 
 
 

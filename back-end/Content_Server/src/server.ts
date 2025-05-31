@@ -5,9 +5,10 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-AppDataSource.initialize().then((DataSource) => {
-  log('database connected: ', DataSource.options.type)
-  return app.listen(process.env.PORT,()=>{
-    log(`Listening on port: ${process.env.PORT}`)
-  });
-});
+const PORT:Number = parseInt(process.env.PORT) || 3000;
+
+app.listen(PORT, async()=>{
+  log(`listening on port: ${PORT}`)
+  const db = await AppDataSource.initialize();
+  log('connected to db', db.isInitialized);
+})

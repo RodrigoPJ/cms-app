@@ -26,7 +26,7 @@ const createNewProject = async (req: Request, res: Response) => {
       res.status(401).json(validProject);
     }
   } catch (error) {
-    res.status(402).send({ message: "error saving new project", error: error });
+    res.status(402).send({ message: "error saving new project", error: JSON.stringify(error) });
   }
 };
 

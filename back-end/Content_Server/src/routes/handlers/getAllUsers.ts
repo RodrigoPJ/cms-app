@@ -1,11 +1,15 @@
 import { Request, Response } from "express";
 import { log } from "console";
 import { AppDataSource } from "../../database/db-config/data-source";
-import { UserContent } from "../../database/db-config/entity/UserContent";
+import { User } from "../../database/db-config/entity/User";
 
 const getAllUsers = async(req:Request, res:Response) => {
     log(req.headers["user-agent"]);
-    const allUsers = await AppDataSource.getRepository(UserContent).query('SELECT * FROM public."user_content"');
+    const allUsers = await AppDataSource.getRepository(User).find({
+      relations: {
+        projectListId: true
+      }
+    });
     res.status(200).json(allUsers);
 
 }
