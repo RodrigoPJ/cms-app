@@ -1,14 +1,15 @@
 import {Navigate, type RouteObject } from "react-router";
-import { MainLayout } from "../../pages/MainLayout";
-import { Home } from "../../pages/Home";
-import { Login } from "../../pages/Login";
-import { DashboardLayout } from "../../pages/dashboard/DashboardLayout";
-import { Account } from "../../pages/Acccount";
-import { LogOut} from "../../pages/LogOut";
-import Content from "../../pages/dashboard/components/Content";
-import Users from "../../pages/dashboard/components/User";
-import Settings from "../../pages/dashboard/components/Settings";
-import Dashboard from "../../pages/dashboard/components/Dashboard";
+import { MainLayout } from "../pages/MainLayout";
+import { Home } from "../pages/Home";
+import { Login } from "../pages/Login";
+import { DashboardLayout } from "../pages/dashboard/DashboardLayout";
+import { Account } from "../pages/Acccount";
+import { LogOut} from "../pages/LogOut";
+import Content from "../pages/dashboard/components/Content";
+import Users from "../pages/dashboard/components/User";
+import Settings from "../pages/dashboard/components/Settings";
+import Dashboard from "../pages/dashboard/components/Dashboard";
+import { SignUp } from "../pages/SignUp";
 export const routes:RouteObject[]= [
   {
     path: '/',
@@ -17,8 +18,10 @@ export const routes:RouteObject[]= [
       {index: true, element: <Navigate to={'home'} />},
       {path: 'home', element: <Home />},
       {path: 'login', Component: Login},
+      {path: 'signup', Component: SignUp},
       {path: 'account', Component: Account},
-      {path: 'dashboard', Component: DashboardLayout, children: [
+      {path: 'dashboard', Component: DashboardLayout,
+        children: [
         {index: true, element: <Navigate to={'main'} />},
         {path: 'main', Component: Dashboard},
         {path: 'content', Component: Content},

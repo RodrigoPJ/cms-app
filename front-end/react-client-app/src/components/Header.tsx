@@ -5,11 +5,22 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faUserTie } from "@fortawesome/free-solid-svg-icons";
 import { faBell } from "@fortawesome/free-regular-svg-icons";
 import squares from "../assets/squares.svg"
+import { useEffect, useState } from "react";
 
 export function Header() {
   const content = navBar;
+  const [assignedNav, setAssigned] = useState(content.pages);
   const isLoggedIn = useAppSelector((state) => state.UIState.isLoggedin);
-  const alerts = false;
+  const alerts = true;
+
+  useEffect(()=>{
+    if(!isLoggedIn){
+      const visibleNav = content.pages.filter(el => !el.needsAuth);
+      setAssigned(visibleNav);
+    } else {
+      setAssigned(content.pages)
+    }
+  }, [isLoggedIn])
 
   function mobileDipdownClick() {
     const activeElement: Element | null =
@@ -29,7 +40,7 @@ export function Header() {
               tabIndex={0}
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
             >
-              {content.pages.map((item) => (
+              {assignedNav.map((item) => (
                 <li onClick={mobileDipdownClick} key={item.name}>
                   <NavLink to={item.url}>{item.name}</NavLink>
                 </li>
@@ -49,7 +60,7 @@ export function Header() {
         </div>
         <div className="navbar-center hidden md:flex">
           <ul className="menu menu-horizontal px-1">
-            {content.pages.map((item) => (
+            {assignedNav.map((item) => (
               <li key={item.name}>
                 <NavLink className={({isActive})=> isActive ? 'underline' : ''} to={item.url}>{item.name}</NavLink>
               </li>

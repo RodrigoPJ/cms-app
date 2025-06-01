@@ -1,9 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { NavLinkRenderProps } from "react-router";
-import { NavLink, Outlet } from "react-router";
+import { NavLink, Outlet, useNavigate } from "react-router";
+import { useAppSelector } from "../../utils/store/hooks";
 
 export function DashboardLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const isLoggedin = useAppSelector(state => state.UIState.isLoggedin);
+  const navigate = useNavigate();
+
+  useEffect(()=>{
+    if (!isLoggedin) {
+      navigate('/')
+    }
+  })
 
   function toggleSidebar() {
     setSidebarOpen((state) => !state);

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Hero } from "../components/daisy-ui/Hero";
 import pages from "../utils/content/pages";
-import AuthService from "../services/ui-service/AuthService";
+import AuthService from "../services/auth-service/AuthService";
 import { useAppDispatch } from "../utils/store/hooks";
 
 export function LogOut() {
