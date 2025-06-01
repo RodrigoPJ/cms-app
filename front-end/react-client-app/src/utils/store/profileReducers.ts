@@ -1,8 +1,10 @@
-import type { Profile, } from "../types/data-types";
+import type { Profile, User } from "../types/data-types";
 import type {PayloadAction} from '@reduxjs/toolkit';
 
-export function setProfile(state: Profile, action: PayloadAction<Profile>) {
-  state = action.payload;
+export function setProfile(state: User, action: PayloadAction<User>) {
+  state.userAccount = action.payload.userAccount;
+  state.projects = action.payload.projects
+  
 }
 
 export default {

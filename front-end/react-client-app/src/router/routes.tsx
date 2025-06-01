@@ -1,5 +1,5 @@
 import {Navigate, type RouteObject } from "react-router";
-import { MainLayout } from "../pages/MainLayout";
+import { MainLayout } from "../components/MainLayout";
 import { Home } from "../pages/Home";
 import { Login } from "../pages/Login";
 import { DashboardLayout } from "../pages/dashboard/DashboardLayout";

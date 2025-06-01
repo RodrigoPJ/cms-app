@@ -1,48 +1,86 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import AuthService from "../services/auth-service/AuthService";
 import { useAppDispatch } from "../utils/store/hooks";
+import { useNavigate } from "react-router";
 
 export default function SignUpForm() {
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    name: "",
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
-    confirmPassword: ""
+    confirmPassword: "",
+    age: "",
   });
 
- /// const postForm = useCallback(new AuthService().signup, [])
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Handle signup logic (e.g., send to API)
-    console.log(formData);
-    const authService =  new AuthService()
-
-    dispatch(authService.signup({...formData, age:67, firstName:'huhuhu', lastName: 'gvjgv'}))
-
-  //  const helper  = authService.signup({...formData, age:67, firstName:'huhuhu', lastName: 'gvjgv'})
-  //  helper(dispatch).then(e=> console.log(e))
+    const authService = new AuthService();
+    // here is where we should verify the form
+    dispatch(
+      authService.signup({ ...formData, age: parseInt(formData.age) })
+    ).then((e) => {
+      if(e) navigate("/dashboard");
+      else alert('login failed');
+    });
   };
 
   return (
-    <div  style={{backgroundImage: `url(https://img.daisyui.com/images/stock/photo-1507358522600-9f71e620c44e.webp)`}} className="flex items-center justify-center min-h-screen bg-base-200 px-4">
+    <div
+      style={{
+        backgroundImage: `url(https://img.daisyui.com/images/stock/photo-1507358522600-9f71e620c44e.webp)`,
+      }}
+      className="flex items-center justify-center min-h-screen bg-base-200 px-4"
+    >
       <div className="w-full max-w-md p-8 space-y-4 bg-base-100 rounded-lg shadow-lg">
         <h2 className="text-2xl font-bold text-center">Create an Account</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="form-control">
-            <label className="label" htmlFor="name">
-              <span className="label-text">Full Name</span>
+            <label className="label" htmlFor="fname">
+              <span className="label-text">First Name</span>
             </label>
             <input
               type="text"
-              id="name"
-              name="name"
+              id="fname"
+              name="firstName"
               className="input input-bordered"
-              value={formData.name}
+              value={formData.firstName}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-control">
+            <label className="label" htmlFor="lname">
+              <span className="label-text">Last Name</span>
+            </label>
+            <input
+              type="text"
+              id="lname"
+              name="lastName"
+              className="input input-bordered"
+              value={formData.lastName}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-control">
+            <label className="label" htmlFor="age">
+              <span className="label-text">Age</span>
+            </label>
+            <input
+              type="text"
+              id="age"
+              name="age"
+              className="input input-bordered"
+              value={formData.age}
               onChange={handleChange}
               required
             />

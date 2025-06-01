@@ -1,14 +1,15 @@
 import { createSlice, } from '@reduxjs/toolkit'
-import type { Profile } from '../types/data-types'
+import type { User, } from '../types/data-types'
 import profileReducers from './profileReducers'
 
 // Define the initial state using that type
-const initialState: Profile = {
-  id: '',
+const initialState: User = {
+ userAccount: { id: '',
   user: '',
   userName: '',
-  dateCreated: new Date(),
-	userType: ''
+  dateCreated: '',
+	userType: ''},
+  projects: []
 }
 
 const profile = createSlice({

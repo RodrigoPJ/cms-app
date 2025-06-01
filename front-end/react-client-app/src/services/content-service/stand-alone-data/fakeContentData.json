@@ -1,0 +1,25 @@
+{
+	"userAccount": {
+		"id": "857e129b-e278-4960-885f-fd7a91018d34",
+		"user": "test1@test.com",
+		"userName": "Rod",
+		"dateCreated": "2025-05-31T17:35:01.247Z",
+		"userType": "free"
+	},
+	"projects": [
+		{
+			"id": "9ad1b946-fa9f-45f4-954c-b4374c2f09ae",
+			"accountId": "857e129b-e278-4960-885f-fd7a91018d34",
+			"contentType": "blog",
+			"name": "my first project 2",
+			"isActive": true
+		},
+		{
+			"id": "63e52e25-732b-4357-8f3e-c3f34f0c1d75",
+			"accountId": "857e129b-e278-4960-885f-fd7a91018d34",
+			"contentType": "blog",
+			"name": "my first project 3",
+			"isActive": true
+		}
+	]
+}

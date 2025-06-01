@@ -12,8 +12,21 @@ export interface Profile {
   id: string;
   user: string;
   userName: string;
-  dateCreated: Date,
+  dateCreated: string,
 	userType: string
+}
+
+export interface Project {
+  id?: string;
+  accountId?: string;
+  contentType?: string;
+  name?: string;
+  isActive?: boolean;
+}
+
+export interface User {
+  userAccount: Profile;
+  projects: Project[];
 }
 
 export interface PersonData {

@@ -1,10 +1,12 @@
 
 import { configureStore } from '@reduxjs/toolkit';
 import uiSliceReducer from './uiSlice'
+import profileSliceReducer from './profileSlice'
 
  const store =  configureStore({
   reducer: {
-   UIState: uiSliceReducer
+   UIState: uiSliceReducer,
+   profile: profileSliceReducer
   },
 })
 
