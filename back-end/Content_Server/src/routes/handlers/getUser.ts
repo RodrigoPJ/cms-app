@@ -7,21 +7,25 @@ import { ProjectItem } from "../../database/db-config/entity/ProjectItem";
 
 const getUser = async (req: Request, res: Response) => {
   log(req.headers["user-agent"]);
-  const { account } = req.body;
+  log(req.query);
+  const { accountId } = req.query;
   try {
-    if (typeof account === "string") {
+    if (typeof accountId === "string") {
       const userAccount = await AppDataSource.getRepository(
         User
       ).findOne({
         where: {
-          id: account,
+          id: accountId,
         }
       });
+      log(userAccount)
       const projects = await AppDataSource.getRepository(ProjectItem).find({
         where: {
-          accountId: account
+          accountId: accountId
         }
       })
+      console.log(projects);
+      
       if (userAccount) {
         res.status(200).json({userAccount, projects});
       } else {

@@ -8,6 +8,7 @@ import { DataAuth } from "./DataAuth";
 class AuthService {
   public isLogged = false;
   public authData = new DataAuth();
+
   async persistLoginAndGetInfo(accountId: string, dispatch: AppDispatch) {
     localStorage.setItem("cms-app", JSON.stringify({ user: accountId }));
     const contentData = new DataContent();
@@ -21,10 +22,12 @@ class AuthService {
 
   hasLogged() {
     return async (dispatch: AppDispatch) => {
-      const cmsData = localStorage.getItem("cms-app");
+      const cmsDataRaw = localStorage.getItem("cms-app");
+      if  (cmsDataRaw) {
+        const cmsData = JSON.parse(cmsDataRaw);
       if (cmsData) {
         const contentData = new DataContent();
-        const user = await contentData.findUser(cmsData);
+        const user = await contentData.findUser(cmsData.user);
         if (user) {
           dispatch(setLogggedIn(true));
           dispatch(setProfile(user));
@@ -33,6 +36,8 @@ class AuthService {
       } else {
         return false;
       }
+      }
+      return false;
     };
   }
 
@@ -40,9 +45,11 @@ class AuthService {
     return async (dispatch: AppDispatch) => {
       const dataSaved = await this.authData.signup(personData);
       if (dataSaved) {
-        const { accountId } = dataSaved;
+        const { account } = dataSaved;
+        console.log(dataSaved);
+        
         const uiProfile = await this.persistLoginAndGetInfo(
-          accountId,
+          account,
           dispatch
         );
         if (uiProfile) {
@@ -67,9 +74,9 @@ class AuthService {
     return async (dispatch: AppDispatch) => {
       try {
         const loginTry = await this.authData.login(name, password);
-        if (loginTry?.accountId) {
+        if (loginTry?.account) {
         const loadUser = await this.persistLoginAndGetInfo(
-          loginTry.accountId,
+          loginTry.account,
           dispatch
         );
         if (loadUser) {
@@ -98,8 +105,10 @@ class AuthService {
     return async (dispatch: AppDispatch) => {
       localStorage.removeItem("cms-app");
       this.isLogged = false;
+      dispatch(setLogggedIn(false));
       const logOut = await this.authData.logout();
-      dispatch(setLogggedIn(!logOut));
+      if (logOut) return true;
+      
     };
   }
 }

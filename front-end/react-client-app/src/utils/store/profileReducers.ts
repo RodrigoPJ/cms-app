@@ -1,4 +1,4 @@
-import type { Profile, User } from "../types/data-types";
+import type { User } from "../types/data-types";
 import type {PayloadAction} from '@reduxjs/toolkit';
 
 export function setProfile(state: User, action: PayloadAction<User>) {

@@ -17,6 +17,7 @@ const createNewUser = async (req: Request, res: Response) => {
       const { firstName, user } = body;
       if (typeof firstName === "string" && typeof user === "string") {
         const savedUser = await saveUser({firstName, user});
+        log('saved user:', savedUser)
         if (savedUser){
           res.status(200).json(savedUser);
         } else {

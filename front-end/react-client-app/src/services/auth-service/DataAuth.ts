@@ -25,15 +25,19 @@ export class DataAuth {
   }
 
   async authSignup(obj: PersonData): Promise<SignupResponse | null> {
-    const baseUrl = this.env["VITE_Back_End_auth_url"];
-    let url = "/signup";
+    const baseUrl = this.env["VITE_SERVER_auth"];
+    let url = "/add-user";
     if (baseUrl) {
       url = baseUrl + url;
     }
     const request = new Request(url, {
       method: "POST",
       body: JSON.stringify(obj),
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
+
     try {
       const rawResponse = await fetch(request);
       if (rawResponse.status === 200) {
@@ -49,10 +53,17 @@ export class DataAuth {
   }
 
   async authLogout() {
-    const request = new Request("auth/logout", {
+     const baseUrl = this.env["VITE_SERVER_auth"];
+    let url = "/logout";
+    if (baseUrl) {
+      url = baseUrl + url;
+    }
+    const request = new Request(url, {
       method: "POST",
-      body: JSON.stringify(null),
+      credentials: 'include',
+      body: JSON.stringify({loggedOut: true}),
     });
+
     try {
       const rawResponse = await fetch(request);
       if (rawResponse.status === 200) {
@@ -63,7 +74,7 @@ export class DataAuth {
       }
     } catch (error) {
       console.log(error);
-      throw new Error("request to auth failed");
+      return null;
     }
   }
 
@@ -71,19 +82,24 @@ export class DataAuth {
     name: string,
     password: string
   ): Promise<SignupResponse | null> {
-    const baseUrl = this.env["VITE_Back_End_auth_url"];
+    const baseUrl = this.env["VITE_SERVER_auth"];
     let url = "/login";
     if (baseUrl) {
       url = baseUrl + url;
     }
     const request = new Request(url, {
       method: "POST",
-      body: JSON.stringify({ name, password }),
+      body: JSON.stringify({ email: name, password }),
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
     try {
-      const rawResponse = await fetch(request);
+      const rawResponse = await fetch(request,{
+       credentials: 'include'
+      });
       if (rawResponse.status === 200) {
-        const user = await rawResponse.json();
+        const user = await rawResponse.json();        
         return user;
       } else {
         return null;

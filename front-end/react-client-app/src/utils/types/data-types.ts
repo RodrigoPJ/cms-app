@@ -38,5 +38,5 @@ export interface PersonData {
 }
 
 export interface SignupResponse {
-  accountId: string;
+  account: string;
 }

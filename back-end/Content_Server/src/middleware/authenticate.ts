@@ -17,6 +17,7 @@ const aunthenticateRequest = async (
         Cookie: headersCookie,
       },
     });
+console.log('auth call');
 
     if (serverAuth.status === 200) {
       const parsedServerRes = await serverAuth.json();

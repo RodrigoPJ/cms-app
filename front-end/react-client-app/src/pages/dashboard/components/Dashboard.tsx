@@ -1,7 +1,7 @@
 import { useAppSelector } from "../../../utils/store/hooks";
 
 export default function Dashboard() {
-  const profileName = useAppSelector(state => state.profile.userName);
+  const profileName = useAppSelector(state => state.profile.userAccount.userName);
   console.log(profileName);
   
   return(

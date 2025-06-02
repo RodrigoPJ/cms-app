@@ -25,8 +25,7 @@ export class UserClass {
   @IsEmail()
   email: string;
 
-  @Length(5, 178)
-  @IsStrongPassword()
+  @Length(1, 178)
   password: string;
 
   @IsDate()
