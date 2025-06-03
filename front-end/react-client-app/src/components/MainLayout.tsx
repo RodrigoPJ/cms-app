@@ -9,7 +9,7 @@ export function MainLayout() {
   useEffect(()=>{
     const authService = new AuthService();
     dispatch(authService.hasLogged())
-  }, []);
+  }, [dispatch]);
   return (
     <>
       <Header />

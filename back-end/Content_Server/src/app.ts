@@ -15,7 +15,7 @@ app.use(cors( {
 app.use(cookieParser());
 app.use(express.json());
 // Only use when the other server is also running 
-app.use(aunthenticateRequest)
+//app.use(aunthenticateRequest)
 app.use(routes);
 
 export default app;

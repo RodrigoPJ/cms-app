@@ -19,6 +19,6 @@ const profile = createSlice({
   reducers: profileReducers,
 })
 
-export const { setProfile } = profile.actions
+export const { setProfile, addProject } = profile.actions
 
 export default profile.reducer

@@ -1,14 +1,14 @@
-import type { PersonData, SignupResponse } from "../../utils/types/data-types";
+import type { ENV, PersonData, SignupResponse } from "../../utils/types/data-types";
 import { fakeLogIn, fakeLogout, fakeSignup } from "./fakeAuthServices";
 
 export class DataAuth {
   public login;
   public logout;
   public signup;
-  private env: any;
+  private env: ENV;
   constructor() {
-    const BE = import.meta.env;
-    this.env = BE;
+    const BE:ENV = import.meta.env;
+      this.env = BE;
     if (BE["VITE_Back_End_type"] === "fake") {
       this.login = fakeLogIn;
       this.logout = fakeLogout;
@@ -105,6 +105,7 @@ export class DataAuth {
         return null;
       }
     } catch (e) {
+      alert(e);
       return null;
     }
   }

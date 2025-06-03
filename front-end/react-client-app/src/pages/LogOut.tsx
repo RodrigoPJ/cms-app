@@ -10,7 +10,7 @@ export function LogOut() {
     useEffect(()=>{
       const logService = new AuthService();
       dispatch(logService.logOut());
-    },[])
+    },[dispatch])
   return (
     <Hero
       title={content.title}

@@ -10,3 +10,14 @@ export function fakeGetUser (): Promise<User> {
   }, 1500)
   })
   }
+
+
+
+// export function fakePostProject(): Promise<Project[]> {
+//   return new Promise(res => {
+//     setTimeout(()=>{
+//   console.log('just returning base user');
+//       res({})
+//   }, 1500)
+//   })
+//   }

@@ -1,7 +1,6 @@
 import type { AppDispatch } from "../../utils/store/store";
 import { DataContent } from "./DataContent";
-import { setProfile } from "../../utils/store/profileSlice";
-
+import { addProject, setProfile } from "../../utils/store/profileSlice";
 
 export class ContentService   {
     accountId: string;
@@ -14,10 +13,17 @@ export class ContentService   {
       return async (dispatch: AppDispatch)=>{
           const UserProfile = await this.dataContent.findUser(accountId);
           console.log(UserProfile);
-          
           if (UserProfile) {
             dispatch(setProfile(UserProfile))
           }
+      }
+    }
+    createNewProject(projectName:string, contentType:string) {
+      return async (dispatch:AppDispatch) =>{
+       const createdProject = await this.dataContent.createProject(projectName, contentType, this.accountId);
+       if(createdProject){
+        dispatch(addProject(createdProject))
+       }
       }
     }
 }

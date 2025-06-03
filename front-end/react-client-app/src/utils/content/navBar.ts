@@ -5,24 +5,24 @@ export const navBar = {
     {
       name: "Home",
       url: "home",
-      needsAuth: false,
+      loggedin: false,
     },
     {
-      name: "Sign UP",
+      name: "Sign up",
       url: "signup",
-      needsAuth: false,
+      loggedin: false,
     },
     {
       name: "Dasboard",
       url: "dashboard",
-      needsAuth: true,
+      loggedin: true,
     },
     {
       name: "Account",
       url: "account",
-      needsAuth: true,
+      loggedin: true,
     },
   ],
-  loginButton: "Log In",
-  logoutButton: "Log Out",
+  loginButton: "Log in",
+  logoutButton: "Log out",
 };

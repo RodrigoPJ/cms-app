@@ -12,8 +12,8 @@ export interface Profile {
   id: string;
   user: string;
   userName: string;
-  dateCreated: string,
-	userType: string
+  dateCreated: string;
+  userType: string;
 }
 
 export interface Project {
@@ -31,12 +31,24 @@ export interface User {
 
 export interface PersonData {
   firstName: string;
-	lastName: string;
-	age: number;
-	password: string;
-	email: string;
+  lastName: string;
+  age: number;
+  password: string;
+  email: string;
 }
 
 export interface SignupResponse {
   account: string;
+}
+
+export interface ENV extends ImportMetaEnv {
+  VITE_Back_End_type?: string;
+  VITE_SERVER_auth?: string;
+  ["key"]?: string;
+}
+
+export interface Pages {
+  name: string;
+  url: string;
+  loggedin: boolean;
 }

@@ -6,7 +6,7 @@ export function Card({ title, body, button }: CardInterface) {
     }
   }
   return (
-    <div className="card card-border bg-base-100 w-96">
+    <div className="card card-border bg-base-100">
       <div className="card-body">
         <h2 className="card-title">{title}</h2>
         <p>{body}</p>

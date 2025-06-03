@@ -9,6 +9,7 @@ import { validate } from "class-validator";
 const authenticate = async (req: Request, res: Response, next:NextFunction) => {
   const cookies = req.cookies;
   log(req.headers["user-agent"]);
+  console.log('authenticating thru cookies');
   if (typeof cookies === "object") {
     const jwtoken: string | undefined = cookies["token_bearer"];
     if (jwtoken) {
@@ -27,6 +28,7 @@ const authenticate = async (req: Request, res: Response, next:NextFunction) => {
               .json({ ...validateJWTErrors.map((el) => el.constraints) });
           const tokenMail = newJWT.email;
           const timeExpiration = newJWT.exp;
+          log(newJWT)
           const now = Date.now();
           if (timeExpiration && tokenMail) {
             const isExpired = timeExpiration - now > 0;

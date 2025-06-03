@@ -5,7 +5,7 @@ export function fakeSignup(obj:PersonData): Promise<SignupResponse> {
     console.log("connecting to server....");
     setTimeout(() => {
       console.log(`${JSON.stringify(obj)}`);
-      res({accountId: '1'});
+      res({account: '1'});
     }, 1500);
   });
 }
@@ -27,7 +27,7 @@ export function fakeLogIn(name: string, password: string) {
     setTimeout(() => {
       console.log(`${name} with ${password} is now logged in`);
       res({
-        accountId: "1"
+        account: "1"
       });
     }, 1500);
   });
