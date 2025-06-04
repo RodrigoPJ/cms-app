@@ -1,6 +1,6 @@
 export interface UIState {
   isLoggedin: boolean;
-  isLightTheme?: boolean;
+  isCustomTheme?: boolean;
   isDarkTheme?: boolean;
 }
 
@@ -16,12 +16,22 @@ export interface Profile {
   userType: string;
 }
 
+export interface Content {
+  id: string;
+  type: string;
+  title: string;
+  body: string;
+  properties?: string; // this will be JSON stringified for maximum efficiency
+  children?: Content[];
+}
+
 export interface Project {
   id?: string;
   accountId?: string;
   contentType?: string;
   name?: string;
   isActive?: boolean;
+  contents?: Content[];
 }
 
 export interface User {

@@ -8,9 +8,7 @@ function setProfile(state: User, action: PayloadAction<User>) {
 }
 
 function addProject(state: User, action: PayloadAction<Project>){
-  state.projects.push(action.payload)
-  console.log(state);
-  
+  state.projects.push(action.payload);
 }
 
 

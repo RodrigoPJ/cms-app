@@ -1,49 +1,44 @@
+import { useEffect, useState } from "react";
+import { ContentList } from "../../../components/ContentList";
+import { useAppSelector } from "../../../utils/store/hooks";
+import type { Content } from "../../../utils/types/data-types";
+import Modal from "../../../components/daisy-ui/Modal";
+import { CreateContent } from "../../../components/CreateContent";
+import { Card } from "../../../components/daisy-ui/Card";
+
 // src/pages/Content.tsx
 export default function Content() {
+  const projects = useAppSelector((state) => state.profile.projects);
+  const [contents, setContents] = useState<Content[]>([]);
+  const [projectId, setProjectId] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
+
+  useEffect(() => {
+    const activeProject = projects.filter((pr) => pr.isActive);
+    if (activeProject[0] && activeProject[0].contents && activeProject[0].id) {
+      setProjectId(activeProject[0].id);
+      setContents(activeProject[0].contents);
+    }
+  }, [projects]);
+    function openContentCreator(){
+      setModalOpen(true);
+    }
+
   return (
     <div className="space-y-6">
       <h1 className="text-3xl font-bold">Content Management</h1>
-
-      <div className="card bg-base-100 shadow">
-        <div className="card-body">
-          <h2 className="card-title">Create New Content</h2>
-          <p>Add a title, description, and publish options for your content.</p>
-          <button className="btn btn-primary w-fit">Create New</button>
-        </div>
-      </div>
-
-      <div className="card bg-base-100 shadow">
-        <div className="card-body">
-          <h2 className="card-title">All Content</h2>
-          <p>View, edit, or delete existing content entries.</p>
-          <div className="overflow-x-auto mt-4">
-            <table className="table table-zebra w-full">
-              <thead>
-                <tr>
-                  <th>Title</th>
-                  <th>Status</th>
-                  <th>Author</th>
-                  <th>Last Updated</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Welcome Post</td>
-                  <td>Published</td>
-                  <td>Admin</td>
-                  <td>May 25, 2025</td>
-                  <td>
-                    <button className="btn btn-sm btn-outline mr-2">Edit</button>
-                    <button className="btn btn-sm btn-error">Delete</button>
-                  </td>
-                </tr>
-                {/* Repeat as needed */}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+      <Card
+      title="Create New Content"
+      body="Add a title, description, and publish options for your content."
+      button={{
+        text:'Create new',
+        action: openContentCreator
+      }}
+      />
+      <ContentList contents={contents} />
+      <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
+        <CreateContent projectId={projectId} />
+      </Modal>
     </div>
   );
 }

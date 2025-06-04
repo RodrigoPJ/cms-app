@@ -1,8 +1,6 @@
-import type { JSX } from "react";
-import type { Pages } from "./data-types";
+import type { ReactNode } from "react";
+import type { Content, Pages } from "./data-types";
 import type { NavLinkRenderProps } from "react-router";
-
-
 export interface CardInterface {
   title: string;
   body:string;
@@ -33,7 +31,7 @@ export interface HeroComponent {
     link?: string;
     action?: ()=>void
   };
-  children?: JSX.Element
+  children?: ReactNode
 }
 export interface NavBarComponent {
   title: string;
@@ -63,4 +61,10 @@ export interface FormInputInterface {
   value:string;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>)=>void;
   required: boolean;
+}
+export interface CreateContent {
+  projectId: string;
+}
+export interface ContentListComponent {
+  contents: Content[]
 }
