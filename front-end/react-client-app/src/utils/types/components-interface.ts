@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { Dispatch, ReactNode, SetStateAction } from "react";
 import type { Content, Pages } from "./data-types";
 import type { NavLinkRenderProps } from "react-router";
 export interface CardInterface {
@@ -64,7 +64,12 @@ export interface FormInputInterface {
 }
 export interface CreateContent {
   projectId: string;
+  setContents: Dispatch<SetStateAction<Content[]>>
 }
 export interface ContentListComponent {
   contents: Content[]
+}
+
+export interface QuillComponent {
+  setValue: Dispatch<SetStateAction<string>>
 }

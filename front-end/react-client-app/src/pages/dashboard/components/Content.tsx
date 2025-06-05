@@ -15,30 +15,33 @@ export default function Content() {
 
   useEffect(() => {
     const activeProject = projects.filter((pr) => pr.isActive);
-    if (activeProject[0] && activeProject[0].contents && activeProject[0].id) {
+    console.log(activeProject);
+
+    if (activeProject[0] && activeProject[0].id) {
       setProjectId(activeProject[0].id);
-      setContents(activeProject[0].contents);
+      if(activeProject[0].contents)setContents(activeProject[0].contents);
     }
   }, [projects]);
-    function openContentCreator(){
-      setModalOpen(true);
-    }
+
+  function openContentCreator() {
+    setModalOpen(true);
+  }
 
   return (
     <div className="space-y-6">
+      <Modal fullScreen={true} isOpen={modalOpen} onClose={() => setModalOpen(false)}>
+        <CreateContent setContents={setContents} projectId={projectId} />
+      </Modal>
       <h1 className="text-3xl font-bold">Content Management</h1>
       <Card
-      title="Create New Content"
-      body="Add a title, description, and publish options for your content."
-      button={{
-        text:'Create new',
-        action: openContentCreator
-      }}
+        title="Create New Content"
+        body="Add a title, description, and publish options for your content."
+        button={{
+          text: "Create new",
+          action: openContentCreator,
+        }}
       />
       <ContentList contents={contents} />
-      <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
-        <CreateContent projectId={projectId} />
-      </Modal>
     </div>
   );
 }

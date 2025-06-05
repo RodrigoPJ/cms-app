@@ -18,11 +18,12 @@ export interface Profile {
 
 export interface Content {
   id: string;
-  type: string;
-  title: string;
-  body: string;
+  type?: string;
+  title?: string;
+  body?: string;
   properties?: string; // this will be JSON stringified for maximum efficiency
   children?: Content[];
+  projectId: string;
 }
 
 export interface Project {

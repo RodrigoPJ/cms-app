@@ -26,9 +26,9 @@ Each service follows a similar structure (Express + TypeScript + TypeORM + Postg
 
 1. **Authentication**
    - Front-End → Auth Server: `POST /auth/register` or `POST /auth/login`
-   - Auth Server → Front-End: `200 OK` + `{ accessToken, refreshToken? }`
+   - Auth Server → Front-End: `200 OK` + `{ accessToken }`
 2. **Content Access**
-   - Front-End includes `Authorization: Bearer <accessToken>` header on content requests
+   - Front-End includes ` Bearer <bearer_token>` cookie on content requests
    - Front-End → Content Server: any protected endpoint (e.g., `GET /content/pages`)
    - Content Server validates JWT (via secret or public key) before granting access
 

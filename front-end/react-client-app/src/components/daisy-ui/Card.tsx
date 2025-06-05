@@ -11,7 +11,7 @@ export function Card({ title, body, button }: CardInterface) {
         <h2 className="card-title">{title}</h2>
         <p>{body}</p>
         {button && (
-          <div className="card-actions justify-end">
+          <div className="card-actions justify-center">
             <button onClick={handleButtonClick} className="btn btn-primary">
               {button.text}
             </button>

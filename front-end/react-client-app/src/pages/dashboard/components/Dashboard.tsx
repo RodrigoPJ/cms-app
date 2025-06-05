@@ -34,7 +34,7 @@ export default function Dashboard() {
             : "No projects active",
         },
         {
-          title: "Contents in project",
+          title: "Content in project",
           value: activeProject?.contentType
             ? activeProject?.contentType
             : "Empty content",
@@ -63,7 +63,7 @@ export default function Dashboard() {
         <NewProjectForm />
       </Modal>
       {/* Table or Chart */}
-      {stats.length > 0 && (
+      {stats.length === 0 && (
         <Card
           title="No projects started"
           body="Start a project to start adding content to your site"
