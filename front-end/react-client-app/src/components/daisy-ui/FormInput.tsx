@@ -4,7 +4,7 @@ export function FormInput({id, label, type, name, value, handleChange, required}
   return(
     <div className="form-control">
             <label className="label" htmlFor={id}>
-              <span className="label-text">{label}</span>
+              {label && <span className="label-text">{label}</span>}
             </label>
             <input
               type={type}
@@ -13,7 +13,7 @@ export function FormInput({id, label, type, name, value, handleChange, required}
               className="input input-bordered"
               value={value}
               onChange={handleChange}
-              required ={required}
+              required ={required ? required : false}
             />
           </div>
   )

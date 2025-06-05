@@ -91,14 +91,14 @@ class AuthService {
         alert("login failed");
       }
       } catch (error) {
+        alert(error);
         console.log(error, 'request failed');
-        
         return 'request failed'
       }
-      
-     
     };
   }
+
+
 
   /**this is for logging out the app **/
   logOut() {

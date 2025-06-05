@@ -26,4 +26,7 @@ export class ContentService   {
        }
       }
     }
+    createNewContent(content) {
+      return async (dispatch:AppDispatch)=>{}
+    }
 }

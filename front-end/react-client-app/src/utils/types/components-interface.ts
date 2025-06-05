@@ -55,16 +55,15 @@ export interface Stat {
 
 export interface FormInputInterface {
   id:string
-  label:string;
+  label?:string;
   type:string;
   name:string;
   value:string;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>)=>void;
-  required: boolean;
+  required?: boolean;
 }
 export interface CreateContent {
   projectId: string;
-  setContents: Dispatch<SetStateAction<Content[]>>
 }
 export interface ContentListComponent {
   contents: Content[]

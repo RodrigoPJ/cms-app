@@ -21,7 +21,7 @@ const getUser = async (req: Request, res: Response) => {
       log(userAccount)
       const projects = await AppDataSource.getRepository(ProjectItem).find({
         where: {
-          accountId: accountId
+          accountId
         }
       })
       console.log(projects);

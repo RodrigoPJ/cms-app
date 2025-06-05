@@ -14,6 +14,7 @@ export class ProjectItem {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
+  @Column()
   @ManyToOne(() => User, (user) => user.projectList)
   @JoinColumn({ name: "accountId" })
   accountId: string;
@@ -28,5 +29,5 @@ export class ProjectItem {
   isActive: boolean;
 
   @OneToMany(() => ProjectContent, (cont) => cont.projectItem)
-  projectContents: ProjectContent[];
+  projectContents: ProjectContent;
 }

@@ -21,7 +21,7 @@ export default function Content() {
       setProjectId(activeProject[0].id);
       if(activeProject[0].contents)setContents(activeProject[0].contents);
     }
-  }, [projects]);
+  }, [contents]);
 
   function openContentCreator() {
     setModalOpen(true);
@@ -30,7 +30,7 @@ export default function Content() {
   return (
     <div className="space-y-6">
       <Modal fullScreen={true} isOpen={modalOpen} onClose={() => setModalOpen(false)}>
-        <CreateContent setContents={setContents} projectId={projectId} />
+        <CreateContent projectId={projectId} />
       </Modal>
       <h1 className="text-3xl font-bold">Content Management</h1>
       <Card

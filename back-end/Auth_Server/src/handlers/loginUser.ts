@@ -3,9 +3,14 @@ import { AppDataSource } from "../db-config/data-source";
 import { User } from "../db-config/entity/user";
 import { Encrypt } from "../utils/encryption/Encrypt";
 import { log } from "console";
+import { UserPass } from "../utils/validators/userPassValidator";
 
 const loginUser = async (req: Request, res: Response) => {
-  const { email, password } = req.body;
+  const myTokenHeader = req.headers['my_token'] as string;
+  const body: UserPass = JSON.parse(myTokenHeader);
+  const { email, password } = body;
+
+  log(myTokenHeader);
   log("login");
   const user = await AppDataSource.getRepository(User).find({
     where: {
