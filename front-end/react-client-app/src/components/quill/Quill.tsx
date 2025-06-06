@@ -10,7 +10,7 @@ export default function Quill ({setValue}:QuillComponent)  {
   const modules = {
     toolbar: [
       ['bold', 'italic', 'underline', 'strike'],
-      [ 'image',{ align: [] }]
+      [ 'image']
     ],
   };
 

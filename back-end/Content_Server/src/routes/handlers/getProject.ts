@@ -7,14 +7,14 @@ const getProject = async (req: Request, res: Response) => {
   log(req.headers["user-agent"]);
   log("retrieving contents of project");
   try {
-    const body = req.body;
+    const body:any = req.query;
     if (body) {
       const validationErrors = await validateProjectId(body);
       log("validation errors", validationErrors.length);
       if (validationErrors.length > 0) {
         res.status(402).json({ ...validationErrors.map((e) => e.constraints) });
       } else {
-        const projectId: string = body.projectId;
+        const projectId: string = body.projectId  as string;
         const savedContents = await findContents(projectId);
         if (savedContents) res.status(200).send(savedContents);
         else {

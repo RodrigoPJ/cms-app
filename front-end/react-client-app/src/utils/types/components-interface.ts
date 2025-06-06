@@ -64,6 +64,7 @@ export interface FormInputInterface {
 }
 export interface CreateContent {
   projectId: string;
+  setModalOpen: Dispatch<SetStateAction<boolean>>;
 }
 export interface ContentListComponent {
   contents: Content[]

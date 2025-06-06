@@ -1,4 +1,4 @@
-import type { User } from "../../utils/types/data-types";
+import type { Content, User } from "../../utils/types/data-types";
 import {
   fakeGetUser,
 //  fakePostProject,
@@ -8,6 +8,8 @@ export class DataContent {
   public findUser;
   private contentServer: string;
   public createProject;
+  public createContent;
+  public fetchContents;
 
   constructor() {
     const BE = import.meta.env;
@@ -15,17 +17,82 @@ export class DataContent {
     if (BE["VITE_Back_End_type"] === "fake") {
       this.findUser = fakeGetUser;
       this.createProject = this.postProject;
+      this.createContent = this.postContent; //this.fakeContentCreation
+      this.fetchContents = this.getContents;
     }
     if (BE["VITE_Back_End_type"] === "local") {
       this.findUser = this.fetchUser;
       this.createProject = this.postProject;
+      this.createContent = this.postContent;
+      this.fetchContents = this.getContents;
     } else {
       this.findUser = fakeGetUser;
       this.createProject = this.postProject;
+      this.createContent = this.postContent;
+      this.fetchContents = this.getContents;
     }
   }
 
-  async loadProject() {}
+  async getContents(projectId:string) {
+     const baseUrl = this.contentServer;
+    let url = "/project";
+    if (baseUrl) {
+      url = baseUrl + url;
+    }
+    const userUrl = new URL(url);
+    userUrl.searchParams.append("projectId", projectId);
+    const request = new Request(userUrl);
+    try {
+      const rawContent = await fetch(request);
+      if (rawContent.status === 200) {
+        const parsedContent = await rawContent.json();
+        if (parsedContent.id) {
+          return parsedContent;
+        }
+      }
+      return null;
+      
+    } catch (error) {
+      alert(error)
+      return null
+    }
+    
+  }
+
+
+  async postContent(content: Content, quill: string):Promise<Content | null> {
+    const baseUrl = this.contentServer;
+    let url = "/project-content";
+    if (baseUrl) {
+      url = baseUrl + url;
+    }
+    const request = new Request(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ...content, body:quill, projectItemId:content.projectId
+      }),
+    });
+
+    try {
+      const rawContent = await fetch(request);
+      if (rawContent.status === 200) {
+        const parsedContent = await rawContent.json();
+        if (parsedContent.id) {
+          return parsedContent;
+        }
+      }
+      return null;
+      
+    } catch (error) {
+      alert(error)
+      return null
+    }
+    
+  }
+
 
   async postProject(
     projectName: string,

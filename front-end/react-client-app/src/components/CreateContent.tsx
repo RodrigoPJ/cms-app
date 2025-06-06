@@ -3,8 +3,9 @@ import type { CreateContent } from "../utils/types/components-interface";
 import Quill from "./quill/Quill";
 import { useAppDispatch } from "../utils/store/hooks";
 import { FormInput } from "./daisy-ui/FormInput";
+import { ContentService } from "../services/content-service/ContentService";
 
-export function CreateContent({ projectId }: CreateContent) {
+export function CreateContent({ projectId, setModalOpen }: CreateContent) {
   const [quillValue, setQuillValue] = useState("");
   const dispatch = useAppDispatch();
   const [formData, setFormData] = useState({
@@ -14,13 +15,23 @@ export function CreateContent({ projectId }: CreateContent) {
     type: "",
   });
 function changeHandler(e:ChangeEvent<HTMLInputElement>) {
-    console.log(e.currentTarget.value);
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
 
   const saveContent = (e:FormEvent) => {
     e.preventDefault()
     console.log(projectId, quillValue);
+    const content = {
+      title: formData.title,
+      type: formData.type,
+      properties: formData.properties,
+      projectId
+    };
+    const contentService = new ContentService(projectId);
+
+    dispatch(contentService.createNewContent(content,quillValue)).then(()=>{
+      setModalOpen(false);
+    })
 
   };
 
