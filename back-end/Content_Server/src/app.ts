@@ -15,8 +15,11 @@ app.use(
 );
 app.use(cookieParser());
 app.use(express.json());
+
 // Only use when the other server is also running
 //app.use(aunthenticateRequest)
-app.use(routes);
+
+//main logic and services
+app.use('/content',routes);
 
 export default app;

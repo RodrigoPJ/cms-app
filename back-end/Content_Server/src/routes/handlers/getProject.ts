@@ -18,7 +18,7 @@ const getProject = async (req: Request, res: Response) => {
         const savedContents = await findContents(projectId);
         if (savedContents) res.status(200).send(savedContents);
         else {
-          res.status(404).send('no contents saved for that project')
+          res.status(303).json('no contents saved for that project');
         }
       }
     } else {

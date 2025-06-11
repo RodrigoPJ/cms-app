@@ -4,7 +4,7 @@ import * as dotenv from 'dotenv'
 export default async function saveAccount(name: string, email: string) {
   dotenv.config();
   const contentServerUrl = process.env.CONTENT_SERVER_URL;
-  const url = contentServerUrl + '/ui-profile';
+  const url = contentServerUrl + '/content/ui-profile';
   const rawResponse = await fetch(url ,{
     method: "POST",
     headers: {

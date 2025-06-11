@@ -67,7 +67,7 @@ export interface CreateContent {
   setModalOpen: Dispatch<SetStateAction<boolean>>;
 }
 export interface ContentListComponent {
-  contents: Content[]
+  projectId: string;
 }
 
 export interface QuillComponent {

@@ -15,8 +15,7 @@ export class ProjectItem {
   id: string;
 
   @Column()
-  @ManyToOne(() => User, (user) => user.projectList)
-  @JoinColumn({ name: "accountId" })
+  @ManyToOne(() => User, (user) => user.id)
   accountId: string;
 
   @Column("varchar")
@@ -28,6 +27,7 @@ export class ProjectItem {
   @Column("boolean")
   isActive: boolean;
 
-  @OneToMany(() => ProjectContent, (cont) => cont.projectItem)
+  @OneToMany(() => ProjectContent, (cont) => cont.projectItemId)
+  @JoinColumn()
   projectContents: ProjectContent;
 }

@@ -10,32 +10,28 @@ function addProject(state: User, action: PayloadAction<Project>) {
   state.projects.push(action.payload);
 }
 
+function setContentsEmpty(){
+  
+}
+
 function addContent(state: User, action: PayloadAction<Content>) {
-  console.log(action);
-  
-  
   const itemIndex = state.projects.findIndex(
     (el) => el.id === action.payload.projectItemId
   );
-  console.log(itemIndex);
-  
   if (itemIndex > -1) {
-      console.log(action.type);
-      if (state.projects[itemIndex].contents){
-    state.projects[itemIndex].contents.push(action.payload);
-      }else {
-        state.projects[itemIndex].contents = [action.payload]
-      }
-
+    if (state.projects[itemIndex].contents) {
+      state.projects[itemIndex].contents.push(action.payload);
+    } else {
+      state.projects[itemIndex].contents = [action.payload];
+    }
   }
 }
 function addAllContents(state: User, action: PayloadAction<Content[]>) {
-  console.log();
-  
   const itemIndex = state.projects.findIndex(
-    (el) => el.id === action.payload[0].projectId
+    (el) => el.id === action.payload[0].projectItemId
   );
-  if (itemIndex > 0) {
+
+  if (itemIndex >= 0) {
     state.projects[itemIndex].contents = action.payload;
   }
 }

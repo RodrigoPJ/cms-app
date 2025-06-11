@@ -1,6 +1,18 @@
 import type { ContentListComponent } from "../utils/types/components-interface";
+import { DataContent } from "../services/content-service/DataContent";
 
-export function ContentList({ contents }: ContentListComponent) {
+import { useQuery } from "@tanstack/react-query";
+
+export function ContentList({ projectId }: ContentListComponent) {
+  const contentQuery = useQuery({
+    queryKey: ["project-content", projectId],
+    queryFn: async () => {
+      const contents = await DataContent.getContents(projectId);
+      return contents;
+    },
+    staleTime: Infinity,
+  });
+
   return (
     <div className="card bg-base-100 shadow">
       <div className="card-body">
@@ -18,21 +30,21 @@ export function ContentList({ contents }: ContentListComponent) {
               </tr>
             </thead>
             <tbody>
-              {contents.map((el, i) => (
-                <tr key={i}>
-                  <td>{el.title}</td>
-                  <td>{el.type}</td>
-                  <td>{el.properties}</td>
-                  <td>May 25, 2025</td>
-                  <td>
-                    <button className="btn btn-sm btn-outline mr-2">
-                      Edit
-                    </button>
-                    <button className="btn btn-sm btn-error">Delete</button>
-                  </td>
-                </tr>
-              ))}
-              {/* Repeat as needed */}
+              {contentQuery.data &&
+                contentQuery.data.map((el, i) => (
+                  <tr key={i}>
+                    <td>{el.title}</td>
+                    <td>{el.type}</td>
+                    <td>{el.properties}</td>
+                    <td>May 25, 2025</td>
+                    <td>
+                      <button className="btn btn-sm btn-outline mr-2">
+                        Edit
+                      </button>
+                      <button className="btn btn-sm btn-error">Delete</button>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>

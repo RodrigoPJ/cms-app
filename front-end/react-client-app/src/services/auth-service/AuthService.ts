@@ -23,21 +23,22 @@ class AuthService {
   hasLogged() {
     return async (dispatch: AppDispatch) => {
       const cmsDataRaw = localStorage.getItem("cms-app");
-      if  (cmsDataRaw) {
+      if (cmsDataRaw) {
         const cmsData = JSON.parse(cmsDataRaw);
-      if (cmsData) {
-        const contentData = new DataContent();
-        const user = await contentData.findUser(cmsData.user);
-        if (user) {
-          dispatch(setLogggedIn(true));
-          dispatch(setProfile(user));
+        if (cmsData.user) {
+          const contentData = new DataContent();
+          const user = await contentData.findUser(cmsData.user);
+          if (user) {
+            dispatch(setLogggedIn(true));
+            dispatch(setProfile(user));
+            return true;
+          } else {
+            dispatch(setLogggedIn(false));
+          }
+        } else {
+          dispatch(setLogggedIn(false));
         }
-        return true;
-      } else {
-        return false;
-      }
-      }
-      return false;
+      }  else dispatch(setLogggedIn(false));
     };
   }
 
@@ -47,11 +48,8 @@ class AuthService {
       if (dataSaved) {
         const { account } = dataSaved;
         console.log(dataSaved);
-        
-        const uiProfile = await this.persistLoginAndGetInfo(
-          account,
-          dispatch
-        );
+
+        const uiProfile = await this.persistLoginAndGetInfo(account, dispatch);
         if (uiProfile) {
           dispatch(setLogggedIn(true));
           this.isLogged = true;
@@ -75,30 +73,28 @@ class AuthService {
       try {
         const loginTry = await this.authData.login(name, password);
         if (loginTry?.account) {
-        const loadUser = await this.persistLoginAndGetInfo(
-          loginTry.account,
-          dispatch
-        );
-        if (loadUser) {
-          this.isLogged = true;
-          dispatch(setLogggedIn(true));
+          const loadUser = await this.persistLoginAndGetInfo(
+            loginTry.account,
+            dispatch
+          );
+          if (loadUser) {
+            this.isLogged = true;
+            dispatch(setLogggedIn(true));
+          } else {
+            dispatch(setLogggedIn(false));
+            alert("login failed");
+          }
         } else {
           dispatch(setLogggedIn(false));
           alert("login failed");
         }
-      } else {
-        dispatch(setLogggedIn(false));
-        alert("login failed");
-      }
       } catch (error) {
         alert(error);
-        console.log(error, 'request failed');
-        return 'request failed'
+        console.log(error, "request failed");
+        return "request failed";
       }
     };
   }
-
-
 
   /**this is for logging out the app **/
   logOut() {
@@ -108,7 +104,6 @@ class AuthService {
       dispatch(setLogggedIn(false));
       const logOut = await this.authData.logout();
       if (logOut) return true;
-      
     };
   }
 }

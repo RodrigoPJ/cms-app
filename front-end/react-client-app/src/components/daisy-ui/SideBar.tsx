@@ -9,8 +9,8 @@ export function SideBar ({sidebarOpen, navLinkStyle}:SideBarComponent){
         }`}
       >
         <nav className="flex flex-col gap-4">
-          <NavLink className={navLinkStyle} to="main">
-            Dashboard
+          <NavLink className={navLinkStyle} to="summary">
+            Summary
           </NavLink>
           <NavLink className={navLinkStyle} to="content">
             Content

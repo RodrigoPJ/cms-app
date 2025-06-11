@@ -6,9 +6,9 @@ import { useAppDispatch } from "../utils/store/hooks";
 
 export function MainLayout() {
   const dispatch = useAppDispatch();
-  useEffect(()=>{
-    const authService = new AuthService();
-    dispatch(authService.hasLogged())
+  useEffect(() => {
+    const checkIfLogged = new AuthService().hasLogged();
+    dispatch(checkIfLogged);
   }, [dispatch]);
   return (
     <>

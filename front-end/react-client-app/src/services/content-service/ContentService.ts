@@ -36,7 +36,7 @@ export class ContentService {
         dispatch(addAllContents(allContents));
         return allContents;
       }
-      return null;
+      return [];
     }
   }
 

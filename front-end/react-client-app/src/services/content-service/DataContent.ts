@@ -17,38 +17,36 @@ export class DataContent {
     if (BE["VITE_Back_End_type"] === "fake") {
       this.findUser = fakeGetUser;
       this.createProject = this.postProject;
-      this.createContent = this.postContent; //this.fakeContentCreation
-      this.fetchContents = this.getContents;
+      this.createContent = DataContent.postContent; //this.fakeContentCreation
+      this.fetchContents = DataContent.getContents;
     }
     if (BE["VITE_Back_End_type"] === "local") {
       this.findUser = this.fetchUser;
       this.createProject = this.postProject;
-      this.createContent = this.postContent;
-      this.fetchContents = this.getContents;
+      this.createContent = DataContent.postContent;
+      this.fetchContents = DataContent.getContents;
     } else {
       this.findUser = fakeGetUser;
       this.createProject = this.postProject;
-      this.createContent = this.postContent;
-      this.fetchContents = this.getContents;
+      this.createContent = DataContent.postContent;
+      this.fetchContents = DataContent.getContents;
     }
   }
 
-  async getContents(projectId:string) {
-     const baseUrl = this.contentServer;
-    let url = "/project";
-    if (baseUrl) {
-      url = baseUrl + url;
-    }
-    const userUrl = new URL(url);
-    userUrl.searchParams.append("projectId", projectId);
-    const request = new Request(userUrl);
+  static async getContents(projectId:string):Promise<Content[]| null> {
+    const url =  `/content/project?projectId=${projectId}`
+    const request = new Request(url);
     try {
-      const rawContent = await fetch(request);
-      if (rawContent.status === 200) {
-        const parsedContent = await rawContent.json();
-        if (parsedContent.id) {
+      const rawContent = await fetch(request);            
+      if (rawContent.status === 200) {  
+        const parsedContent = await rawContent.json();        
+        if (parsedContent.length > 0) {                  
           return parsedContent;
         }
+      }
+      if(rawContent.status === 303) {
+        const message = await rawContent.text();
+        alert(message);        
       }
       return null;
       
@@ -60,13 +58,8 @@ export class DataContent {
   }
 
 
-  async postContent(content: Content, quill: string):Promise<Content | null> {
-    const baseUrl = this.contentServer;
-    let url = "/project-content";
-    if (baseUrl) {
-      url = baseUrl + url;
-    }
-    const request = new Request(url, {
+  static async postContent(content: Content, quill: string):Promise<Content | null> {
+    const request = new Request("/content/project-content", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -125,20 +118,13 @@ export class DataContent {
     } catch (error) {
       alert(error);
       console.log(error);
-      
       return null;
     }
   }
 
   async fetchUser(accId: string): Promise<User | null> {
-    const baseUrl = this.contentServer;
-    let url = "/ui-profile/";
-    if (baseUrl) {
-      url = baseUrl + url;
-    }
-    const userUrl = new URL(url);
-    userUrl.searchParams.append("accountId", accId);
-    const request = new Request(userUrl);
+    const shortUrl= `/content/ui-profile?accountId=${accId}`
+    const request = new Request(shortUrl);    
     try {
       const rawUser = await fetch(request, {
         credentials: "include",
@@ -150,7 +136,7 @@ export class DataContent {
         return null;
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       return null;
     }
   }

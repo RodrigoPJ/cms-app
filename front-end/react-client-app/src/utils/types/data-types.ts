@@ -1,6 +1,6 @@
 export interface UIState {
   isLoggedin: boolean;
-  isCustomTheme?: boolean;
+  isLightTheme?: boolean;
   isDarkTheme?: boolean;
 }
 

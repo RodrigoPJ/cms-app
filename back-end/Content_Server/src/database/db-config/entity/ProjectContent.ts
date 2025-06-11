@@ -24,10 +24,8 @@ export class ProjectContent {
   @Column("varchar")
   properties: string;
 
-  @Column("uuid")
+  @ManyToOne(() => ProjectItem, (item) => item.id)
+  @Column()
   projectItemId: string;
-
-  @ManyToOne(() => ProjectItem, (item) => item.projectContents)
-  @JoinColumn({ name: "projectItemId" })
-  projectItem: ProjectItem;
+  
 }

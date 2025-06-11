@@ -4,6 +4,7 @@ import {
   Column,
   CreateDateColumn,
   OneToMany,
+  JoinColumn,
 } from "typeorm";
 import { ProjectItem } from "./ProjectItem";
 
@@ -26,5 +27,6 @@ export class User {
 
   // FK → project_item.id
   @OneToMany(() => ProjectItem, item => item.accountId)
+  @JoinColumn()
   projectList: ProjectItem[];
 }

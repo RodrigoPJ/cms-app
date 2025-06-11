@@ -1,38 +1,47 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import type { CreateContent } from "../utils/types/components-interface";
 import Quill from "./quill/Quill";
-import { useAppDispatch } from "../utils/store/hooks";
 import { FormInput } from "./daisy-ui/FormInput";
-import { ContentService } from "../services/content-service/ContentService";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { DataContent } from "../services/content-service/DataContent";
 
 export function CreateContent({ projectId, setModalOpen }: CreateContent) {
   const [quillValue, setQuillValue] = useState("");
-  const dispatch = useAppDispatch();
   const [formData, setFormData] = useState({
     title: "",
     body: "",
     properties: "",
     type: "",
   });
-function changeHandler(e:ChangeEvent<HTMLInputElement>) {
+  const queryClient = useQueryClient();
+
+  const { isPending, mutate } = useMutation({
+    mutationFn: async (projectId: string) => {
+      const content = {
+        title: formData.title,
+        type: formData.type,
+        properties: formData.properties,
+        projectId,
+      };
+      const savedContent = await DataContent.postContent(content, quillValue);
+      return savedContent;
+    },
+    onSuccess() {
+      queryClient.invalidateQueries({
+        queryKey: ["project-content", projectId],
+        exact: true,
+      });
+      setModalOpen(false);
+    },
+  });
+
+  function changeHandler(e: ChangeEvent<HTMLInputElement>) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
 
-  const saveContent = (e:FormEvent) => {
-    e.preventDefault()
-    console.log(projectId, quillValue);
-    const content = {
-      title: formData.title,
-      type: formData.type,
-      properties: formData.properties,
-      projectId
-    };
-    const contentService = new ContentService(projectId);
-
-    dispatch(contentService.createNewContent(content,quillValue)).then(()=>{
-      setModalOpen(false);
-    })
-
+  const saveContent = (e: FormEvent) => {
+    e.preventDefault();
+    mutate(projectId);
   };
 
   return (
@@ -43,6 +52,7 @@ function changeHandler(e:ChangeEvent<HTMLInputElement>) {
       <div className="flex gap-2 my-3">
         <div className="flex flex-col justify-center text-center">
           <label htmlFor="ctn-title">Title</label>
+          {isPending && <p>saving .... </p>}
           <FormInput
             id="ctn-title"
             name="title"
@@ -70,7 +80,7 @@ function changeHandler(e:ChangeEvent<HTMLInputElement>) {
         />
       </div>
       <div className="flex flex-col">
-        <Quill setValue={setQuillValue} /> 
+        <Quill setValue={setQuillValue} />
         <button className="btn btn-primary mt-5" onClick={saveContent}>
           Save
         </button>
