@@ -25,8 +25,6 @@ export class User {
   @Column('varchar')
   userType: string;
 
-  // FK → project_item.id
   @OneToMany(() => ProjectItem, item => item.accountId)
-  @JoinColumn()
   projectList: ProjectItem[];
 }

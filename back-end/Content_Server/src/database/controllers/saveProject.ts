@@ -17,7 +17,7 @@ const saveProject = async ({
     const savedProject = await AppDataSource.getRepository(ProjectItem).save(
       project
     );
-    if (savedProject.contentType) return savedProject;
+    if (savedProject.id) return savedProject;
     else return null;
   } catch (error) {
     log(error)

@@ -15,7 +15,7 @@ export class ProjectItem {
   id: string;
 
   @Column()
-  @ManyToOne(() => User, (user) => user.id)
+  @ManyToOne(() => User, (user) => user.projectList)
   accountId: string;
 
   @Column("varchar")
@@ -28,6 +28,5 @@ export class ProjectItem {
   isActive: boolean;
 
   @OneToMany(() => ProjectContent, (cont) => cont.projectItemId)
-  @JoinColumn()
   projectContents: ProjectContent;
 }
