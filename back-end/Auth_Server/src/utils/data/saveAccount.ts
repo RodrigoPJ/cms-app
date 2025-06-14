@@ -1,10 +1,13 @@
+import { log } from "console";
 import { ContentNewUserResponse } from "../types";
 import * as dotenv from 'dotenv'
 
 export default async function saveAccount(name: string, email: string) {
   dotenv.config();
+  log()
   const contentServerUrl = process.env.CONTENT_SERVER_URL;
   const url = contentServerUrl + '/content/ui-profile';
+  log(url);
   const rawResponse = await fetch(url ,{
     method: "POST",
     headers: {

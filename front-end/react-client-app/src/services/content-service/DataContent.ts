@@ -1,4 +1,4 @@
-import type { Content, User } from "../../utils/types/data-types";
+import type { Content, User, ENV } from "../../utils/types/data-types";
 import {
   fakeGetUser,
 //  fakePostProject,
@@ -9,9 +9,11 @@ export class DataContent {
   public createProject;
   public createContent;
   public fetchContents;
+  public env: ENV;
 
   constructor() {
     const BE = import.meta.env;
+    this.env = BE;
     if (BE["VITE_Back_End_type"] === "fake") {
       this.findUser = fakeGetUser;
       this.createProject = this.postProject;
@@ -32,7 +34,12 @@ export class DataContent {
   }
 
   static async getContents(projectId:string):Promise<Content[]| null> {
-    const url =  `/content/project?projectId=${projectId}`
+    let url =  `/content/project?projectId=${projectId}`;
+    const BE = import.meta.env;
+    const baseUrl = BE['VITE_SERVER_content'] as string;
+    if (baseUrl) {
+      url = baseUrl + url;
+    }
     const request = new Request(url);
     try {
       const rawContent = await fetch(request);            
@@ -57,7 +64,13 @@ export class DataContent {
 
 
   static async postContent(content: Content, quill: string):Promise<Content | null> {
-    const request = new Request("/content/project-content", {
+    let url = "/content/project-content"
+    const BE = import.meta.env;
+    const baseUrl = BE['VITE_SERVER_content'] as string;
+    if (baseUrl) {
+      url = baseUrl + url;
+    }
+    const request = new Request(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -90,7 +103,12 @@ export class DataContent {
     contentType: string,
     accountId: string
   ) {
-    const url = "/content/new-project";
+    let url = "/content/new-project";
+    const BE = import.meta.env;
+    const baseUrl = BE['VITE_SERVER_content'] as string;
+    if (baseUrl) {
+      url = baseUrl + url;
+    }
     const request = new Request(url, {
       method: "POST",
       headers: {
@@ -117,7 +135,12 @@ export class DataContent {
   }
 
   async fetchUser(accId: string): Promise<User | null> {
-    const shortUrl= `/content/ui-profile?accountId=${accId}`
+    let shortUrl= `/content/ui-profile?accountId=${accId}`;
+    const BE = import.meta.env;
+    const baseUrl = BE['VITE_SERVER_content'] as string;
+    if (baseUrl) {
+      shortUrl = baseUrl + shortUrl;
+    }
     const request = new Request(shortUrl);    
     try {
       const rawUser = await fetch(request, {

@@ -3,13 +3,22 @@ import cors from "cors";
 import routes from "./routes/routes";
 import cookieParser from "cookie-parser";
 //import aunthenticateRequest from "./middleware/authenticate";
+import * as dotenv from "dotenv";
+
+dotenv.config();
+
+const origin =
+  process.env["LOCAL_ENV"] === "local"
+    ? "http://localhost:5173"
+    : "https://content-management-react-app.onrender.com";    
+
 
 // here we create a basic express server and add all the middleware
 const app = express();
 
 app.use(
   cors({
-    origin: "https://content-management-react-app.onrender.com", // your frontend origin
+    origin, // your frontend origin
     credentials: true,
   })
 );

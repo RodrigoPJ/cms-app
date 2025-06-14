@@ -29,6 +29,6 @@
       "migration:run": "typeorm-ts-node-commonjs -d ./src/database/db-config/data-source.ts migration:run",
       "typeorm": "typeorm-ts-node-commonjs",
       "build": "tsc --project tsconfig.json",
-      "start:prod": "npm run build && node ./build/server.js"
+      "start:prod": "node ./build/server.js"
    }
 }

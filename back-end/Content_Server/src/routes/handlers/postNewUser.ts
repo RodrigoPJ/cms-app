@@ -15,6 +15,7 @@ const createNewUser = async (req: Request, res: Response) => {
       res.status(401).json({ ...validationErrors.map((el) => el.constraints) });
     } else {
       const { firstName, user } = body;
+      log(body)
       if (typeof firstName === "string" && typeof user === "string") {
         const savedUser = await saveUser({firstName, user});
         log('saved user:', savedUser)

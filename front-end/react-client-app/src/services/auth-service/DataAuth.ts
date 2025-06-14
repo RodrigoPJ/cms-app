@@ -29,20 +29,23 @@ export class DataAuth {
   }
 
   async authSignup(obj: PersonData): Promise<SignupResponse | null> {
-    const baseUrl = this.env["VITE_SERVER_auth"];
     let url = "/auth/add-user";
+    const baseUrl = this.env["VITE_SERVER_auth"];
     if (baseUrl) {
       url = baseUrl + url;
     }
+    console.log(url);
+    
     const request = new Request(url, {
       method: "POST",
+      mode: 'cors',
       body: JSON.stringify(obj),
       headers: {
         "Content-Type": "application/json",
       },
     });
     request.headers.set("my_token", JSON.stringify(obj));
-    console.log(request.headers);
+    console.log(request.headers.values().next().value);
 
     try {
       const rawResponse = await fetch(request);
