@@ -1,5 +1,5 @@
 import type { Dispatch, ReactNode, SetStateAction } from "react";
-import type { Content, Pages } from "./data-types";
+import type { Pages } from "./data-types";
 import type { NavLinkRenderProps } from "react-router";
 export interface CardInterface {
   title: string;
