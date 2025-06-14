@@ -9,7 +9,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "http://localhost:5173", // your frontend origin
+    origin: "https://content-management-react-app.onrender.com", // your frontend origin
     credentials: true,
   })
 );

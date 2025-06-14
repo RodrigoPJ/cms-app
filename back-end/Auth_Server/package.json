@@ -9,7 +9,7 @@
     "migration:run": "typeorm-ts-node-commonjs -d ./src/db-config/data-source.ts migration:run",
     "typeorm": "typeorm-ts-node-commonjs",
     "build": "tsc --project tsconfig.json",
-    "start:prod": "npm run build && node ./build/server.js"
+    "start:prod": "node ./dist/server.js"
   },
   "keywords": [],
   "author": "",
