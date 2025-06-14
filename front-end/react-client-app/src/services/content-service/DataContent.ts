@@ -6,14 +6,12 @@ import {
 
 export class DataContent {
   public findUser;
-  private contentServer: string;
   public createProject;
   public createContent;
   public fetchContents;
 
   constructor() {
     const BE = import.meta.env;
-    this.contentServer = BE["VITE_SERVER_content"] || "";
     if (BE["VITE_Back_End_type"] === "fake") {
       this.findUser = fakeGetUser;
       this.createProject = this.postProject;
