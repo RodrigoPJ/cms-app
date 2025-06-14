@@ -7,7 +7,7 @@ import { ProjectItem } from "./entity/ProjectItem";
 
 dotenv.config();
 
-const port = parseInt(process.env.DB_PORT ) as number | undefined;
+const port = parseInt(process.env.DB_PORT);
 
 export const AppDataSource = new DataSource({
    type: 'postgres',

@@ -4,7 +4,7 @@ A modern, full-stack content management system built with React, Vite, Tailwind 
 
 ## 🧱 Project Structure
 
-```
+```shell
 cms-app/
 ├── front-end/       # React + Vite + Tailwind CMS UI
 ├── back-end/        # Node.js/Express server (WIP)
@@ -17,6 +17,7 @@ cms-app/
 ## 🚀 Features
 
 ### Frontend
+
 - ⚛️ Built with React (Vite) + TypeScript
 - 🎨 Styled with Tailwind CSS and DaisyUI
 - 🌐 Client-side routing with React Router
@@ -25,10 +26,12 @@ cms-app/
 - 🎨 Responsive admin dashboard layout
 - 🎯 Icons via Font Awesome
 
-### Backend (Planned)
+### Backend
+
 - 🚀 Express + Node.js REST API
-- 🔐 JWT Authentication
-- 💾 MongoDB or PostgreSQL integration
+- 🌐 Node Microservices
+- 🔐  JWT Authentication
+- 💾  PostgreSQL integration
 - 📁 CMS endpoints for managing content/users
 
 ---
@@ -39,7 +42,7 @@ cms-app/
 
 - Node.js ≥ 18
 - npm or yarn
-- (Optional) MongoDB or PostgreSQL running locally
+- PostgreSQL running locally
 
 ---
 
@@ -55,12 +58,15 @@ Visit: [http://localhost:5173](http://localhost:5173)
 
 ---
 
-### 🖥️ Backend Setup (Coming Soon)
+### 🖥️ Backend Setup
+
+This will run both BE services, Auth and Content.
 
 ```bash
+
 cd back-end
 npm install
-npm run dev
+npm run start
 ```
 
 Visit: [http://localhost:3000](http://localhost:3000)
@@ -93,6 +99,5 @@ Developed by [RodrigoPJ](https://github.com/RodrigoPJ)
 ## 🧭 Future Plans
 
 - [ ] Full CRUD API
-- [ ] Real user authentication (JWT)
 - [ ] Upload support for media
 - [ ] Analytics and role-based access

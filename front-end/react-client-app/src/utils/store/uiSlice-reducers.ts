@@ -16,3 +16,4 @@ export function setDarkTheme(state: UIState, action: PayloadAction<boolean>) {
 export default {
   setLogggedIn, setLightTheme, setDarkTheme
 }
+

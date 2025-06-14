@@ -1,21 +1,28 @@
 export const navBar = {
-  brandName: '',
-  mainTitle: 'Content Manager',
+  brandName: "myCMS",
+  mainTitle: "Content Manager",
   pages: [
     {
-      name: 'Home',
-      url: 'home'
+      name: "Home",
+      url: "home",
+      loggedin: false,
     },
     {
-      name: 'Dasboard',
-      url: 'dashboard',
+      name: "Sign up",
+      url: "signup",
+      loggedin: false,
     },
     {
-      name: 'Account',
-      url: 'account'
-    }
+      name: "Dasboard",
+      url: "dashboard",
+      loggedin: true,
+    },
+    {
+      name: "Account",
+      url: "account",
+      loggedin: true,
+    },
   ],
-  loginButton: 'Log In',
-  logoutButton: 'Log Out'
-
-}
+  loginButton: "Log in",
+  logoutButton: "Log out",
+};

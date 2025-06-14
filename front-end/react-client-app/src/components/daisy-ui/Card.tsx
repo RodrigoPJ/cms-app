@@ -6,12 +6,12 @@ export function Card({ title, body, button }: CardInterface) {
     }
   }
   return (
-    <div className="card card-border bg-base-100 w-96">
+    <div className="card card-border bg-base-100 shadow">
       <div className="card-body">
         <h2 className="card-title">{title}</h2>
         <p>{body}</p>
         {button && (
-          <div className="card-actions justify-end">
+          <div className="card-actions justify-center">
             <button onClick={handleButtonClick} className="btn btn-primary">
               {button.text}
             </button>

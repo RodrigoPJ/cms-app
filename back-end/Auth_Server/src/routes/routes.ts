@@ -1,13 +1,13 @@
 import { Router } from 'express';
-import saveNewUser  from '../controllers/saveNewUser';
-import getAllUsers from '../controllers/getAllUsers';
-import loginUser from '../controllers/loginUser';
+import saveNewUser  from '../handlers/saveNewUser';
+import getAllUsers from '../handlers/getAllUsers';
+import loginUser from '../handlers/loginUser';
 import authenticate from '../middleware/authenticate';
-import resetPassword from '../controllers/resetPassword';
+import resetPassword from '../handlers/resetPassword';
 import UserPassParser from '../middleware/userPassParser';
-import logout from '../controllers/logout';
-import healthCheck from '../controllers/health';
-import isAuthenticated from '../controllers/isAuthenticated';
+import logout from '../handlers/logout';
+import healthCheck from '../handlers/health';
+import isAuthenticated from '../handlers/isAuthenticated';
 
 const router = Router();
 

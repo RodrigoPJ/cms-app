@@ -4,13 +4,15 @@ import { log } from "console";
 import { User } from "../db-config/entity/user";
 import validateUser from "../utils/validators/userValidator";
 import { Encrypt } from "../utils/encryption/Encrypt";
+import saveAccount from "../utils/data/saveAccount";
 
 const saveNewUser = async (req: Request, res: Response) => {
   try {
     const hasjsonheaders = req.headers["content-type"];
     if (!hasjsonheaders?.includes("json") || !req.body)
-      res.status(404).send("no json content");
+      res.status(407).send("no json header in request");
     log(req.headers["user-agent"]);
+    log(req.body)
     const validatorErrors = await validateUser(req.body);
     if (validatorErrors.length > 0) {
       const displayErrors = { ...validatorErrors.map((el) => el.constraints) };
@@ -31,42 +33,19 @@ const saveNewUser = async (req: Request, res: Response) => {
         user.lastName = lastName;
         user.password = encryptedPassword;
         user.email = email;
-        const rawResponse = await fetch("http://localhost:3001/uiprofile", {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            firstName,
-            user: user.email,
-          }),
-        });
-        if (rawResponse.status !== 200) {
-          res.status(302).send("bad request for uiprofile service");
-        } else {
-          const parsedUser: any = await rawResponse.json();
-          if (parsedUser.id) {
-            user.account = parsedUser.id;
-            const savedData = await AppDataSource.manager.save(user);
-            if (savedData) {
-              const savedUser = {
-                user: savedData.email,
-                firstName: savedData.firstName,
-                account: savedData.account,
-              };
-              res.status(200).json(savedUser);
-            } else {
-              res.status(402).send("content server couldnt save");
-            }
-          } else {
-            res.status(402).send("content server didnt gave an id");
-          }
+        const newAccount = await saveAccount(firstName, email);
+        if (newAccount && newAccount.id){
+          user.account = newAccount.id
+          const accSaved = await AppDataSource.getRepository(User).save(user);          
+          res.status(200).json(accSaved);
+        }else {
+            res.status(500).send('no content account created')
         }
       }
     }
   } catch (error) {
-    res.status(402).json(error);
+    log(error)  
+    res.status(406).json('error in the request');
   }
 };
 

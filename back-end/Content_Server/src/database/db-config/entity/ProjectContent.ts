@@ -3,10 +3,11 @@ import {
   PrimaryGeneratedColumn,
   Column,
   ManyToOne,
+  JoinColumn,
 } from "typeorm";
 import { ProjectItem } from "./ProjectItem";
 
-@Entity()
+@Entity({ name: "project_content" })
 export class ProjectContent {
   @PrimaryGeneratedColumn("uuid")
   id: string;
@@ -23,7 +24,8 @@ export class ProjectContent {
   @Column("varchar")
   properties: string;
 
-  @Column("uuid")
-  @ManyToOne(()=>ProjectItem, item => item.id)
+  @ManyToOne(() => ProjectItem, (item) => item.id)
+  @Column()
   projectItemId: string;
+  
 }
