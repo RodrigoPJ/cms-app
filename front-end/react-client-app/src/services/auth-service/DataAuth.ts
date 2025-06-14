@@ -30,7 +30,7 @@ export class DataAuth {
 
   async authSignup(obj: PersonData): Promise<SignupResponse | null> {
     const baseUrl = this.env["VITE_SERVER_auth"];
-    let url = "/add-user";
+    let url = "/auth/add-user";
     if (baseUrl) {
       url = baseUrl + url;
     }
@@ -60,7 +60,7 @@ export class DataAuth {
 
   async authLogout() {
     const baseUrl = this.env["VITE_SERVER_auth"];
-    let url = "/logout";
+    let url = "/auth/logout";
     if (baseUrl) {
       url = baseUrl + url;
     }
@@ -89,7 +89,7 @@ export class DataAuth {
     password: string
   ): Promise<SignupResponse | null> {
     const baseUrl = this.env["VITE_SERVER_auth"];
-    let url = "/login";
+    let url = "/auth/login";
     if (baseUrl) {
       url = baseUrl + url;
     }
