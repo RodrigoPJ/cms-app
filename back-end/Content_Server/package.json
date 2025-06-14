@@ -12,7 +12,6 @@
       "typescript": "^5.8.2"
    },
    "dependencies": {
-      "bcrypt": "^6.0.0",
       "class-validator": "^0.14.2",
       "cookie-parser": "^1.4.7",
       "cors": "^2.8.5",

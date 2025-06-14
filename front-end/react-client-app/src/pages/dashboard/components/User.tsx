@@ -1,9 +1,8 @@
 // src/pages/Users.tsx
 export default function Users() {
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 p-4">
       <h1 className="text-3xl font-bold">User Management</h1>
-
       <div className="card bg-base-100 shadow">
         <div className="card-body">
           <h2 className="card-title">All Users</h2>

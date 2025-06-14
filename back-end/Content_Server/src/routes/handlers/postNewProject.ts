@@ -9,7 +9,7 @@ import saveProject from "../../database/controllers/saveProject";
 const createNewProject = async (req: Request, res: Response) => {
   log(req.headers["user-agent"]);
   try {
-    const body: ProjectValidator = req.body;
+    const body: ProjectValidator = req.body;    
     const validProject: ProjectValidator | ValidationError[] = await validateNewProjectItem(body);
     if (
       "accountId" in validProject &&

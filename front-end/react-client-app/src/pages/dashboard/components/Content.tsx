@@ -1,49 +1,78 @@
+import { useEffect, useState, type ChangeEvent } from "react";
+import { ContentList } from "../../../components/ContentList";
+import { useAppSelector } from "../../../utils/store/hooks";
+import type { Content, Project } from "../../../utils/types/data-types";
+import Modal from "../../../components/daisy-ui/Modal";
+import { CreateContent } from "../../../components/CreateContent";
+import { Card } from "../../../components/daisy-ui/Card";
+
 // src/pages/Content.tsx
 export default function Content() {
+  const projects = useAppSelector((state) => state.profile.projects);
+  const [project, setProjectId] = useState<Project>();
+  const [modalOpen, setModalOpen] = useState(false);
+
+ 
+  useEffect(() => {
+    if (projects.length > 0) {
+      const activeProject = projects.find((el) => el.isActive);
+      if (activeProject) {
+        setProjectId(activeProject);
+      }
+    }
+  }, [projects]);
+
+  function openContentCreator() {
+    setModalOpen(true);
+  }
+
+  function projectChange(ev: ChangeEvent<HTMLSelectElement>) {
+    const selectedProject = projects.find((el) => el.id === ev.target.value);
+    if (selectedProject) {
+      setProjectId(selectedProject);
+    }
+  }
+
   return (
-    <div className="space-y-6">
-      <h1 className="text-3xl font-bold">Content Management</h1>
+    <div className="space-y-6 p-4">
+      {project && <Modal
+        fullScreen={true}
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+      >
+        <CreateContent
+          projectId={project.id ? project.id : ""}
+          setModalOpen={setModalOpen}
+        />
+      </Modal>}
 
-      <div className="card bg-base-100 shadow">
-        <div className="card-body">
-          <h2 className="card-title">Create New Content</h2>
-          <p>Add a title, description, and publish options for your content.</p>
-          <button className="btn btn-primary w-fit">Create New</button>
-        </div>
+      <div className="flex justify-between">
+        <h1 className="text-3xl font-bold">Content Management</h1>
+        <select
+          onChange={projectChange}
+          className="max-w-3/12 select select-ghost hover:border-violet-800"
+          name="active-project"
+          id="activeId-project"
+        >
+          {projects.map((proj) => {
+            return (
+              <option key={proj.id} value={proj.id}>
+                {proj.name}
+              </option>
+            );
+          })}
+        </select>
       </div>
 
-      <div className="card bg-base-100 shadow">
-        <div className="card-body">
-          <h2 className="card-title">All Content</h2>
-          <p>View, edit, or delete existing content entries.</p>
-          <div className="overflow-x-auto mt-4">
-            <table className="table table-zebra w-full">
-              <thead>
-                <tr>
-                  <th>Title</th>
-                  <th>Status</th>
-                  <th>Author</th>
-                  <th>Last Updated</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Welcome Post</td>
-                  <td>Published</td>
-                  <td>Admin</td>
-                  <td>May 25, 2025</td>
-                  <td>
-                    <button className="btn btn-sm btn-outline mr-2">Edit</button>
-                    <button className="btn btn-sm btn-error">Delete</button>
-                  </td>
-                </tr>
-                {/* Repeat as needed */}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+      <Card
+        title="Create New Content"
+        body="Add a title, description, and publish options for your content."
+        button={{
+          text: "Create new",
+          action: openContentCreator,
+        }}
+      />
+      {project && <ContentList projectId={project.id || ''} />}
     </div>
   );
 }

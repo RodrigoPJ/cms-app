@@ -54,12 +54,14 @@ Built with Node.js, TypeScript, Express, TypeORM, and PostgreSQL.
 ### Installation
 
 1. **Clone the repository**:
+
     ```bash
     git clone <repository-url>
     cd Content_Server
     ```
 
 2. **Install dependencies**:
+
     ```bash
     npm install
     # or
@@ -68,6 +70,7 @@ Built with Node.js, TypeScript, Express, TypeORM, and PostgreSQL.
 
 3. **Configure Environment**:
    - Copy `.env.example` to `.env` and set the following variables:
+
      ```env
      PORT=5000
      DB_HOST=localhost
@@ -77,14 +80,17 @@ Built with Node.js, TypeScript, Express, TypeORM, and PostgreSQL.
      DB_NAME=cms_content
      JWT_PUBLIC_KEY_PATH=../auth-server/keys/public.pem  # If integrating with Auth Server
      ```
+
    - Adjust values as needed.
 
 4. **Run Database Migrations**:
+
     ```bash
     npm run migration:run
     ```
 
 5. **Start the Server**:
+
     ```bash
     npm run dev         # Development (with hot reload)
     npm run build       # Compile TypeScript
@@ -195,8 +201,8 @@ export class ProjectContent {
 
 For detailed API documentation, see [API_DOCUMENTATION.md](API_DOCUMENTATION.md).
 
-<!--
 List of endpoints:
+
 - GET /admin/get-users
 - GET /admin/get-user (expects body { account: string })
 - GET /admin/get-all-projects
@@ -206,7 +212,12 @@ List of endpoints:
 - GET /projects           (getProjectList)
 - POST /project-content   (postContent)
 - GET /project-content    (getProject)
--->
+- **GET /content/pages**: List pages  
+- **GET /content/pages/:id**: Get page by ID  
+- **POST /content/pages**: Create page  
+- **PUT /content/pages/:id**: Update page  
+- **DELETE /content/pages/:id**: Delete page  
+- Similar endpoints for **/content/posts**
 
 ## Error Handling
 
@@ -220,17 +231,4 @@ Basic `console.log` statements are included. For production use, integrate a str
 
 ## License
 
-MIT
-
-
-## API Endpoints
-
-- **GET /content/pages**: List pages  
-- **GET /content/pages/:id**: Get page by ID  
-- **POST /content/pages**: Create page  
-- **PUT /content/pages/:id**: Update page  
-- **DELETE /content/pages/:id**: Delete page  
-- Similar endpoints for **/content/posts**
-
-## License
 MIT

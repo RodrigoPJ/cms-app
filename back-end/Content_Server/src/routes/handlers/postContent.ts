@@ -22,7 +22,7 @@ const postContent: RequestHandler | null = async (req: Request, res: Response) =
           type, title, body, properties, projectItemId 
         });
         if (savedContent) res.status(200).send(savedContent);
-        res.status(400).send("bad request");
+        else res.status(400).send("bad request");
       } else {
         res.status(400).send("bad request");
       }

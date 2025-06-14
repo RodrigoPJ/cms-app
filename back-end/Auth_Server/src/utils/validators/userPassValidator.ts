@@ -6,7 +6,7 @@ export class UserPass {
   email: string;
 
   @IsString()
-  password: number;
+  password: string;
 
 }
 

@@ -8,6 +8,7 @@ const aunthenticateRequest = async (
 ) => {
   log(req.headers["user-agent"]);
   const cookies = req.cookies;
+  
   if (cookies["token_bearer"]) {
     const headersCookie = req.headers.cookie;
     const serverAuth = await fetch("http://localhost:3000/auth/authenticate", {
@@ -17,6 +18,7 @@ const aunthenticateRequest = async (
         Cookie: headersCookie,
       },
     });
+console.log('auth call');
 
     if (serverAuth.status === 200) {
       const parsedServerRes = await serverAuth.json();

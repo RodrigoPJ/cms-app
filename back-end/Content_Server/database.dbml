@@ -1,16 +1,16 @@
 Table user {
-  id uuid [primary key , ref: < project_item.user]
+  id uuid [primary key , ref: < project_item.accountId]
   userName varchar
   user varchar
   dateCreated timestamp
   userType varchar
-  projects uuid 
+  projectList project_item
 }
 
 Table project_item {
-  id uuid [primary key , ref: < project_content.projectId]
-  user uuid 
-  content varchar
+  id uuid [primary key , ref: < project_content.projectItemId]
+  accountId uuid 
+  contentType varchar
   name varchar
   isActive boolean
 }
@@ -21,5 +21,5 @@ Table project_content {
   title varchar
   body varchar
   properties varchar
-  projectId uuid 
+  projectItemId uuid 
 }

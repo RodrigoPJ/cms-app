@@ -10,3 +10,11 @@ export interface JWTPayload extends JwtPayload{
   iat: number;
   exp: number;
 }
+
+export interface ContentNewUserResponse {
+  dateCreated: string;
+	user: string;
+	userName: string;
+	userType: string;
+	id: string;
+}

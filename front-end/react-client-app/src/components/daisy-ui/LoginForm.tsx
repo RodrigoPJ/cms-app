@@ -1,7 +1,8 @@
 import { forwardRef, useImperativeHandle, useRef, type ForwardedRef} from "react";
-import type { LoginFormComponent, LoginRef } from "../../utils/types/components-interface";
+import type { LoginFormComponent } from "../../utils/types/components-interface";
+import { Link } from "react-router";
 
-const LoginForm = forwardRef(({ startLogin }:LoginFormComponent, ref:ForwardedRef<LoginRef>) => {
+const LoginForm = forwardRef(({ startLogin }:LoginFormComponent, ref:ForwardedRef<{getLoginInfo: ()=>void}>) => {
   const emailRef = useRef<HTMLInputElement |null>(null);
   const passwordRef = useRef<HTMLInputElement |null>(null);
 
@@ -19,7 +20,6 @@ const LoginForm = forwardRef(({ startLogin }:LoginFormComponent, ref:ForwardedRe
           emailRef.current.value = '';
           passwordRef.current.value = '';
         }
-        
       }
     };
   });
@@ -59,7 +59,7 @@ const LoginForm = forwardRef(({ startLogin }:LoginFormComponent, ref:ForwardedRe
                 placeholder="Password"
               />
               <div>
-                <a className="link link-hover">Forgot password?</a>
+                <Link to={'reset'} className="link link-hover">Forgot password?</Link>
               </div>
               <button onClick={handleClick} className="btn btn-neutral mt-4">
                 Login
