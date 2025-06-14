@@ -17,20 +17,20 @@ const getUser = async (req: Request, res: Response) => {
         where: {
           id: accountId,
         },
-        relations: {
-          projectList: true
-        }
+        // relations: {
+        //   projectList: true
+        // }
       });
       log(userAccount)
-      // const projects = await AppDataSource.getRepository(ProjectItem).find({
-      //   where: {
-      //     accountId: accountId
-      //   }
-      // })
-      console.log();
+      const projects = await AppDataSource.getRepository(ProjectItem).find({
+        where: {
+          accountId: accountId
+        }
+      })
+      console.log(projects);
       
       if (userAccount) {
-        res.status(200).json({userAccount,});
+        res.status(200).json({userAccount,projects});
       } else {
         res.status(400).json({ message: "Account not found in db" });
       }

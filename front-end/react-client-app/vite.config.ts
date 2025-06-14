@@ -5,7 +5,7 @@ import tailwindcss from '@tailwindcss/vite'
 export default {
   server: {
     proxy: {
-      '/content': 'http://localhost:3001',
+  //  '/content': 'http://localhost:3001',
     //  '/auth': 'http://localhost:3000'
     }
   },
