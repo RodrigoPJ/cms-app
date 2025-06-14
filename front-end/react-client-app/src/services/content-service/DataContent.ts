@@ -92,11 +92,7 @@ export class DataContent {
     contentType: string,
     accountId: string
   ) {
-    const baseUrl = this.contentServer;
-    let url = "/new-project";
-    if (baseUrl) {
-      url = baseUrl + url;
-    }
+    const url = "/content/new-project";
     const request = new Request(url, {
       method: "POST",
       headers: {
