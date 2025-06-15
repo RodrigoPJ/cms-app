@@ -72,4 +72,5 @@ export interface ContentListComponent {
 
 export interface QuillComponent {
   setValue: Dispatch<SetStateAction<string>>
+  value: string
 }

@@ -1,12 +1,12 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import type { CreateContent } from "../utils/types/components-interface";
-import Quill from "./quill/Quill";
 import { FormInput } from "./daisy-ui/FormInput";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { DataContent } from "../services/content-service/DataContent";
+import QuillEditor from "./quill/Quill";
 
 export function CreateContent({ projectId, setModalOpen }: CreateContent) {
-  const [quillValue, setQuillValue] = useState("");
+  const [tiptapValue, setTiptapValue] = useState("");
   const [formData, setFormData] = useState({
     title: "",
     body: "",
@@ -23,7 +23,7 @@ export function CreateContent({ projectId, setModalOpen }: CreateContent) {
         properties: formData.properties,
         projectId,
       };
-      const savedContent = await DataContent.postContent(content, quillValue);
+      const savedContent = await DataContent.postContent(content, tiptapValue);
       return savedContent;
     },
     onSuccess() {
@@ -80,7 +80,7 @@ export function CreateContent({ projectId, setModalOpen }: CreateContent) {
         />
       </div>
       <div className="flex flex-col">
-        <Quill setValue={setQuillValue} />
+        <QuillEditor value={tiptapValue} setValue={setTiptapValue} />
         <button className="btn btn-primary mt-5" onClick={saveContent}>
           Save
         </button>
