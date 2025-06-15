@@ -10,10 +10,6 @@ function addProject(state: User, action: PayloadAction<Project>) {
   state.projects.push(action.payload);
 }
 
-function setContentsEmpty(){
-  
-}
-
 function addContent(state: User, action: PayloadAction<Content>) {
   const itemIndex = state.projects.findIndex(
     (el) => el.id === action.payload.projectItemId

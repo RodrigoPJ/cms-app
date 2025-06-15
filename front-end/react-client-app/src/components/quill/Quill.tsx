@@ -1,44 +1,63 @@
-import { useEffect } from "react";
-import { useQuill,} from 'react-quilljs';
-
+// components/QuillEditor.jsx
+import { useEffect, useRef } from "react";
+import Quill from "quill";
+import "quill/dist/quill.snow.css";
 import type { QuillComponent } from "../../utils/types/components-interface";
-import 'quill/dist/quill.snow.css'; // Add css for snow theme
 
-export default function Quill ({setValue}:QuillComponent)  {
-  const theme = 'snow';
-
-  const modules = {
-    toolbar: [
-      ['bold', 'italic', 'underline', 'strike'],
-      [ 'image']
-    ],
-  };
-
-  const placeholder = 'Compose an epic...';
-
-  const formats = ['bold', 'italic', 'underline', 'strike', 'image'];
-
-  const { quillRef, quill } = useQuill({ theme,modules, formats, placeholder });
-
-    const selectLocalImage = () => {
-    const input = document.createElement('input');
-    input.setAttribute('type', 'file');
-    input.setAttribute('accept', 'image/*');
-    input.click();
-  };
+const QuillEditor = ({ value, setValue }: QuillComponent) => {
+  const editorRef = useRef(null);
+  const quillRef = useRef<Quill | null>(null);
 
   useEffect(() => {
-    if (quill) {
-      (quill.getModule('toolbar')as any).addHandler('image', selectLocalImage);      
-      quill.on('text-change', () => {
-        setValue(quill.getSemanticHTML())
-      });
+    if (!editorRef.current) return;
+
+    quillRef.current = new Quill(editorRef.current, {
+      theme: "snow",
+      placeholder: "Write something amazing...",
+      modules: {
+        toolbar: {
+          container: [
+            ["bold", "italic", "underline", "strike"],
+            [{ list: "ordered" }, { list: "bullet" }],
+            ["link", "image", "code-block"],
+            ["clean"],
+          ],
+          handlers: {
+            image: () => {
+              const input = document.createElement("input");
+              input.setAttribute("type", "file");
+              input.setAttribute("accept", "image/*");
+              input.click();
+
+              input.onchange = async () => {};
+            },
+          },
+        },
+      },
+    });
+
+    // Handle content changes
+    quillRef.current.on("text-change", () => {
+      if (quillRef.current) {
+        setValue(quillRef.current.root.getHTML());
+      }
+    });
+
+    // Set initial content
+    if (value) {
+      quillRef.current.root.innerHTML = value;
     }
-  }, [quill]);
+
+    return () => {
+      quillRef.current = null;
+    };
+  }, []);
 
   return (
-    <div style={{border: '1px solid darkgrey', borderRadius: '7px'}}>
-      <div ref={quillRef} />
+    <div className="quill-wrapper border border-gray-300 rounded-lg p-2">
+      <div ref={editorRef} style={{ height: "300px" }} />
     </div>
   );
 };
+
+export default QuillEditor;
