@@ -76,7 +76,7 @@ export class DataContent {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        ...content, body:quill, projectItemId:content.projectId
+        ...content, body:quill, projectItemId:content.projectId, published: 'not published'
       }),
     });
 

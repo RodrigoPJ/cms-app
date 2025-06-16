@@ -12,6 +12,7 @@ const saveContent = async (content: ContentRequest) => {
       newContent.title = content.title;
       newContent.type = content.type;
       if (content.id) newContent.id  = content.id;
+      if(content.published) newContent.published = content.published;
       const savedContent = await AppDataSource.getRepository(ProjectContent).save(newContent);
       if (savedContent) {
         return savedContent;

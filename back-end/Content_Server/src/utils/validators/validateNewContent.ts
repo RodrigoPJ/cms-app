@@ -18,6 +18,9 @@ export class ContentRequest {
 
   @IsOptional()
   id?: string;
+
+  @IsOptional()
+  published?: string;
 }
 
 const validateContentRequest = async (user: ContentRequest) => {

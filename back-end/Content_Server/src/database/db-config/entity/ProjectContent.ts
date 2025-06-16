@@ -3,7 +3,6 @@ import {
   PrimaryGeneratedColumn,
   Column,
   ManyToOne,
-  JoinColumn,
 } from "typeorm";
 import { ProjectItem } from "./ProjectItem";
 
@@ -20,6 +19,9 @@ export class ProjectContent {
 
   @Column("varchar")
   body: string;
+
+  @Column('varchar')
+  published?: string | null; 
 
   @Column("varchar")
   properties: string;

@@ -7,15 +7,17 @@ import { ValidationError } from "class-validator";
 import saveProject from "../../database/controllers/saveProject";
 
 const createNewProject = async (req: Request, res: Response) => {
-  log(req.headers["user-agent"]);
+  log(req.headers["user-agent"], 'creating new project');
   try {
-    const body: ProjectValidator = req.body;    
+    const body: ProjectValidator = req.body;
+    log(req.body);
     const validProject: ProjectValidator | ValidationError[] = await validateNewProjectItem(body);
     if (
       "accountId" in validProject &&
       validProject.name &&
       typeof validProject.contentType === "string"
     ) {
+      validProject.published = body.published;      
       const savedProject = await saveProject(validProject);
       if (savedProject) {
         res.status(200).json(savedProject);

@@ -12,9 +12,11 @@ const origin =
     : "https://content-management-react-app.onrender.com";
 
 const app = express();
+console.log(origin);
+
 app.use(
   cors({
-    origin: origin, // your frontend origin
+    origin, // your frontend origin
     credentials: true
   })
 );

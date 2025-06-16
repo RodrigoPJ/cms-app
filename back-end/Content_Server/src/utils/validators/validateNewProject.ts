@@ -1,4 +1,4 @@
-import { validate, IsUUID, IsString, ValidationError } from "class-validator";
+import { validate, IsUUID, IsString, ValidationError, IsOptional } from "class-validator";
 
 
 export class ProjectValidator {
@@ -11,6 +11,9 @@ export class ProjectValidator {
   @IsString()
   name: string;
 
+  @IsOptional()
+  published: string;
+
 }
 
 
@@ -19,6 +22,7 @@ const validateNewProjectItem = async (item:ProjectValidator): Promise<ProjectVal
     project.accountId = item.accountId;
     project.name = item.name;
     project.contentType = item.contentType;
+    project.published = item.published;
     const ValidationErrors = await validate(project);
     if (ValidationErrors.length === 0) {
         return {...project};

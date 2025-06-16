@@ -6,9 +6,9 @@ import { DashboardLayout } from "../pages/dashboard/DashboardLayout";
 import { Account } from "../pages/Acccount";
 import { LogOut } from "../pages/LogOut";
 import Content from "../pages/dashboard/components/Content";
-import Users from "../pages/dashboard/components/User";
+import Projects from "../pages/dashboard/components/Projects";
 import Settings from "../pages/dashboard/components/Settings";
-import Summary from "../pages/dashboard/components/Dashboard";
+import Summary from "../pages/dashboard/components/Summary";
 import { SignUp } from "../pages/SignUp";
 export const routes: RouteObject[] = [
   {
@@ -32,7 +32,7 @@ export const routes: RouteObject[] = [
           { index: true, element: <Navigate to={"summary"} /> },
           { path: "summary", Component: Summary },
           { path: "content", Component: Content },
-          { path: "users", Component: Users },
+          { path: "projects", Component: Projects },
           { path: "settings", Component: Settings },
           { path: "*", element: <Navigate to={"/"} /> },
         ],

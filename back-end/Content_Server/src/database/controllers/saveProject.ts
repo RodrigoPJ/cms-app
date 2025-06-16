@@ -14,6 +14,7 @@ const saveProject = async ({
     project.accountId = accountId;
     project.name = name;
     project.isActive = true;
+    project.published = 'not published'
     const savedProject = await AppDataSource.getRepository(ProjectItem).save(
       project
     );

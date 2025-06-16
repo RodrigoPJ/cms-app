@@ -14,7 +14,6 @@ class AuthService {
     const contentData = new DataContent();
     const userProfile = await contentData.findUser(accountId);
     if (userProfile) {
-      console.log(userProfile);
       dispatch(setProfile(userProfile));
       return true;
     } else return null;

@@ -70,6 +70,7 @@ export class DataAuth {
     const request = new Request(url, {
       method: "POST",
       credentials: "include",
+      mode: 'cors',
       body: JSON.stringify({ loggedOut: true }),
     });
 
@@ -99,6 +100,8 @@ export class DataAuth {
     const request = new Request(url, {
       method: "POST",
       body: JSON.stringify({ email: "mail@test.com", password: "password" }),
+      credentials: 'include',
+      mode: 'cors',
       headers: {
         "Content-Type": "application/json",
       },
