@@ -4,9 +4,10 @@
     <meta charset="UTF-8" />
     <title>Redirecting...</title>
     <script>
-      const fullPath = location.pathname + location.search + location.hash;
-      const target = '/cms-app' + fullPath;
-      location.replace(target);
+      const originalPath = location.pathname.replace(/^\/cms-app/, '') || '/';
+      const target = '/cms-app/index.html' + originalPath + location.search + location.hash;
+      window.history.replaceState(null, '', target);
+      window.location.replace(target);
     </script>
   </head>
   <body>
