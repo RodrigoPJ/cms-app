@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router";
 import routes from "./routes.tsx";
 
-const router= createBrowserRouter(routes);
+const router= createBrowserRouter(routes, {basename: '/cms-app'});
 
 export default router;
