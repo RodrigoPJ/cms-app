@@ -8,7 +8,8 @@
     "vite:build": "vite build",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build:github": "tsc -b && vite build --outDir ../../docs"
   },
   "dependencies": {
     "@floating-ui/react": "^0.27.12",

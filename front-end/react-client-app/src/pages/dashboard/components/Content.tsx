@@ -12,7 +12,7 @@ export default function Content() {
   const projects = useAppSelector((state) => state.profile.projects);
   const [project, setProjectId] = useState<Project>();
   const [modalOpen, setModalOpen] = useState(false);
-  const [search, setSearchparams] = useSearchParams();
+  const [search] = useSearchParams();
 
   useEffect(() => {
     if (search.has('projectId')) {
@@ -21,11 +21,7 @@ export default function Content() {
       if (projectId) {
         const selectedProject = projects.find((el) => el.id === projectId);
         if (selectedProject) {
-          console.log("set project from search");
-
           setProjectId(selectedProject);
-          console.log(selectedProject);
-          //setSearchparams('')
         }
       }
     } else {
