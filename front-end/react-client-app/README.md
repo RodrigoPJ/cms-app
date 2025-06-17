@@ -146,9 +146,9 @@ npm run build:github
 1. Ensure the `docs/` folder is being used for GitHub Pages
 2. Run:
 
-```bash
-npm run build:github
-```
+   ```bash
+   npm run build:github
+   ```
 
 3. Push to the default branch `develop`
 
@@ -219,4 +219,5 @@ react-client-app/
 - To connect to a real API, replace mock implementations with `fetch` or `axios` calls using `VITE_API_BASE_URL`.
 
 ## License
+
 This front-end client is licensed under the **MIT License**. See the [LICENSE](../LICENSE) file for details.
