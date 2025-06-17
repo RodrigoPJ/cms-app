@@ -9,7 +9,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "build:github": "tsc -b && vite build --outDir ../../docs"
+    "build:github": "tsc -b && vite build --outDir ../../docs --base /cms-app --emptyOutDir"
   },
   "dependencies": {
     "@floating-ui/react": "^0.27.12",

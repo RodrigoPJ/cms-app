@@ -3,4 +3,4 @@ import routes from "./routes.tsx";
 
 const router= createBrowserRouter(routes);
 
-export default router
+export default router;
