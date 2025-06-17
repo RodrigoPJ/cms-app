@@ -33,9 +33,7 @@ const QuillEditor = ({ value, setValue, fileAdded }: QuillComponent) => {
               input.accept = "image/*";
               input.click();
 
-              input.onchange = async () => {
-                console.log(input);
-                
+              input.onchange = async () => {                
                 const file = input.files ? input.files[0] : null;
                 if (!file) return;
 
@@ -64,15 +62,10 @@ const QuillEditor = ({ value, setValue, fileAdded }: QuillComponent) => {
       }
     });
 
-    // Set initial content
-    if (value) {
-      quillRef.current.root.innerHTML = value;
-    }
-
     return () => {
       quillRef.current = null;
     };
-  }, []);
+  }, [fileAdded, setValue]);
 
   return (
     <div className="quill-wrapper border border-gray-300 rounded-lg p-2">

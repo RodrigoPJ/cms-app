@@ -67,7 +67,10 @@ export class ContentService {
         if (createdContent) {
           dispatch(addContent(createdContent));
         }
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+        return null;
+      }
     };
   }
 }

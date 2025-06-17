@@ -5,11 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "tsc": "tsc -b",
     "vite:build": "vite build",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview",
-    "build:github": "tsc -b && vite build --outDir ../../docs --base /cms-app --emptyOutDir"
+    "preview": "npm run build && vite preview",
+    "build:github": "tsc -b && vite build --outDir ../../docs --base '/cms-app' --emptyOutDir -- --mode github"
   },
   "dependencies": {
     "@floating-ui/react": "^0.27.12",
