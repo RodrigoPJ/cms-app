@@ -1,18 +1,70 @@
 import type { ContentListComponent } from "../utils/types/components-interface";
 import { DataContent } from "../services/content-service/DataContent";
 
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import Modal from "./daisy-ui/Modal";
+import { useState } from "react";
+import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export function ContentList({ projectId }: ContentListComponent) {
+  const [modalOpen, setModalOpen] = useState(false);
+  const queryClient = useQueryClient();
+  const [preview, setPreview] = useState({ __html: "" });
+  const [publish, setPublish] = useState('');
   const contentQuery = useQuery({
     queryKey: ["project-content", projectId],
     queryFn: async () => {
       const contents = await DataContent.getContents(projectId);
+      contents?.reverse();
       return contents;
     },
     staleTime: Infinity,
   });
 
+  const { isPending, mutate } = useMutation({
+    mutationFn: async (contentId: string) => {
+      const deleted = await DataContent.removeContent(contentId);
+      console.log(deleted);
+    },
+    onSuccess() {
+      queryClient.invalidateQueries({
+        queryKey: ["project-content", projectId],
+        exact: true,
+      });
+    },
+  });
+
+  const publishedContent = useMutation({
+    mutationFn: async (published:string)=>{
+       await DataContent.publishContent(publish, published);
+    },
+    onSuccess: ()=>{
+       queryClient.invalidateQueries({
+        queryKey: ["project-content", projectId],
+        exact: true,
+      });
+    },
+  })
+
+  function handlePreview(body: string) {
+    setPreview({ __html: body });
+    setModalOpen(true);
+  }
+
+  function handlePublish(){
+    publishedContent.mutate('');
+    setModalOpen(false)
+  }
+
+  function handleUnPublish(){
+    publishedContent.mutate('not published');
+    setModalOpen(false)
+  }
+
+  function handleDelete(id: string | undefined) {
+    if (id) mutate(id);
+  }
   return (
     <>
       {contentQuery.data && contentQuery.data.length > 0 && (
@@ -20,6 +72,23 @@ export function ContentList({ projectId }: ContentListComponent) {
           <div className="card-body">
             <h2 className="card-title">All Content</h2>
             <p>View, edit, or delete existing content entries.</p>
+            <Modal
+              isOpen={modalOpen}
+              onClose={() => {
+                setModalOpen(false);
+              }}
+            >
+              <div className="text-center">
+                <button onClick={handlePublish} className="btn btn-primary">
+                  Publish
+                </button>
+                <button onClick={handleUnPublish} className="btn btn-primary">
+                  Un Publish
+                </button>
+
+              </div>
+              <div dangerouslySetInnerHTML={preview}></div>
+            </Modal>
             <div className="mt-4">
               <table className="border border-gray-400 dark:border-gray-500 xs:table xs:table-zebra table-auto ">
                 <thead>
@@ -48,8 +117,13 @@ export function ContentList({ projectId }: ContentListComponent) {
                         <td>{el.title}</td>
                         <td>{el.type}</td>
                         <td>
-                          <button onClick={()=>{console.log(el.body);
-                          }} className="btn btn-sm btn-outline mr-2">
+                          <button
+                            onClick={() => {
+                              handlePreview(el.body || "");
+                              setPublish(el.id || '')
+                            }}
+                            className="btn btn-sm btn-outline mr-2"
+                          >
                             {" "}
                             Preview
                           </button>
@@ -59,8 +133,14 @@ export function ContentList({ projectId }: ContentListComponent) {
                           <button className="btn btn-sm btn-outline mr-2">
                             Edit
                           </button>
-                          <button className="btn btn-sm btn-error">
-                            Delete
+                          <button
+                            disabled={isPending}
+                            onClick={() => {
+                              handleDelete(el.id);
+                            }}
+                            className="btn btn-sm btn-error"
+                          >
+                            <FontAwesomeIcon size="xl" icon={faTrashCan} />
                           </button>
                         </td>
                       </tr>

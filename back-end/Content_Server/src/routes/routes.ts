@@ -9,6 +9,7 @@ import getAllProjects from './handlers/admin/getAllProjects';
 import postContent from './handlers/postContent';
 import putContent from './handlers/putContent';
 import postPresignedS3url from './handlers/postPresignedS3url';
+import deleteContent from './handlers/deleteContent';
 
 const routes = Router();
 
@@ -39,7 +40,7 @@ routes.post('/project-content', postContent);
 
 // update given content node
 routes.put('/project-content', putContent);
-// routes.delete('/project-content');
+routes.delete('/project-content', deleteContent);
 
 
 // posts filee information before getting the url to upload the users media

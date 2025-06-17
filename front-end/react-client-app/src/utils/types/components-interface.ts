@@ -3,35 +3,35 @@ import type { Pages } from "./data-types";
 import type { NavLinkRenderProps } from "react-router";
 export interface CardInterface {
   title: string;
-  body:string;
-  button?:{
-    action: ()=>void;
+  body: string;
+  button?: {
+    action: () => void;
     text: string;
-  }
+  };
 }
 
 export interface LoginFormComponent {
-  startLogin: ()=>void;
+  startLogin: () => void;
 }
 
 export interface LoginRef {
-  getLoginInfo: ()=>{
-    email: string | undefined,
-    password: string | undefined,
+  getLoginInfo: () => {
+    email: string | undefined;
+    password: string | undefined;
   };
-  clearLoginInfo: ()=>void;
+  clearLoginInfo: () => void;
 }
 
 export interface HeroComponent {
-  image:string;
-  title:string;
+  image: string;
+  title: string;
   body: string;
   cta?: {
     text: string;
     link?: string;
-    action?: ()=>void
+    action?: () => void;
   };
-  children?: ReactNode
+  children?: ReactNode;
 }
 export interface NavBarComponent {
   title: string;
@@ -42,10 +42,10 @@ export interface NavBarComponent {
 
 export interface SideBarComponent {
   sidebarOpen: boolean;
-  navLinkStyle: (props: NavLinkRenderProps)=>string;
+  navLinkStyle: (props: NavLinkRenderProps) => string;
 }
 export interface InformationGrid {
-  stats: Stat[]
+  stats: Stat[];
 }
 
 export interface Stat {
@@ -54,12 +54,12 @@ export interface Stat {
 }
 
 export interface FormInputInterface {
-  id:string
-  label?:string;
-  type:string;
-  name:string;
-  value:string;
-  handleChange: (e: React.ChangeEvent<HTMLInputElement>)=>void;
+  id: string;
+  label?: string;
+  type: string;
+  name: string;
+  value: string;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   required?: boolean;
 }
 export interface CreateContent {
@@ -71,6 +71,13 @@ export interface ContentListComponent {
 }
 
 export interface QuillComponent {
-  setValue: Dispatch<SetStateAction<string>>
-  value: string
+  setValue: Dispatch<SetStateAction<string>>;
+  value: string;
+  fileAdded: (url: string) => void;
+}
+
+export interface ProfileInfoComponent {
+  email: string;
+  firstName: string;
+  accountType:string;
 }

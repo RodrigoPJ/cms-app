@@ -31,11 +31,18 @@ export function CreateContent({ projectId, setModalOpen }: CreateContent) {
         queryKey: ["project-content", projectId],
         exact: true,
       });
+      setFormData({
+        title: "",
+        body: "",
+        properties: "",
+        type: "",
+      });
+      setTiptapValue("delete");
       setModalOpen(false);
     },
   });
 
-  function changeHandler(e: ChangeEvent<HTMLInputElement>) {
+  function changeHandler(e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
 
@@ -43,6 +50,9 @@ export function CreateContent({ projectId, setModalOpen }: CreateContent) {
     e.preventDefault();
     mutate(projectId);
   };
+  function onFileAdded(url:string) {
+    setFormData({ ...formData, properties: JSON.stringify({url}) })
+  }
 
   return (
     <form>
@@ -62,16 +72,26 @@ export function CreateContent({ projectId, setModalOpen }: CreateContent) {
           />
         </div>
 
+        <div className="flex flex-col">
+          <label>Type</label>
+          <select
+            onChange={changeHandler}
+            className="select select-ghost hover:border-violet-800"
+            name="type"
+            id="content_type"
+            value={formData.type}
+          >
+            {["image", "video", "audio"].map((proj) => {
+              return (
+                <option key={proj} value={proj}>
+                  {proj}
+                </option>
+              );
+            })}
+          </select>
+        </div>
         <FormInput
-          id="ctn-type"
-          name="type"
-          label="Type: "
-          type="text"
-          value={formData.type}
-          handleChange={changeHandler}
-        />
-        <FormInput
-          id="props1"
+          id="ctn-props"
           name="properties"
           label="Properties: "
           type="text"
@@ -80,7 +100,7 @@ export function CreateContent({ projectId, setModalOpen }: CreateContent) {
         />
       </div>
       <div className="flex flex-col">
-        <QuillEditor value={tiptapValue} setValue={setTiptapValue} />
+        <QuillEditor value={tiptapValue} setValue={setTiptapValue} fileAdded={onFileAdded} />
         <button className="btn btn-primary mt-5" onClick={saveContent}>
           Save
         </button>

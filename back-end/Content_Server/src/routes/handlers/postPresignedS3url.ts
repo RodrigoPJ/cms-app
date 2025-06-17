@@ -23,7 +23,7 @@ const s3 = new S3Client({
       ContentType: fileType
     });
 
-    const url = await getSignedUrl(s3, command, { expiresIn: 600 }); // valid for 600 sec
+    const url = await getSignedUrl(s3, command, { expiresIn: 60 }); // valid for 60 sec
 
     res.status(200).json({ url });
   } catch (err) {

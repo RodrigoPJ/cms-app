@@ -122,4 +122,40 @@ export class DataAuth {
       throw new Error(JSON.stringify(e))
     }
   }
+
+  static async resetPassword(
+    name: string,
+    password: string
+  ): Promise<SignupResponse | null> {
+    const BE = import.meta.env;
+
+    const baseUrl = BE["VITE_SERVER_auth"];
+    let url = "/auth/reset";
+    if (baseUrl) {
+      url = baseUrl + url;
+    }
+    const request = new Request(url, {
+      method: "PUT",
+      body: JSON.stringify({ email: name, password}),
+      credentials: 'include',
+      mode: 'cors',
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    try {
+      const rawResponse = await fetch(request);
+      if (rawResponse.status === 200) {
+        const user = await rawResponse.json();
+        return user;
+      } else {
+        const error = await rawResponse.json();
+        alert(error)
+        return null;
+      }
+    } catch (e) {
+      console.log(e);
+      throw new Error(JSON.stringify(e))
+    }
+  }
 }

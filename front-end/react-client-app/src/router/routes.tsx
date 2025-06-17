@@ -31,8 +31,8 @@ export const routes: RouteObject[] = [
         children: [
           { index: true, element: <Navigate to={"summary"} /> },
           { path: "summary", Component: Summary },
-          { path: "content", Component: Content },
           { path: "projects", Component: Projects },
+          { path: "content", Component: Content },
           { path: "settings", Component: Settings },
           { path: "*", element: <Navigate to={"/"} /> },
         ],
