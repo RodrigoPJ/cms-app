@@ -1,31 +1,13 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ProfileInfo from "../components/ProfileInfo";
 import { useAppSelector } from "../utils/store/hooks";
+import { faEyeSlash, faEye} from "@fortawesome/free-solid-svg-icons";
 
 export function Account() {
   const user = useAppSelector((state) => state.profile.userAccount);
   return (
-    <div className="space-y-6">
-      <h1 className="text-3xl font-bold">Account Settings</h1>
-      {/* Personal Info */}
-      <div className="card bg-base-100 shadow">
-        <div className="card-body">
-          <h2 className="card-title">Profile Information</h2>
-          <div className="form-control">
-            <label className="label">Full Name</label>
-            {/* <input
-              type="text"
-              placeholder="John Doe"
-              className="input input-bordered"
-            /> */}
-            <p>{user.userName}</p>
-          </div>
-          <div className="form-control mt-4">
-            <label className="label">Email</label>
-            <p>{user.user}</p>
-          </div>
-          <button className="btn btn-tertiary mt-4 w-fit">Edit</button>
-        </div>
-      </div>
-
+    <div className="">
+     <ProfileInfo email={user.user} firstName={user.userName} accountType={user.userType} />
       {/* Password Update */}
       <div className="card bg-base-100 shadow">
         <div className="card-body">
@@ -35,8 +17,12 @@ export function Account() {
             <input type="password" className="input input-bordered" />
           </div>
           <div className="form-control mt-4">
-            <label className="label">New Password: </label>
-            <input type="password" className="input input-bordered" />
+            <span>New Password</span>
+            <label className="input">
+              <input type="password"  />
+              <span className="label"><button className="btn btn-ghost" onClick={()=>{console.log('icon');
+              }}>{<FontAwesomeIcon icon={faEyeSlash} />}<FontAwesomeIcon icon={faEye} /></button></span>
+            </label>
           </div>
           <div className="form-control mt-4">
             <label className="label">Confirm New Password: </label>

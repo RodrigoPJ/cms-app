@@ -4,7 +4,8 @@ import {
   Column,
   OneToMany,
   ManyToOne,
-  JoinColumn,
+  Generated,
+  CreateDateColumn
 } from "typeorm";
 import { ProjectContent } from "./ProjectContent";
 import { User } from "./User";
@@ -26,6 +27,12 @@ export class ProjectItem {
 
   @Column("boolean")
   isActive: boolean;
+
+  @CreateDateColumn({type: 'timestamp'})
+  created: string;
+
+  @Column('varchar')
+  published?: string |  null;
 
   @OneToMany(() => ProjectContent, (cont) => cont.projectItemId)
   projectContents: ProjectContent;

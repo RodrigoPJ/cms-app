@@ -12,11 +12,11 @@ export function SideBar ({sidebarOpen, navLinkStyle}:SideBarComponent){
           <NavLink className={navLinkStyle} to="summary">
             Summary
           </NavLink>
-          <NavLink className={navLinkStyle} to="content">
-            Content
+          <NavLink className={navLinkStyle} to="projects">
+            Projects
           </NavLink>
-          <NavLink className={navLinkStyle} to="users">
-            Users
+           <NavLink className={navLinkStyle} to="content">
+            Content
           </NavLink>
           <NavLink className={navLinkStyle} to="settings">
             Settings

@@ -1,6 +1,6 @@
 # CMS App
 
-A modern, full-stack content management system built with React, Vite, Tailwind CSS, DaisyUI, Redux, and Node.js (backend in progress). Designed to be fast, responsive, and developer-friendly with a clean UI and scalable architecture.
+A modern, full-stack content management system built with React, Vite, Tailwind CSS, DaisyUI, Redux, and Node.js. Designed to be fast, responsive, and developer-friendly with a clean UI and scalable architecture.
 
 ## 🧱 Project Structure
 

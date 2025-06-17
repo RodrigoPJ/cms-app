@@ -5,11 +5,9 @@ import { Login } from "../pages/Login";
 import { DashboardLayout } from "../pages/dashboard/DashboardLayout";
 import { Account } from "../pages/Acccount";
 import { LogOut } from "../pages/LogOut";
-import Content from "../pages/dashboard/components/Content";
-import Users from "../pages/dashboard/components/User";
 import Settings from "../pages/dashboard/components/Settings";
-import Summary from "../pages/dashboard/components/Dashboard";
 import { SignUp } from "../pages/SignUp";
+import { lazy } from "react";
 export const routes: RouteObject[] = [
   {
     path: "/",
@@ -30,9 +28,9 @@ export const routes: RouteObject[] = [
         },
         children: [
           { index: true, element: <Navigate to={"summary"} /> },
-          { path: "summary", Component: Summary },
-          { path: "content", Component: Content },
-          { path: "users", Component: Users },
+          { path: "summary", Component: lazy(()=> import('../pages/dashboard/components/Summary')) },
+          { path: "projects", Component: lazy(()=> import('../pages/dashboard/components/Projects'))  },
+          { path: "content", Component: lazy(()=> import('../pages/dashboard/components/Content')) },
           { path: "settings", Component: Settings },
           { path: "*", element: <Navigate to={"/"} /> },
         ],

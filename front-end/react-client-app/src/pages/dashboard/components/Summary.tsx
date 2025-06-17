@@ -6,7 +6,7 @@ import { Card } from "../../../components/daisy-ui/Card";
 import Modal from "../../../components/daisy-ui/Modal";
 import { NewProjectForm } from "../../../components/NewProjectForm";
 
-export default function Dashboard() {
+export default function Summary() {
   const [stats, setStats] = useState<Stat[]>([]);
   const [modalOpen, setModalOpen] = useState(false);
   const profile = useAppSelector((state) => state.profile);

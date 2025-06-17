@@ -8,7 +8,7 @@ export const projectItemList = [
   }, {
     id: "content-type",
     name: "contentType",
-    label: "Content type",
+    label: "Description",
     type: "text",
     required: true,
   },

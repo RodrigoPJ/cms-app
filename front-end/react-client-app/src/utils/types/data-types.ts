@@ -21,6 +21,7 @@ export interface Content {
   type?: string;
   title?: string;
   body?: string;
+  published?:string;
   properties?: string; // this will be JSON stringified for maximum efficiency
   children?: Content[];
   projectId: string;
