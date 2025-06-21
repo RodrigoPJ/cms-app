@@ -65,7 +65,7 @@ const QuillEditor = ({ value, setValue, fileAdded }: QuillComponent) => {
     return () => {
       quillRef.current = null;
     };
-  }, [fileAdded, setValue]);
+  }, []);
 
   return (
     <div className="quill-wrapper border border-gray-300 rounded-lg p-2">

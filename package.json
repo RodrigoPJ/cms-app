@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/RodrigoPJ/cms-app/issues"
   },
-  "homepage": "https://github.com/RodrigoPJ/cms-app#readme"
+  "homepage": "https://github.com/RodrigoPJ/cms-app#readme",
+  "devDependencies": {
+    "express": "^5.1.0",
+    "serverless-http": "^3.2.0"
+  }
 }
