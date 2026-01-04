@@ -8,15 +8,18 @@ import UserPassParser from '../middleware/userPassParser';
 import logout from '../handlers/logout';
 import healthCheck from '../handlers/health';
 import isAuthenticated from '../handlers/isAuthenticated';
+import keys from '../handlers/keys';
+import encryptedDataParser from '../middleware/encryptedDataParser';
 
 const router = Router();
 
-router.get('/auth/get-users',authenticate, getAllUsers);
-router.get('/auth/health-check', authenticate, healthCheck);
-router.post('/auth/add-user', saveNewUser);
-router.post('/auth/login', UserPassParser, loginUser);
-router.post('/auth/authenticate', authenticate, isAuthenticated);
-router.post('/auth/logout', logout);
-router.put('/auth/reset', UserPassParser, resetPassword);
+router.get('/get-users', getAllUsers);
+router.get('/health-check', healthCheck);
+router.get('/keys', keys);
+router.post('/add-user', saveNewUser);
+router.post('/login', encryptedDataParser , loginUser);
+router.post('/authenticate', authenticate, isAuthenticated);
+router.post('/logout', logout);
+router.put('/reset', UserPassParser, resetPassword);
 
 export default router;

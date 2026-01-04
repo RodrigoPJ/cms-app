@@ -17,18 +17,16 @@ const getUser = async (req: Request, res: Response) => {
         where: {
           id: accountId,
         },
-        // relations: {
-        //   projectList: true
-        // }
+        relations: {
+          projectList: true
+        }
       });
       log(userAccount)
       const projects = await AppDataSource.getRepository(ProjectItem).find({
         where: {
           accountId: accountId
         }
-      })
-      console.log(projects);
-      
+      });
       if (userAccount) {
         res.status(200).json({userAccount,projects});
       } else {

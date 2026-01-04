@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { AppDataSource } from "../db-config/data-source";
+import { AppDataSource } from "../server";
 import { User } from "../db-config/entity/user";
 import { Encrypt } from "../utils/encryption/Encrypt";
 

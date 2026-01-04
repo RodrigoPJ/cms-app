@@ -1,0 +1,21 @@
+service: serverless-test1
+
+frameworkVersion: "4"
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: us-east-1 # or your preferred region
+
+functions:
+  app:
+    handler: build/handler.handler
+    events:
+      - httpApi: '*'   # capture all routes
+
+package:
+  individually: true
+
+plugins:
+  - serverless-offline
+ 

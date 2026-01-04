@@ -1,6 +1,6 @@
 import { log } from "console";
 import { Request, Response } from "express";
-import { AppDataSource } from "../db-config/data-source";
+import { AppDataSource } from "../server";
 import { User } from "../db-config/entity/user";
 import { TypeORMError } from "typeorm";
 import os from "os";
@@ -21,7 +21,7 @@ const healthCheck = async (req: Request, res: Response) => {
   try {
     if (AppDataSource.isInitialized) {
       // Do not use on PROD or higher environments because it may cause service disruptions
-      if (process.env.environment === "local") {
+      if (process.env.NODE_ENV === "devlocal") {
         log("Disconnecting from database...");
         await AppDataSource.destroy();
         log("is DB Initialised :", AppDataSource.isInitialized);

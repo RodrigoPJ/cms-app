@@ -18,3 +18,18 @@ export interface ContentNewUserResponse {
 	userType: string;
 	id: string;
 }
+
+export interface DataBaseParams {
+  host: string;
+  port: string;
+  username: string;
+  password: string;
+  database: string;
+}
+
+export interface EncryptedPayload {
+  data: string;
+  iv: string;
+  key: string;
+  tag: string;
+}

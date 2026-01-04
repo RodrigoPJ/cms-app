@@ -2,10 +2,10 @@
 // Docs: https://dbml.dbdiagram.io/docs
 
 Table user {
-  id uuid [primary key]
+  id uuid [pk]
   firstName varchar
   lastName varchar
-  account uuid
+  account uuid [unique]
   age integer
   email varchar
   password varchar

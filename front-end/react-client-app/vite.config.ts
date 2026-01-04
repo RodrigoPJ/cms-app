@@ -1,16 +1,21 @@
 // vite.config.js
-import react from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'
+import react from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/vite';
+import mkcert from 'vite-plugin-mkcert';
 
 export default {
   server: {
     proxy: {
-  //  '/content': 'http://localhost:3001',
-    //  '/auth': 'http://localhost:3000'
+    '/api/content': 'http://localhost:3001',
+    '/api/auth': {
+      target: 'https://localhost:3000',
+      secure: false
+    },
     }
   },
     plugins: [
       react(),
+      mkcert(),
       tailwindcss()
     ]
 }

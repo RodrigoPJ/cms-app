@@ -29,6 +29,6 @@ app.use(express.json());
 //app.use(aunthenticateRequest)
 
 //main logic and services
-app.use('/content',routes);
+app.use('/api/content',routes);
 
 export default app;

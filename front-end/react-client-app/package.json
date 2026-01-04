@@ -4,7 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev:standalone": "vite --host 192.168.0.160 --port 5173 --mode standalone",
+    "dev:local": "vite --port 5173 --mode localdev",
     "tsc": "tsc -b",
     "vite:build": "vite build",
     "build": "tsc -b && vite build",
@@ -34,6 +35,7 @@
     "@eslint/js": "^9.25.0",
     "@tanstack/eslint-plugin-query": "^5.78.0",
     "@tanstack/react-query-devtools": "^5.80.6",
+    "@types/node": "^25.0.3",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "@vitejs/plugin-react": "^4.4.1",
@@ -46,6 +48,7 @@
     "sass-embedded": "^1.89.2",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.30.1",
-    "vite": "^6.3.5"
+    "vite": "^6.3.5",
+    "vite-plugin-mkcert": "^1.17.9"
   }
 }

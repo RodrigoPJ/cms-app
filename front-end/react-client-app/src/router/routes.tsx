@@ -8,6 +8,7 @@ import { LogOut } from "../pages/LogOut";
 import Settings from "../pages/dashboard/components/Settings";
 import { SignUp } from "../pages/SignUp";
 import { lazy } from "react";
+import Chat from "../pages/Chat";
 export const routes: RouteObject[] = [
   {
     path: "/",
@@ -18,6 +19,7 @@ export const routes: RouteObject[] = [
       { path: "login", Component: Login },
       { path: "signup", Component: SignUp },
       { path: "account", Component: Account },
+      { path: "chat", Component: Chat },
       {
         path: "dashboard",
         Component: DashboardLayout,

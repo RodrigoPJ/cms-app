@@ -1,18 +1,20 @@
-import { useState, type ChangeEvent, type FormEvent } from "react";
+import { useState,useRef, useCallback, type ChangeEvent, type FormEvent } from "react";
 import type { CreateContent } from "../utils/types/components-interface";
 import { FormInput } from "./daisy-ui/FormInput";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { DataContent } from "../services/content-service/DataContent";
+import Quill from "quill";
 import QuillEditor from "./quill/Quill";
 
 export function CreateContent({ projectId, setModalOpen }: CreateContent) {
-  const [tiptapValue, setTiptapValue] = useState("");
+  const quillRef = useRef<Quill>(null);
   const [formData, setFormData] = useState({
     title: "",
     body: "",
     properties: "",
     type: "",
   });
+
   const queryClient = useQueryClient();
 
   const { isPending, mutate } = useMutation({
@@ -23,7 +25,8 @@ export function CreateContent({ projectId, setModalOpen }: CreateContent) {
         properties: formData.properties,
         projectId,
       };
-      const savedContent = await DataContent.postContent(content, tiptapValue);
+      const editorContent = quillRef.current?.getSemanticHTML();
+      const savedContent = await DataContent.postContent(content, editorContent || '');
       return savedContent;
     },
     onSuccess() {
@@ -37,7 +40,7 @@ export function CreateContent({ projectId, setModalOpen }: CreateContent) {
         properties: "",
         type: "",
       });
-      setTiptapValue("delete");
+      if(quillRef.current) quillRef.current.root.innerHTML = "";
       setModalOpen(false);
     },
   });
@@ -50,10 +53,12 @@ export function CreateContent({ projectId, setModalOpen }: CreateContent) {
     e.preventDefault();
     mutate(projectId);
   };
-  function onFileAdded(url:string) {
-    setFormData({ ...formData, properties: JSON.stringify({url}) })
-  }
 
+  const onFileAdded = useCallback(
+    (url: string) => {
+      console.log(url);
+    },[])
+  
   return (
     <form>
       <h2 className="mb-4  text-center font-bold text-2xl">
@@ -100,7 +105,7 @@ export function CreateContent({ projectId, setModalOpen }: CreateContent) {
         />
       </div>
       <div className="flex flex-col">
-        <QuillEditor value={tiptapValue} setValue={setTiptapValue} fileAdded={onFileAdded} />
+        <QuillEditor quillRefProp={quillRef} fileAdded={onFileAdded} />
         <button className="btn btn-primary mt-5" onClick={saveContent}>
           Save
         </button>

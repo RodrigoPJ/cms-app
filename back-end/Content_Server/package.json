@@ -8,6 +8,7 @@
       "@types/cors": "^2.8.18",
       "@types/express": "^5.0.2",
       "@types/node": "^22.13.10",
+      "serverless-offline": "^14.4.0",
       "ts-node": "^10.9.2",
       "typescript": "^5.8.2"
    },
@@ -22,6 +23,8 @@
       "nodemon": "^3.1.10",
       "pg": "^8.14.1",
       "reflect-metadata": "^0.2.2",
+      "serverless": "^4.17.1",
+      "serverless-http": "^3.2.0",
       "typeorm": "0.3.24",
       "uuid": "^11.1.0"
    },

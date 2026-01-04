@@ -8,13 +8,11 @@ const queryClient = new QueryClient();
 
 function App() {
   return (
-    <>
-      <QueryClientProvider client={queryClient}>
-        <ReduxProvider store={store}>
-          <RouterProvider router={router} />
-        </ReduxProvider>
-      </QueryClientProvider>
-    </>
+    <QueryClientProvider client={queryClient}>
+      <ReduxProvider store={store}>
+        <RouterProvider router={router} />
+      </ReduxProvider>
+    </QueryClientProvider>
   );
 }
 

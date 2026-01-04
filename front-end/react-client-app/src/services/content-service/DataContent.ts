@@ -34,12 +34,7 @@ export class DataContent {
   }
 
   static async getContents(projectId: string): Promise<Content[] | null> {
-    let url = `/content/project?projectId=${projectId}`;
-    const BE = import.meta.env;
-    const baseUrl = BE["VITE_SERVER_content"] as string;
-    if (baseUrl) {
-      url = baseUrl + url;
-    }
+    const url = `/api/content/project?projectId=${projectId}`;
     const request = new Request(url);
     try {
       const rawContent = await fetch(request);
@@ -64,12 +59,7 @@ export class DataContent {
     content: Content,
     quill: string
   ): Promise<Content | null> {
-    let url = "/content/project-content";
-    const BE = import.meta.env;
-    const baseUrl = BE["VITE_SERVER_content"] as string;
-    if (baseUrl) {
-      url = baseUrl + url;
-    }
+    const url = "/api/content/project-content";
     const request = new Request(url, {
       method: "POST",
       headers: {
@@ -99,12 +89,7 @@ export class DataContent {
   }
 
   static async removeContent(contentId: string) {
-    let url = "/content/project-content";
-    const BE = import.meta.env;
-    const baseUrl = BE["VITE_SERVER_content"] as string;
-    if (baseUrl) {
-      url = baseUrl + url;
-    }
+    const url = "/api/content/project-content";
     const request = new Request(url, {
       method: "DELETE",
       headers: {
@@ -132,12 +117,7 @@ export class DataContent {
     contentType: string,
     accountId: string
   ) {
-    let url = "/content/new-project";
-    const BE = import.meta.env;
-    const baseUrl = BE["VITE_SERVER_content"] as string;
-    if (baseUrl) {
-      url = baseUrl + url;
-    }
+    const url = "/api/content/new-project";
     const request = new Request(url, {
       method: "POST",
       headers: {
@@ -166,12 +146,7 @@ export class DataContent {
   }
 
   async fetchUser(accId: string): Promise<User | null> {
-    let shortUrl = `/content/ui-profile?accountId=${accId}`;
-    const BE = import.meta.env;
-    const baseUrl = BE["VITE_SERVER_content"] as string;
-    if (baseUrl) {
-      shortUrl = baseUrl + shortUrl;
-    }
+    const shortUrl = `/api/content/ui-profile?accountId=${accId}`;
     const request = new Request(shortUrl);
     try {
       const rawUser = await fetch(request, {
@@ -190,12 +165,7 @@ export class DataContent {
   }
 
   static async uploadTosS3(file: File): Promise<string> {
-    let shortUrl = "/content/presigned-S3-url";
-    const BE = import.meta.env;
-    const baseUrl = BE["VITE_SERVER_content"] as string;
-    if (baseUrl) {
-      shortUrl = baseUrl + shortUrl;
-    }
+    const shortUrl = "/content/presigned-S3-url";
     const res = await fetch(shortUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -215,12 +185,7 @@ export class DataContent {
   }
 
   static async publishContent(id: string, published = '') {
-    let shortUrl = "/content/project-content";
-    const BE = import.meta.env;
-    const baseUrl = BE["VITE_SERVER_content"] as string;
-    if (baseUrl) {
-      shortUrl = baseUrl + shortUrl;
-    }
+    const shortUrl = "/api/content/project-content";
     try {
       const res = await fetch(shortUrl, {
         method: "PUT",

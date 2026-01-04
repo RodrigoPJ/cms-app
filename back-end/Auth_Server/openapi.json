@@ -1,0 +1,61 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Authentication API",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.example.com/v1",
+      "description": "Production server"
+    },
+    {
+      "url": "https://development-api.example.com",
+      "description": "Internal development server for testing"
+    },
+    {
+      "url": "http://localhost:3000/auth",
+      "description": "Local development server"
+    }
+  ],
+  "paths": {
+    "/get-users": {
+      "get": {
+        "summary": "Returns a list of all users existing in DB",
+        "tags": [
+            "Admin helper"
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/User" }
+                },
+                "examples": { "example": "user" }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "example": "76868586" },
+          "firstName": { "type": "string", "example": "Jane" },
+          "lastName": { "type": "string", "example": "Doe" },
+          "age": { "type": "number", "example": 40 },
+          "password": { "type": "string", "example": "password" },
+          "email": { "type": "string", "example": "person@domain.test" },
+          "account": { "type": "string", "example": "987987987" }
+        }
+      }
+    }
+  }
+}

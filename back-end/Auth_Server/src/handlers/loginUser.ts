@@ -1,22 +1,33 @@
 import { Request, Response } from "express";
-import { AppDataSource } from "../db-config/data-source";
+import { AppDataSource } from "../server";
 import { User } from "../db-config/entity/user";
 import { Encrypt } from "../utils/encryption/Encrypt";
+import { join, resolve, dirname } from "node:path";
 import { log } from "console";
-import { UserPass } from "../utils/validators/userPassValidator";
+import { readFile, stat } from "node:fs/promises";
 
 const loginUser = async (req: Request, res: Response) => {
-  const myTokenHeader = req.headers['my_token'] as string;
-  const body: UserPass = JSON.parse(myTokenHeader);
-  const { email, password } = body;
-
-  log(myTokenHeader);
   log("login");
+  // First we check to have the private key, if not, we return 502
+  // no details needed in the response, just logging the reason
+  const privateKeyPath = join(process.cwd(), "keys/id_rsa_enc.pem");
+  const privateKeyFile = await readFile(privateKeyPath, 'utf-8');
+  const privateKeyObj = Encrypt.createPrivateKeyObjectFromString(privateKeyFile);
+  const privateKey = privateKeyObj.export({
+    type: "pkcs8",
+    format: "pem",
+  }) as string;
+  
+  const { key, iv, data, tag } = req.body;
+  const decryptedData = Encrypt.decryptData({key, iv, data, tag}, privateKey);
+  const { email, password } = decryptedData;
+
   const user = await AppDataSource.getRepository(User).find({
     where: {
       email,
     },
   });
+  log(user)
   if (user.length > 1) {
     res.status(401).send("user duplicated");
   } else if (user.length === 1) {
@@ -31,9 +42,9 @@ const loginUser = async (req: Request, res: Response) => {
       res
         .cookie("token_bearer", token, {
           httpOnly: true,
-          secure: false, // Set to true **only** if using HTTPS (in dev, keep it false)
-          sameSite: "lax", // Or 'none' if secure: true
-          maxAge: 86400000, //
+          secure: true,
+          sameSite: "none",
+          maxAge: 24 * 3600 * 1000, // one day
         })
         .status(200)
         .json(newUser);

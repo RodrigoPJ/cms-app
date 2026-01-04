@@ -13,7 +13,7 @@ export const navBar = {
       loggedin: false,
     },
     {
-      name: "Dasboard",
+      name: "Dashboard",
       url: "dashboard",
       loggedin: true,
     },
@@ -22,6 +22,11 @@ export const navBar = {
       url: "account",
       loggedin: true,
     },
+    {
+      name: "Chat",
+      url: "chat",
+      loggedin: true
+    }
   ],
   loginButton: "Log in",
   logoutButton: "Log out",

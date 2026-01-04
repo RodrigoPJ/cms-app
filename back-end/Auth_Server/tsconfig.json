@@ -1,11 +1,11 @@
 {
  "compilerOptions": {
-  "target": "es2018",
+  "target": "es2020",
   "lib": ["es5", "es6", "ES2018"],
   "experimentalDecorators": true,
   "emitDecoratorMetadata": true,
-  "module": "commonjs",
-  "moduleResolution": "node",
+  "module": "nodenext",
+  "moduleResolution": "node16",
   "resolveJsonModule": true,
   "allowJs": true,
   "outDir": "./dist",
@@ -15,7 +15,7 @@
   "noImplicitAny": true,
   "strictPropertyInitialization": false
  },
- "include": ["src/**/*"],
+ "include": ["src/**/*", ".env.devlocal"],
  "exclude": ["node_modules", "dist"],
  "ts-node": {
   "files": true
