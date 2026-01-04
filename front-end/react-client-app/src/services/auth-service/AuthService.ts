@@ -7,7 +7,7 @@ import { DataAuth } from "./DataAuth";
 
 class AuthService {
   public isLogged = false;
-  public authData = new DataAuth();
+  private authData = new DataAuth();
 
   async persistLoginAndGetInfo(accountId: string, dispatch: AppDispatch) {
     localStorage.setItem("cms-app", JSON.stringify({ user: accountId }));

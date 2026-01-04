@@ -1,6 +1,8 @@
-import type { Dispatch, ReactNode, SetStateAction } from "react";
+import type { Dispatch, ReactNode, SetStateAction, RefObject } from "react";
 import type { Pages } from "./data-types";
+import Quill from "quill";
 import type { NavLinkRenderProps } from "react-router";
+
 export interface CardInterface {
   title: string;
   body: string;
@@ -71,9 +73,8 @@ export interface ContentListComponent {
 }
 
 export interface QuillComponent {
-  setValue: Dispatch<SetStateAction<string>>;
-  value: string;
   fileAdded: (url: string) => void;
+  quillRefProp: RefObject<Quill | null>;
 }
 
 export interface ProfileInfoComponent {

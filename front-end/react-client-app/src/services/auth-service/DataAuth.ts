@@ -1,3 +1,4 @@
+import { encryptAESKey, encryptWithAES, generateAESKey } from "../../utils/crypto/cypher";
 import type {
   ENV,
   PersonData,
@@ -9,10 +10,8 @@ export class DataAuth {
   public login;
   public logout;
   public signup;
-  private env: ENV;
   constructor() {
     const BE: ENV = import.meta.env;
-    this.env = BE;
     if (BE["VITE_Back_End_type"] === "fake") {
       this.login = fakeLogIn;
       this.logout = fakeLogout;
@@ -29,11 +28,7 @@ export class DataAuth {
   }
 
   async authSignup(obj: PersonData): Promise<SignupResponse | null> {
-    let url = "/auth/add-user";
-    const baseUrl = this.env["VITE_SERVER_auth"];
-    if (baseUrl) {
-      url = baseUrl + url;
-    }
+    const url = "/api/auth/add-user";
     console.log(url);
     
     const request = new Request(url, {
@@ -62,11 +57,7 @@ export class DataAuth {
   }
 
   async authLogout() {
-    const baseUrl = this.env["VITE_SERVER_auth"];
-    let url = "/auth/logout";
-    if (baseUrl) {
-      url = baseUrl + url;
-    }
+    const url = "/api/auth/logout";
     const request = new Request(url, {
       method: "POST",
       credentials: "include",
@@ -89,24 +80,31 @@ export class DataAuth {
   }
 
   async authLogin(
-    name: string,
+    email: string,
     password: string
   ): Promise<SignupResponse | null> {
-    const baseUrl = this.env["VITE_SERVER_auth"];
-    let url = "/auth/login";
-    if (baseUrl) {
-      url = baseUrl + url;
-    }
-    const request = new Request(url, {
+    const loginUrl = "/api/auth/login";
+    const keyUrl = '/api/auth/keys';
+    const publicRSAKeyRaw = await fetch(keyUrl);
+    const publicRSAKey = await publicRSAKeyRaw.json()
+    const aesKey = await generateAESKey();
+    const encryptedData = await encryptWithAES(aesKey, {email, password});
+    const encryptedKey = await encryptAESKey(aesKey, publicRSAKey.publicKey);
+    const payload = {
+      key: encryptedKey,
+      iv: encryptedData.iv,
+      data: encryptedData.ciphertext,
+      tag: encryptedData.tag
+    };
+    const request = new Request(loginUrl, {
       method: "POST",
-      body: JSON.stringify({ email: "mail@test.com", password: "password" }),
+      body: JSON.stringify(payload),
       credentials: 'include',
       mode: 'cors',
       headers: {
         "Content-Type": "application/json",
       },
     });
-    request.headers.set("my_token", JSON.stringify({ email: name, password }));
     try {
       const rawResponse = await fetch(request, {
         credentials: "include",
@@ -127,13 +125,7 @@ export class DataAuth {
     name: string,
     password: string
   ): Promise<SignupResponse | null> {
-    const BE = import.meta.env;
-
-    const baseUrl = BE["VITE_SERVER_auth"];
-    let url = "/auth/reset";
-    if (baseUrl) {
-      url = baseUrl + url;
-    }
+    const url = "/api/auth/reset";
     const request = new Request(url, {
       method: "PUT",
       body: JSON.stringify({ email: name, password}),

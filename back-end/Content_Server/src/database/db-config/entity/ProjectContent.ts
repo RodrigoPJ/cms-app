@@ -23,7 +23,7 @@ export class ProjectContent {
   @Column('varchar')
   published?: string | null; 
 
-  @Column("varchar")
+  @Column('jsonb')
   properties: string;
 
   @ManyToOne(() => ProjectItem, (item) => item.id)

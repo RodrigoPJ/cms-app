@@ -1,25 +1,24 @@
 Table user {
-  id uuid [primary key , ref: < project_item.accountId]
-  userName varchar
-  user varchar
+  id uuid [pk, ref: < project_item.accountId]
+  userName varchar [unique]
+  fullName varchar
   dateCreated timestamp
   userType varchar
-  projectList project_item
 }
 
 Table project_item {
-  id uuid [primary key , ref: < project_content.projectItemId]
-  accountId uuid 
+  id uuid [pk , ref: < project_content.projectItemId]
+  accountId uuid
   contentType varchar
   name varchar
   isActive boolean
 }
 
 Table project_content {
-  id uuid [primary key]
+  id uuid [pk]
   type varchar
   title varchar
   body varchar
-  properties varchar
-  projectItemId uuid 
+  properties jsonb
+  projectItemId uuid
 }

@@ -1,21 +1,20 @@
 // components/QuillEditor.jsx
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useImperativeHandle } from "react";
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
 import type { QuillComponent } from "../../utils/types/components-interface";
 import { DataContent } from "../../services/content-service/DataContent";
 
-const QuillEditor = ({ value, setValue, fileAdded }: QuillComponent) => {
-  const editorRef = useRef(null);
-  const quillRef = useRef<Quill | null>(null);
-  if (value === "delete" && quillRef.current) {
-    quillRef.current.root.innerHTML = "";
-  }
+const QuillEditor = ({ fileAdded, quillRefProp }: QuillComponent) => {
+  const containerRef = useRef(null);
+  const internalQuillRef = useRef<Quill | null>(null);
+
+  useImperativeHandle(quillRefProp, () => internalQuillRef.current as Quill);
 
   useEffect(() => {
-    if (!editorRef.current) return;
+    if (!containerRef.current || internalQuillRef.current) return;
 
-    quillRef.current = new Quill(editorRef.current, {
+    internalQuillRef.current = new Quill(containerRef.current, {
       theme: "snow",
       placeholder: "Write something amazing...",
       modules: {
@@ -44,10 +43,10 @@ const QuillEditor = ({ value, setValue, fileAdded }: QuillComponent) => {
                 
                 const imageUrl = url.split("?")[0]; // Public URL without query params
                 fileAdded(imageUrl);
-                if (!quillRef.current) return;
-                const range = quillRef.current.getSelection();
+                if (!internalQuillRef.current) return;
+                const range = internalQuillRef.current.getSelection();
                 if (range)
-                  quillRef.current.insertEmbed(range.index, "image", imageUrl);
+                  internalQuillRef.current.insertEmbed(range.index, "image", imageUrl);
               };
             },
           },
@@ -55,21 +54,14 @@ const QuillEditor = ({ value, setValue, fileAdded }: QuillComponent) => {
       },
     });
 
-    // Handle content changes
-    quillRef.current.on("text-change", () => {
-      if (quillRef.current) {        
-        setValue(quillRef.current.getSemanticHTML());
-      }
-    });
-
     return () => {
-      quillRef.current = null;
+      internalQuillRef.current = null;
     };
-  }, []);
+  }, [fileAdded]);
 
   return (
     <div className="quill-wrapper border border-gray-300 rounded-lg p-2">
-      <div ref={editorRef} style={{ height: "250px" }} />
+      <div ref={containerRef} style={{ height: "250px" }} />
     </div>
   );
 };

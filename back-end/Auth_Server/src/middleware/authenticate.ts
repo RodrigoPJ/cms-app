@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { log } from "console";
 import { Encrypt } from "../utils/encryption/Encrypt";
-import { AppDataSource } from "../db-config/data-source";
+import { AppDataSource } from "../server";
 import { User } from "../db-config/entity/user";
 import { JWebToken } from "../utils/validators/jwtValidator";
 import { validate } from "class-validator";
