@@ -7,6 +7,9 @@ import { log } from "console";
 import { readFile, stat } from "node:fs/promises";
 
 const loginUser = async (req: Request, res: Response) => {
+  log("login");
+  // First we check to have the private key, if not, we return 502
+  // no details needed in the response, just logging the reason
   const privateKeyPath = join(process.cwd(), "keys/id_rsa_enc.pem");
   const privateKeyFile = await readFile(privateKeyPath, 'utf-8');
   const privateKeyObj = Encrypt.createPrivateKeyObjectFromString(privateKeyFile);
@@ -15,10 +18,8 @@ const loginUser = async (req: Request, res: Response) => {
     format: "pem",
   }) as string;
   
-  log("login");
   const { key, iv, data, tag } = req.body;
   const decryptedData = Encrypt.decryptData({key, iv, data, tag}, privateKey);
-  log(decryptedData);
   const { email, password } = decryptedData;
 
   const user = await AppDataSource.getRepository(User).find({

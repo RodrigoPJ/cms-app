@@ -9,7 +9,7 @@ const env = process.env.NODE_ENV || "devlocal";
 dotenv.config({ path: resolve(process.cwd(), `.env.${env}`) });
 
 const keys = async (req: Request, res: Response) => {
-  log("Keys endpoint");
+  log("Keys");
   log(req.headers["user-agent"]);
   const privateKeyPath = join(process.cwd(), "keys/id_rsa_enc.pem");
   const publicKeyPath = join(process.cwd(), "keys/id_rsa_pub.pem");
