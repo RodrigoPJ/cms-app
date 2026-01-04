@@ -24,8 +24,8 @@ export const AppDataSource = createDataSource(dbEnv);
 
 const app = createApp(process.env.FRONT_URL);
 const sslOptions = {
-  key: fs.readFileSync(path.resolve(process.cwd(), 'localhost+2-key.pem')),
-  cert: fs.readFileSync(path.resolve(process.cwd(), 'localhost+2.pem'))
+  key: fs.readFileSync(path.resolve(process.cwd(), 'certificates/localhost+2-key.pem')),
+  cert: fs.readFileSync(path.resolve(process.cwd(), 'certificates/localhost+2.pem'))
 };
 
 const server = https.createServer(sslOptions, app);

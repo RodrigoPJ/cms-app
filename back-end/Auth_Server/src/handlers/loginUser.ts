@@ -14,7 +14,6 @@ const loginUser = async (req: Request, res: Response) => {
     type: "pkcs8",
     format: "pem",
   }) as string;
-  // log(privateKey)
   
   log("login");
   const { key, iv, data, tag } = req.body;

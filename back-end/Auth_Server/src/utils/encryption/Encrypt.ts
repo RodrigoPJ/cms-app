@@ -6,7 +6,7 @@ import {
   createPrivateKey,
   privateDecrypt,
   constants,
-  createDecipheriv
+  createDecipheriv,
 } from "crypto";
 import dotenv from "dotenv";
 import path from "path";
@@ -55,11 +55,12 @@ export class Encrypt {
       },
     });
     return {
-      publicKey, privateKey
-    }
+      publicKey,
+      privateKey,
+    };
   }
 
-  static createPublicKeyObjectFromString(publicKeyString: string){
+  static createPublicKeyObjectFromString(publicKeyString: string) {
     const publicKeyObject = createPublicKey({
       key: publicKeyString,
       format: "pem",
@@ -68,39 +69,40 @@ export class Encrypt {
     return publicKeyObject;
   }
 
-  static createPrivateKeyObjectFromString(privateKeyString: string){
+  static createPrivateKeyObjectFromString(privateKeyString: string) {
     const privateKeyObject = createPrivateKey({
       key: privateKeyString,
-      passphrase: rsaFilesPassphrase
+      passphrase: rsaFilesPassphrase,
     });
     return privateKeyObject;
   }
 
   static decryptAESKey(encryptedKeyBase64: string, privateKeyPem: string) {
-  const encryptedKey = Buffer.from(encryptedKeyBase64, 'base64');
+    const encryptedKey = Buffer.from(encryptedKeyBase64, "base64");
 
-  return privateDecrypt(
-    {
-      key: privateKeyPem,
-      padding: constants.RSA_PKCS1_OAEP_PADDING,
-      oaepHash: 'sha256'
-    },
-    encryptedKey
-  );
-}
+    return privateDecrypt(
+      {
+        key: privateKeyPem,
+        padding: constants.RSA_PKCS1_OAEP_PADDING,
+        oaepHash: "sha256",
+      },
+      encryptedKey
+    );
+  }
 
-static decryptData({ key, iv, data, tag }: EncryptedPayload, privateKeyPem: string) {
-  const aesKey = this.decryptAESKey(key, privateKeyPem);
-  const decipher = createDecipheriv(
-    'aes-256-gcm',
-    aesKey,
-    Buffer.from(iv, 'base64')
-  );
-  decipher.setAuthTag(Buffer.from(tag, 'base64'));
-  const decrypted =
-    decipher.update(Buffer.from(data, 'base64')) +
-    decipher.final('utf8');
-  return JSON.parse(decrypted);
-}
-
+  static decryptData(
+    { key, iv, data, tag }: EncryptedPayload,
+    privateKeyPem: string
+  ) {
+    const aesKey = this.decryptAESKey(key, privateKeyPem);
+    const decipher = createDecipheriv(
+      "aes-256-gcm",
+      aesKey,
+      Buffer.from(iv, "base64")
+    );
+    decipher.setAuthTag(Buffer.from(tag, "base64"));
+    const decrypted =
+      decipher.update(Buffer.from(data, "base64")) + decipher.final("utf8");
+    return JSON.parse(decrypted);
+  }
 }
