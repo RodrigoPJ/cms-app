@@ -3,7 +3,7 @@ import { ProjectContent } from "../db-config/entity/ProjectContent";
 
 /** Searches for all project items that share the given */
 const findContents = async (id: string):Promise<ProjectContent[] | null> => {
-  await AppDataSource.initialize();
+  // await AppDataSource.initialize();
   try {
     const projectList= await AppDataSource.getRepository(ProjectContent).find({
       where: {

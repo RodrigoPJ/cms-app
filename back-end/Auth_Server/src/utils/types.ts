@@ -33,3 +33,7 @@ export interface EncryptedPayload {
   key: string;
   tag: string;
 }
+
+export interface EncryptedRequest extends EncryptedPayload{
+  kid: string;
+}

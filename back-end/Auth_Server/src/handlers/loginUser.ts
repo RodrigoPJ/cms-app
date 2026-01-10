@@ -5,20 +5,22 @@ import { Encrypt } from "../utils/encryption/Encrypt";
 import { join, resolve, dirname } from "node:path";
 import { log } from "console";
 import { readFile, stat } from "node:fs/promises";
+import { createPrivateKeyObjectFromString } from "../utils/helper/keysHelper";
 
 const loginUser = async (req: Request, res: Response) => {
   log("login");
   // First we check to have the private key, if not, we return 502
   // no details needed in the response, just logging the reason
-  const privateKeyPath = join(process.cwd(), "keys/id_rsa_enc.pem");
+    const { key, iv, data, tag, kid } = req.body;
+  log(kid)
+  const privateKeyPath = join(process.cwd(), `keys/${kid}/id_rsa_enc.pem`);
   const privateKeyFile = await readFile(privateKeyPath, 'utf-8');
-  const privateKeyObj = Encrypt.createPrivateKeyObjectFromString(privateKeyFile);
+  const privateKeyObj = createPrivateKeyObjectFromString(privateKeyFile);
   const privateKey = privateKeyObj.export({
     type: "pkcs8",
     format: "pem",
   }) as string;
   
-  const { key, iv, data, tag } = req.body;
   const decryptedData = Encrypt.decryptData({key, iv, data, tag}, privateKey);
   const { email, password } = decryptedData;
 
@@ -41,7 +43,7 @@ const loginUser = async (req: Request, res: Response) => {
       };
       res
         .cookie("token_bearer", token, {
-          httpOnly: true,
+          // httpOnly: true,
           secure: true,
           sameSite: "none",
           maxAge: 24 * 3600 * 1000, // one day

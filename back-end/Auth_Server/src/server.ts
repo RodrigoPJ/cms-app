@@ -1,4 +1,5 @@
-import { log } from "console";
+import "dotenv/config";
+import { log, info } from "console";
 import dotenv from 'dotenv';
 import path from 'path';
 import https from 'https';
@@ -6,16 +7,17 @@ import fs from 'fs';
 import { createDataSource } from "./db-config/data-source";
 import { createApp } from "./app";
 import { DataBaseParams } from "./utils/types";
+import ensureKeys from "./utils/on-start/ensureKeys";
 
 const env = process.env.NODE_ENV || 'devlocal';
 dotenv.config({ path: path.resolve(process.cwd(), `.env.${env}`) });
 
-console.log(`Environment: ${env}`);
+info(`Environment: ${env}`);
 
 const dbEnv: DataBaseParams = {
   host: process.env.DB_HOST,
   password: process.env.DB_PASS,
-  port: process.env.PORT,
+  port: process.env.DB_PORT,
   username: process.env.DB_USER,
   database: process.env.DB_NAME
 }
@@ -30,10 +32,17 @@ const sslOptions = {
 
 const server = https.createServer(sslOptions, app);
 
-AppDataSource.initialize().then((DataSource) => {
-  log('Database connected: ', DataSource.options.type);
-
-  return server.listen(process.env.PORT,()=>{
-    log(`Secure server listening on port: ${process.env.PORT}`)
+const startServer = async () => {
+  try {
+    const DataSource = await AppDataSource.initialize();
+    log('Database connected: ', DataSource.options.type);
+    await ensureKeys();
+    server.listen(process.env.PORT,()=>{
+    log(`Secure server listening on port: ${process.env.PORT}`);
   });
-});
+  } catch (error) {
+    log(error)
+  }
+};
+
+startServer();

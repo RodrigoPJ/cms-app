@@ -8,10 +8,11 @@ const aunthenticateRequest = async (
 ) => {
   log(req.headers["user-agent"]);
   const cookies = req.cookies;
-  
-  if (cookies["token_bearer"]) {
+  try {
+    if (cookies["token_bearer"]) {
     const headersCookie = req.headers.cookie;
-    const serverAuth = await fetch("http://localhost:3000/auth/authenticate", {
+    log(headersCookie)
+    const serverAuth = await fetch("https://localhost:3000/api/auth/authenticate", {
       method: "POST",
       headers: {
         Accept: "Application/json",
@@ -29,6 +30,9 @@ console.log('auth call');
     }
   } else {
     res.status(401).json({ error: { notAuthentic: true } });
+  }
+  } catch (error) {
+    log(error)
   }
 };
 
