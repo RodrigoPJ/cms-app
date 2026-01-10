@@ -36,8 +36,12 @@ const saveNewUser = async (req: Request, res: Response) => {
         const newAccount = await saveAccount(firstName, email);
         if (newAccount && newAccount.id){
           user.account = newAccount.id
-          const accSaved = await AppDataSource.getRepository(User).save(user);          
-          res.status(200).json(accSaved);
+          const accSaved = await AppDataSource.getRepository(User).save(user);
+          res.status(200).json({
+            user: accSaved.firstName + ' ' + accSaved.lastName,
+            saved: true,
+            account: accSaved.account
+          });
         }else {
             res.status(500).send('no content account created')
         }

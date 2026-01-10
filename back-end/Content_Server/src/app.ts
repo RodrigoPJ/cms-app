@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import routes from "./routes/routes";
 import cookieParser from "cookie-parser";
-//import aunthenticateRequest from "./middleware/authenticate";
+import aunthenticateRequest from "./middleware/authenticate";
 import * as dotenv from "dotenv";
 
 dotenv.config();
@@ -26,7 +26,7 @@ app.use(cookieParser());
 app.use(express.json());
 
 // Only use when the other server is also running
-//app.use(aunthenticateRequest)
+app.use(aunthenticateRequest)
 
 //main logic and services
 app.use('/api/content',routes);

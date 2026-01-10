@@ -86,7 +86,7 @@ export class DataAuth {
     const loginUrl = "/api/auth/login";
     const keyUrl = '/api/auth/keys';
     const publicRSAKeyRaw = await fetch(keyUrl);
-    const publicRSAKey = await publicRSAKeyRaw.json()
+    const publicRSAKey = await publicRSAKeyRaw.json();
     const aesKey = await generateAESKey();
     const encryptedData = await encryptWithAES(aesKey, {email, password});
     const encryptedKey = await encryptAESKey(aesKey, publicRSAKey.publicKey);
@@ -94,7 +94,8 @@ export class DataAuth {
       key: encryptedKey,
       iv: encryptedData.iv,
       data: encryptedData.ciphertext,
-      tag: encryptedData.tag
+      tag: encryptedData.tag,
+      kid: publicRSAKey.kid
     };
     const request = new Request(loginUrl, {
       method: "POST",

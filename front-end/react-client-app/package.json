@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev:standalone": "vite --host 192.168.0.160 --port 5173 --mode standalone",
+    "dev:standalone": "vite --port 5173 --mode standalone",
     "dev:local": "vite --port 5173 --mode localdev",
     "tsc": "tsc -b",
     "vite:build": "vite build",

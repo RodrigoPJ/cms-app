@@ -43,7 +43,7 @@ node_modules/
 jspm_packages/
 
 # MacOS directory change file
-.DS_Store
+back-end/.DS_Store
 
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/

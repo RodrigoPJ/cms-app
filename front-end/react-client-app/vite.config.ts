@@ -6,7 +6,10 @@ import mkcert from 'vite-plugin-mkcert';
 export default {
   server: {
     proxy: {
-    '/api/content': 'http://localhost:3001',
+    '/api/content': {
+      target: 'https://localhost:3001',
+      secure: false
+    },
     '/api/auth': {
       target: 'https://localhost:3000',
       secure: false

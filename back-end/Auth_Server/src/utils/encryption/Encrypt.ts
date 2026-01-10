@@ -1,9 +1,6 @@
 import * as jwt from "jsonwebtoken";
 import * as bcrypt from "bcrypt";
 import {
-  generateKeyPairSync,
-  createPublicKey,
-  createPrivateKey,
   privateDecrypt,
   constants,
   createDecipheriv,
@@ -11,13 +8,11 @@ import {
 import dotenv from "dotenv";
 import path from "path";
 import { EncryptedPayload } from "../types";
-import { log } from "console";
 
 const env = process.env.NODE_ENV || "devlocal";
 dotenv.config({ path: path.resolve(process.cwd(), `.env.${env}`) });
 
 const { JWT_SECRET = "" } = process.env;
-const rsaFilesPassphrase = process.env.RSA_PASSPHRASE;
 
 export class Encrypt {
   static async encryptpass(password: string) {
@@ -38,45 +33,7 @@ export class Encrypt {
     const decode = jwt.verify(jwtoken, JWT_SECRET);
     return decode;
   }
-
-  static generateRSAKeyPair() {
-    const { publicKey, privateKey } = generateKeyPairSync("rsa", {
-      modulusLength: 2048,
-      publicKeyEncoding: {
-        type: "spki",
-        format: "pem",
-      },
-      privateKeyEncoding: {
-        type: "pkcs8",
-        format: "pem",
-        // === ENCRYPTION OPTIONS ===
-        cipher: "aes-256-cbc", // The encryption algorithm
-        passphrase: rsaFilesPassphrase, // The passphrase for encryption
-      },
-    });
-    return {
-      publicKey,
-      privateKey,
-    };
-  }
-
-  static createPublicKeyObjectFromString(publicKeyString: string) {
-    const publicKeyObject = createPublicKey({
-      key: publicKeyString,
-      format: "pem",
-      type: "spki",
-    });
-    return publicKeyObject;
-  }
-
-  static createPrivateKeyObjectFromString(privateKeyString: string) {
-    const privateKeyObject = createPrivateKey({
-      key: privateKeyString,
-      passphrase: rsaFilesPassphrase,
-    });
-    return privateKeyObject;
-  }
-
+ 
   static decryptAESKey(encryptedKeyBase64: string, privateKeyPem: string) {
     const encryptedKey = Buffer.from(encryptedKeyBase64, "base64");
 

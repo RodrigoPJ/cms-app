@@ -4,7 +4,7 @@
   "description": "Small Authentication server for home use",
   "main": "server.ts",
   "scripts": {
-    "dev": "NODE_ENV=devlocal nodemon --exec ts-node ./src/server.ts",
+    "dev": "NODE_ENV=devlocal NODE_EXTRA_CA_CERTS=\"/Users/rodrigopena/Documents/cms-app/back-end/Auth_Server/certificates/rootCA.pem\" nodemon --exec ts-node ./src/server.ts",
     "build": "tsc --project tsconfig.json",
     "build:dev": "NODE_ENV=dev npm run build",
     "build:devlocal": "NODE_ENV=devlocal npm run build",

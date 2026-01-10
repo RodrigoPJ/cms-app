@@ -14,7 +14,8 @@ async function encryptedDataParser(req: Request, res: Response, next: NextFuncti
       if (
         typeof req.body?.data === "string" &&
         typeof req.body?.iv === "string" &&
-        typeof req.body?.key === "string"
+        typeof req.body?.key === "string" &&
+        typeof req.body?.kid === "string"
       ) {
         next();
       } else {

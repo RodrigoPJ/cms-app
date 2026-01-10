@@ -4,8 +4,7 @@ import { User } from "./entity/user";
 import { DataBaseParams } from "../utils/types";
 
 export function createDataSource(dbEnv: DataBaseParams): DataSource {
-  const rawPort = process.env.DB_PORT as string | undefined;
-  const port = parseInt(rawPort || "4000");
+  const port = parseInt(dbEnv.port || "4000");
   const AppDataSource = new DataSource({
     type: "postgres",
     host: dbEnv.host,
