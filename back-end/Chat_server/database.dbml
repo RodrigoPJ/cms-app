@@ -1,0 +1,13 @@
+
+Table Message {
+  id uuid [pk]
+  message varchar
+  conversation uuid[fk]
+  senderUsername varchar
+  created_at date
+}
+
+Table Conversation {
+  id uuid [pk]
+  userids: varchar  [note: "string []"] // string[]
+}

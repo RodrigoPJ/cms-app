@@ -43,7 +43,7 @@ const loginUser = async (req: Request, res: Response) => {
       };
       res
         .cookie("token_bearer", token, {
-          // httpOnly: true,
+          httpOnly: true,
           secure: true,
           sameSite: "none",
           maxAge: 24 * 3600 * 1000, // one day
