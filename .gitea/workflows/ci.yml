@@ -10,8 +10,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+    #   - name: Checkout
+    #     uses: actions/checkout@v4
 
       - name: Install deps
         working-directory: react-client-app
@@ -22,4 +22,4 @@ jobs:
         run: npm run build
 
       - name: Build Docker image
-        run: docker build -t cms-frontend -f docker/Dockerfile .
+        run: docker build -t cms-frontend -f front-end/Dockerfile .
