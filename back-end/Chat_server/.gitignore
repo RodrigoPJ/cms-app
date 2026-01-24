@@ -1,0 +1,3 @@
+certificates/
+.venv
+**/__pycache__/*
