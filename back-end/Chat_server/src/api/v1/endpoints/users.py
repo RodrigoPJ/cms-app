@@ -10,17 +10,21 @@ from src.schemas.schemas import (
 
 router = APIRouter()
 
-@router.post("/users")
+@router.post("/user")
 async def create_user_stub(user_data: UserCreate):
+    """Creates a new user from a UUID"""
+    print(user_data)
     # Simply store the UUID so it can be used for foreign keys
     return await User.create(**user_data.model_dump())
 
 @router.get("/users")
 async def get_all_users():
+    """Returns all users in the D, meant for admin and maintenance"""
     return await User.all()
 
-@router.get("/users/{user_id}", response_model=User_Pydantic_Out)
+@router.get("/user/{user_id}", response_model=User_Pydantic_Out)
 async def get_user_details(user_id: str):
+    """returns the user for a given UUID"""
     # 1. Validate UUID format
     try:
         validated_id = UUID(user_id)

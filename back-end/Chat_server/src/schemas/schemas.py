@@ -7,13 +7,14 @@ from uuid import UUID
 class MessageCreate(BaseModel):
     message: str
     conversation_id: UUID
-    senderUsername: str
+    sender_id: UUID
 
-class ConversationCreate(BaseModel):
+class   ConversationCreate(BaseModel):
     participant_ids: List[str]
+    conversation_starter: str
 
 class UserCreate(BaseModel):
-    id: UUID
+    user_id: UUID
 
 # here we have the pydantic modes created form our database objects
 Conversation_Pydantic_Out = pydantic_model_creator(Conversation, name="ConversationOut")

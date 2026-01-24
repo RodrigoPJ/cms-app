@@ -66,7 +66,7 @@ class AuthService {
     };
   }
 
-  /***this method is a data action that will call the proper service to log in */
+  /** This method is a data action that will call the proper service to log in */
   logIn(name: string, password: string) {
     return async (dispatch: AppDispatch) => {
       try {

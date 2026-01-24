@@ -9,8 +9,6 @@ app = FastAPI(title="Chat server for CMS")
 
 manager = ConnectionManager()
 
-app.include_router(api_router)
-
 register_tortoise(
     app,
     db_url="postgres://postgres:mota@localhost:5777/postgres",
@@ -18,8 +16,8 @@ register_tortoise(
     generate_schemas=True, # Automatically creates tables on startup (dev only)
     add_exception_handlers=True,
 )
-# app.mount("/dist", StaticFiles(directory=static_files_dir), name="dist")
 
+app.include_router(api_router)
 
 @app.websocket("/ws/chat/{client_id}")
 async def websocket_endpoint(websocket: WebSocket, client_id: int):
