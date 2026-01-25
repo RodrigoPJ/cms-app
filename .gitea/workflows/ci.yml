@@ -10,12 +10,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Check start directory
+      - run: pwd
+
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Install deps
         working-directory: react-client-app
-        run: npm ci
+        run:  cd front-end/react-client-app && npm i
 
       - name: Build frontend
         working-directory: react-client-app
