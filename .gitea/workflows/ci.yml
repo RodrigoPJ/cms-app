@@ -21,6 +21,7 @@ jobs:
         run:  cd front-end/react-client-app && npm i
 
       - name: Build frontend
+        run: pwd
         run: npm run build
 
       - name: Build Docker image
