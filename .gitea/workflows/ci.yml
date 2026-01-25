@@ -10,11 +10,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Check start directory
       - run: pwd
 
-      - name: Checkout
-        uses: actions/checkout@v4
 
       - name: Install deps
         working-directory: react-client-app
