@@ -20,8 +20,9 @@ jobs:
         working-directory: ./front-end/react-client-app
         run: pwd
 
-      # - name: Install deps
-      #   run:  cd front-end/react-client-app && npm i
+      - name: Install deps
+        working-directory: ./front-end/react-client-app
+        run: npm i
 
       # - name: Build frontend
       #   run: cd front-end/react-client-app && npm run build
