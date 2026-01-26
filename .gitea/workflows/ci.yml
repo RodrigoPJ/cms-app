@@ -26,8 +26,8 @@ jobs:
       - name: Build Docker image
         run: cd front-end && docker build -t cms-frontend:latest .
 
-      # - name: Stop old container
-      #   run: docker stop cms-frontend || true && docker rm cms-frontend || true
+      - name: Stop old container
+        run: docker stop cms-frontend || true && docker rm cms-frontend || true
 
       - name: Run the docker image
         run: docker run -d -p 8080:80 --name cms-frontend cms-frontend
@@ -35,5 +35,5 @@ jobs:
       - name: Clean unused containers
         run: docker container prune -f
 
-      # - name: Clean unused images
-      #   run: docker image prune -af
+      - name: Clean unused images
+        run: docker image prune -af
