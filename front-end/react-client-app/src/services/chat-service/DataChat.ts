@@ -1,6 +1,6 @@
 export class DataChat {
 
-  private clientID: string;
+  clientID: string;
   public hasConnection: boolean = false;
   public socketConnection: WebSocket | null = null;
 
