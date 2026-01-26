@@ -24,4 +24,4 @@ jobs:
         run: cd front-end/react-client-app && npm run build
 
       - name: Build Docker image
-        run: docker build -t cms-frontend -f front-end/Dockerfile .
+        run: cd front-end && docker build -t cms-frontend:latest .
