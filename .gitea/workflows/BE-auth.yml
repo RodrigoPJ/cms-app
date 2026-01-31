@@ -1,0 +1,22 @@
+name: Auth server deployment
+
+on:
+  push:
+    branches:
+      - "develop"
+
+jobs:
+  frontend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        working-directory: ./back-end/Auth_Server
+        run: docker build -t auth-api:latest .
+      
+      - name: Run docker container
+        working-directory: ./back-end/Auth_Server
+        run: npm run build:dev

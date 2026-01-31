@@ -3,13 +3,13 @@ import cors from "cors";
 import routes from "./routes/routes";
 import cookieParser from "cookie-parser";
 
-export function createApp(origin: string): Express {
+export function createApp(origin: string[]): Express {
   const app = express();
   console.log(`Front end url: ${origin}`);
 
   app.use(
     cors({
-      origin, // frontend origin
+      ...origin, // frontend origin
       credentials: true,
     })
   );

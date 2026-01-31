@@ -10,7 +10,7 @@ import { DataBaseParams } from "./utils/types";
 import ensureKeys from "./utils/on-start/ensureKeys";
 
 const env = process.env.NODE_ENV || 'devlocal';
-dotenv.config({ path: path.resolve(process.cwd(), `.env.${env}`) });
+// dotenv.config({ path: path.resolve(process.cwd(), `.env.${env}`) });
 
 info(`Environment: ${env}`);
 
@@ -24,20 +24,14 @@ const dbEnv: DataBaseParams = {
 
 export const AppDataSource = createDataSource(dbEnv);
 
-const app = createApp(process.env.FRONT_URL);
-const sslOptions = {
-  key: fs.readFileSync(path.resolve(process.cwd(), 'certificates/localhost+2-key.pem')),
-  cert: fs.readFileSync(path.resolve(process.cwd(), 'certificates/localhost+2.pem'))
-};
-
-const server = https.createServer(sslOptions, app);
+const app = createApp(['192.168.0.125', 'localhost']);
 
 const startServer = async () => {
   try {
     const DataSource = await AppDataSource.initialize();
     log('Database connected: ', DataSource.options.type);
     await ensureKeys();
-    server.listen(process.env.PORT,()=>{
+    app.listen(process.env.PORT,()=>{
     log(`Secure server listening on port: ${process.env.PORT}`);
   });
   } catch (error) {
