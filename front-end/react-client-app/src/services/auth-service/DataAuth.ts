@@ -12,11 +12,11 @@ export class DataAuth {
   public signup;
   constructor() {
     const BE: ENV = import.meta.env;
-    if (BE["VITE_Back_End_type"] === "fake") {
+    if (BE["VITE_BACK_END_TYPE"] === "fake") {
       this.login = fakeLogIn;
       this.logout = fakeLogout;
       this.signup = fakeSignup;
-    } else if (BE["VITE_Back_End_type"] === "local") {
+    } else if (BE["VITE_BACK_END_TYPE"] === "local") {
       this.login = this.authLogin;
       this.logout = this.authLogout;
       this.signup = this.authSignup;

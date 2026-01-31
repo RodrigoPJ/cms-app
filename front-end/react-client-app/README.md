@@ -93,7 +93,7 @@ There are two main environment files used:
 Example:
 
 ```env
-VITE_Back_End_type = fake # or local or prod depending on the case
+VITE_BACK_END_TYPE = fake # or local or prod depending on the case
 VITE_SERVER_auth = http://localhost:3000
 VITE_SERVER_content = http://localhost:3001
 ```

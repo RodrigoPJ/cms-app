@@ -55,7 +55,7 @@ export interface SignupResponse {
 }
 
 export interface ENV extends ImportMetaEnv {
-  VITE_Back_End_type?: string;
+  VITE_BACK_END_TYPE?: string;
   VITE_SERVER_auth?: string;
   ["key"]?: string;
 }
