@@ -1,0 +1,43 @@
+name: Frontend Build
+
+on:
+  push:
+    branches:
+      - "develop"
+    paths:
+      - "frontend/**"
+      - ".gitea/workflows/front-end.yml"
+
+jobs:
+  frontend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install deps
+        working-directory: ./front-end/react-client-app
+        run: npm ci
+
+      - name: Build frontend
+        working-directory: ./front-end/react-client-app
+        env:
+          VITE_BACK_END_TYPE: ${{ secrets.VITE_BACK_END_TYPE }}
+        run: npm run build
+
+      - name: Build Docker image
+        working-directory: ./front-end
+        run: docker build -t cms-frontend:latest .
+
+      - name: Stop old container
+        run: docker stop cms-frontend || true && docker rm cms-frontend || true
+
+      - name: Run the docker image
+        run: docker run -d -p 8080:80 --name cms-frontend cms-frontend
+
+      - name: Clean unused containers
+        run: docker container prune -f
+
+      - name: Clean unused images
+        run: docker image prune -af

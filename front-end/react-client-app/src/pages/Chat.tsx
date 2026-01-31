@@ -21,7 +21,7 @@ function Chat() {
   // --- Connection Setup ---
   useEffect(() => {
     // 1. Establish the connection (use wss:// for production with HTTPS)
-    const socket = new WebSocket(`ws://192.168.0.160:8000/ws/chat/${client_id}`);
+    const socket = new WebSocket(`/ws/chat/${client_id}`);
     
     // Store the socket object
     ws.current = socket;

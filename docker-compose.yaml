@@ -1,0 +1,33 @@
+version: "3.9"
+
+services:
+  frontend:
+    image: cms-frontend:latest
+    container_name: cms-frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - content-api
+      - auth-api
+      - chat-api
+
+  content-api:
+    image: cms-content-api:latest
+    container_name: content-api
+    expose:
+      - "3001"
+
+  auth-api:
+    image: cms-auth-api:latest
+    container_name: auth-api
+    expose:
+      - "3000"
+
+  chat-api:
+    image: cms-chat-api:latest
+    container_name: chat-api
+    expose:
+      - "8000"
+networks:
+  cms-net:
+    driver: bridge

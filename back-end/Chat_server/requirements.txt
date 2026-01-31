@@ -1,0 +1,12 @@
+aiosqlite==0.22.0
+click==8.3.1
+h11==0.16.0
+iso8601==2.1.0
+psycopg==3.3.2
+psycopg-binary==3.3.2
+psycopg-pool==3.3.0
+pypika-tortoise==0.6.3
+pytz==2025.2
+tortoise-orm==0.25.2
+typing_extensions==4.15.0
+uvicorn==0.38.0
