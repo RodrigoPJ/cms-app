@@ -14,13 +14,13 @@ export class DataContent {
   constructor() {
     const BE = import.meta.env;
     this.env = BE;
-    if (BE["VITE_Back_End_type"] === "fake") {
+    if (BE["VITE_BACK_END_TYPE"] === "fake") {
       this.findUser = fakeGetUser;
       this.createProject = this.postProject;
       this.createContent = DataContent.postContent; //this.fakeContentCreation
       this.fetchContents = DataContent.getContents;
     }
-    if (BE["VITE_Back_End_type"] === "local") {
+    if (BE["VITE_BACK_END_TYPE"] === "local") {
       this.findUser = this.fetchUser;
       this.createProject = this.postProject;
       this.createContent = DataContent.postContent;
