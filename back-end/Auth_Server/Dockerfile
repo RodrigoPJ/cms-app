@@ -10,8 +10,6 @@ COPY ./dist ./dist
 # 2. Copy package.json to ensure npm start script is available
 COPY package.json .
 
-COPY .env.dev .
-
 # 3. Only install production dependencies to keep the image small
 RUN npm install --omit=dev
 

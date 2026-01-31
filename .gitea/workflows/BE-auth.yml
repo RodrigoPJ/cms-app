@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - "develop"
+    paths:
+      - "back-end/Auth_Server/**"
+      - ".gitea/workflows/front-end.yml"
 
 jobs:
   frontend:
