@@ -13,10 +13,29 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Build app
+        working-directory: ./back-end/Auth_Server
+        run: npm ci && npm run build
+
       - name: Build Docker image
         working-directory: ./back-end/Auth_Server
         run: docker build -t auth-api:latest .
       
       - name: Run docker container
         working-directory: ./back-end/Auth_Server
-        run: npm run build:dev
+        run: |
+          docker run -d \
+            --name auth-container \
+            -p 3000:3000 \
+            -e DB_HOST=host.docker.internal \
+            -e DB_PORT=5432 \
+            -e DB_USER=rodp \
+            -e DB_PASS=${{ secrets.DB_PASS }} \
+            -e DB_NAME=auth_users \
+            -e PORT=3000 \
+            -e environment=dev \
+            -e JWT_SECRET=${{ secrets.JWT_SECRET }} \
+            -e FRONT_URL=192.168.0.125 \
+            -e RSA_PASSPHRASE=${{ secrets.RSA_PASSPHRASE }} \
+            -e CONTENT_SERVER_URL=content-api:3001 \
+            auth-api:latest
