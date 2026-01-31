@@ -9,7 +9,7 @@ on:
       - ".gitea/workflows/front-end.yml"
 
 jobs:
-  frontend:
+  AuthServer:
     runs-on: ubuntu-latest
 
     steps:
