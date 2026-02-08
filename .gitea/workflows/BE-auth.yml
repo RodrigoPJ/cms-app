@@ -6,7 +6,7 @@ on:
       - "develop"
     paths:
       - "back-end/Auth_Server/**"
-      - ".gitea/workflows/front-end.yml"
+      - ".gitea/workflows/BE-auth.yml"
 
 jobs:
   AuthServer:
