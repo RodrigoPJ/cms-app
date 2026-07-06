@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { AppDataSource } from "../server";
-import { User } from "../db-config/entity/user";
+import { User } from "../db-config/entity/User";
 import { Encrypt } from "../utils/encryption/Encrypt";
 import { join, resolve, dirname } from "node:path";
 import { log } from "console";

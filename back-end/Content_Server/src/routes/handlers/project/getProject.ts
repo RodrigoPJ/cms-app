@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
 import { log } from "console";
-import validateProjectId from "../../utils/validators/validatePrrojectId";
-import findContents from "../../database/controllers/findContents";
+import validateProjectId from "../../../utils/validators/validatePrrojectId";
+import findContents from "../../../database/controllers/content/findContents";
 
 const getProject = async (req: Request, res: Response) => {
   log(req.headers["user-agent"]);
   log("retrieving contents of project");
   try {
-    const body:any = req.query;
+    const body:any = req.params;
     if (body) {
       const validationErrors = await validateProjectId(body);
       log("validation errors", validationErrors.length);

@@ -17,7 +17,7 @@ export class DataContent {
     if (BE["VITE_BACK_END_TYPE"] === "fake") {
       this.findUser = fakeGetUser;
       this.createProject = this.postProject;
-      this.createContent = DataContent.postContent; //this.fakeContentCreation
+      this.createContent = DataContent.postContent;
       this.fetchContents = DataContent.getContents;
     }
     if (BE["VITE_BACK_END_TYPE"] === "local") {

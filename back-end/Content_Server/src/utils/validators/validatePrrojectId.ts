@@ -6,7 +6,7 @@ import {
 
 export class ProjectRequest {
   @IsUUID()
-  projectId: string;
+  projectId!: string;
 }
 
 const 

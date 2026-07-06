@@ -10,7 +10,7 @@ dotenv.config();
 const origin =
   process.env["LOCAL_ENV"] === "local"
     ? "http://localhost:5173"
-    : "https://content-management-react-app.onrender.com";    
+    : "*";    
 
 
 // here we create a basic express server and add all the middleware

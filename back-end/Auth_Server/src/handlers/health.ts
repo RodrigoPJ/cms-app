@@ -1,7 +1,7 @@
 import { log } from "console";
 import { Request, Response } from "express";
 import { AppDataSource } from "../server";
-import { User } from "../db-config/entity/user";
+import { User } from "../db-config/entity/User";
 import { TypeORMError } from "typeorm";
 import os from "os";
 

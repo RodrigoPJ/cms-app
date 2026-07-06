@@ -1,20 +1,20 @@
-import { validate, IsEmail, IsUUID, IsString, IsObject, IsOptional } from "class-validator";
+import { validate, IsUUID, IsString, IsObject, IsOptional } from "class-validator";
 
 export class ContentRequest {
   @IsString()
-  type: string;
+  type!: string;
 
   @IsString()
-  title: string;
+  title!: string;
 
   @IsString()
-  body: string;
+  body!: string;
 
-  @IsString()
-  properties: string;
+  @IsObject()
+  properties!: object;
 
   @IsUUID()
-  projectItemId: string;
+  projectId!: string;
 
   @IsOptional()
   id?: string;
@@ -29,7 +29,7 @@ const validateContentRequest = async (user: ContentRequest) => {
   newContent.title = user.title;
   newContent.body = user.body;
   newContent.properties = user.properties;
-  newContent.projectItemId = user.projectItemId;
+  newContent.projectId = user.projectId;
   const validationErrorrs = await validate(newContent);
   return validationErrorrs;
 };

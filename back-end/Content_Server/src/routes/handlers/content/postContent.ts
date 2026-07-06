@@ -1,8 +1,8 @@
 import { RequestHandler, Request, Response } from "express";
-import validateContentRequest from "../../utils/validators/validateNewContent";
-import saveContent from "../../database/controllers/saveContent";
+import validateContentRequest from "../../../utils/validators/validateNewContent";
+import saveContent from "../../../database/controllers/content/saveContent";
 
-const postContent: RequestHandler | null = async (req: Request, res: Response) => {
+const postContent: RequestHandler = async (req: Request, res: Response) => {
   const reqBody = req.body;
   console.log('creating new content');
   
@@ -11,18 +11,18 @@ const postContent: RequestHandler | null = async (req: Request, res: Response) =
     if (validationErrors.length > 0) {
       res.status(400).json([...validationErrors.map((el) => el.constraints)]);
     } else {
-      const { type, title, body, properties, projectItemId, published } = reqBody;
+      const { type, title, body, properties, projectId, published } = reqBody;
       if (
         typeof type === "string" &&
         typeof title === "string" &&
         typeof body === "string" &&
-        typeof properties === "string" &&
-        typeof projectItemId === "string"
+        // typeof properties === "string" &&
+        typeof projectId === "string"
       ) {
         console.log(published);
         
         const savedContent =  await saveContent({
-          type, title, body, properties, projectItemId, published
+          type, title, body, properties, projectId, published
         });
         if (savedContent) res.status(200).send(savedContent);
         else res.status(400).send("bad request");

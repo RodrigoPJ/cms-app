@@ -1,18 +1,18 @@
 import { Request, Response } from "express";
 import { log } from "console";
-import { AppDataSource } from "../../database/db-config/data-source";
+import { AppDataSource } from "../../../database/db-config/data-source";
 import { TypeORMError } from "typeorm";
-import { User } from "../../database/db-config/entity/User";
-import { ProjectItem } from "../../database/db-config/entity/ProjectItem";
+import { Account } from "../../../database/db-config/entity/Account";
+import { Project } from "../../../database/db-config/entity/Project";
 
 const getUser = async (req: Request, res: Response) => {
   log(req.headers["user-agent"]);
   log(req.query);
-  const { accountId } = req.query;
+  const { accountId } = req.params;
   try {
     if (typeof accountId === "string") {
       const userAccount = await AppDataSource.getRepository(
-        User
+        Account
       ).findOne({
         where: {
           id: accountId,
@@ -22,7 +22,7 @@ const getUser = async (req: Request, res: Response) => {
         }
       });
       log(userAccount)
-      const projects = await AppDataSource.getRepository(ProjectItem).find({
+      const projects = await AppDataSource.getRepository(Project).find({
         where: {
           accountId: accountId
         }

@@ -3,21 +3,21 @@ import { validate, IsUUID, IsString, ValidationError, IsOptional } from "class-v
 
 export class ProjectValidator {
   @IsUUID()
-  accountId: string;
+  accountId!: string;
 
   @IsString()
-  contentType: string;
+  contentType!: string;
 
   @IsString()
-  name: string;
+  name!: string;
 
   @IsOptional()
-  published: string;
+  published?: string;
 
 }
 
 
-const validateNewProjectItem = async (item:ProjectValidator): Promise<ProjectValidator | ValidationError[]>=>{
+const validateNewProject = async (item:ProjectValidator): Promise<ProjectValidator | ValidationError[]> => {
     const project = new ProjectValidator();
     project.accountId = item.accountId;
     project.name = item.name;
@@ -31,4 +31,4 @@ const validateNewProjectItem = async (item:ProjectValidator): Promise<ProjectVal
     }
 }
 
-export default validateNewProjectItem;
+export default validateNewProject;

@@ -1,25 +1,31 @@
-import { Entity, PrimaryGeneratedColumn, Column, JoinColumn, OneToOne, Relation} from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from "typeorm";
 
-@Entity({name: 'user_auth'})
+@Entity({name: 'users'})
 export class User {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
-  @Column()
+  @Column({ type: 'varchar', length: 100 })
   firstName: string;
 
-  @Column()
+  @Column({ type: 'varchar', length: 100 })
   lastName: string;
 
-  @Column()
+  @Column('int')
   age:number;
 
-  @Column()
+  @Column('varchar')
   password: string;
 
-  @Column()
+  @Column({ type: 'varchar', unique: true })
   email:string;
 
   @Column('uuid')
   account: string;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 }

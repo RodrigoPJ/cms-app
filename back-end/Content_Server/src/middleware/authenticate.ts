@@ -1,5 +1,10 @@
 import { log } from "console";
+import dotenv from 'dotenv';
 import { Request, Response, NextFunction } from "express";
+
+dotenv.config();
+
+const AUTH_SERVER = process.env.AUTH_SERVER || ''
 
 const aunthenticateRequest = async (
   req: Request,
@@ -8,18 +13,19 @@ const aunthenticateRequest = async (
 ) => {
   log(req.headers["user-agent"]);
   const cookies = req.cookies;
+  const fetchHeaders: Record<string, string> = {
+  Accept: "application/json",
+};
   try {
-    if (cookies["token_bearer"]) {
+    if (cookies["token_bearer"] && req.headers.cookie) {
     const headersCookie = req.headers.cookie;
     log(headersCookie)
-    const serverAuth = await fetch("https://localhost:3000/api/auth/authenticate", {
+    fetchHeaders["Cookie"] = headersCookie;
+    const serverAuth = await fetch(`${AUTH_SERVER}/api/auth/authenticate`, {
       method: "POST",
-      headers: {
-        Accept: "Application/json",
-        Cookie: headersCookie,
-      },
+      headers: fetchHeaders,
     });
-console.log('auth call');
+    log('auth call');
 
     if (serverAuth.status === 200) {
       const parsedServerRes = await serverAuth.json();

@@ -1,19 +1,19 @@
 import { log } from "console";
-import { ContentRequest } from "../../utils/validators/validateNewContent";
-import { AppDataSource } from "../db-config/data-source";
-import { ProjectContent } from "../db-config/entity/ProjectContent";
+import { ContentRequest } from "../../../utils/validators/validateNewContent";
+import { AppDataSource } from "../../db-config/data-source";
+import { Content } from "../../db-config/entity/Content";
 
 const saveContent = async (content: ContentRequest) => {
   try {
-      const newContent = new ProjectContent();
+      const newContent = new Content();
       newContent.body  = content.body;
-      newContent.projectItemId = content.projectItemId;
+      newContent.projectId = content.projectId;
       newContent.properties = content.properties;
       newContent.title = content.title;
       newContent.type = content.type;
       if (content.id) newContent.id  = content.id;
       if(content.published) newContent.published = content.published;
-      const savedContent = await AppDataSource.getRepository(ProjectContent).save(newContent);
+      const savedContent = await AppDataSource.getRepository(Content).save(newContent);
       if (savedContent) {
         return savedContent;
       

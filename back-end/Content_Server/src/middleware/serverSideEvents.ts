@@ -1,7 +1,7 @@
-import {Request, Response, NextFunction } from  'express';
+import {Request, Response } from  'express';
 
 // SSE endpoint
-export default async function setServerEvent (req:Request, res: Response, next:NextFunction) {
+export default async function setServerEvent (req:Request, res: Response) {
   // Headers to establish SSE stream
   res.set({
     'Content-Type': 'text/event-stream',

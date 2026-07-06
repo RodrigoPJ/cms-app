@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev:standalone": "vite --port 5173 --mode standalone",
-    "dev:local": "vite --port 5173 --mode localdev",
+    "dev": "vite --port 5173 --mode localdev",
     "tsc": "tsc -b",
     "vite:build": "vite build",
     "build": "tsc -b && vite build",

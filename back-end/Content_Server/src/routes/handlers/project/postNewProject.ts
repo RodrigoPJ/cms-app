@@ -2,9 +2,9 @@ import { log } from "console";
 import { Request, Response } from "express";
 import validateNewProjectItem, {
   ProjectValidator,
-} from "../../utils/validators/validateNewProject";
+} from "../../../utils/validators/validateNewProject";
 import { ValidationError } from "class-validator";
-import saveProject from "../../database/controllers/saveProject";
+import saveProject from "../../../database/controllers/project/saveProject";
 
 const createNewProject = async (req: Request, res: Response) => {
   log(req.headers["user-agent"], 'creating new project');

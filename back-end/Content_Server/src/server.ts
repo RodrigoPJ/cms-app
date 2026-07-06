@@ -9,7 +9,7 @@ import fs from "fs";
 
 dotenv.config();
 
-const PORT: Number = parseInt(process.env.PORT) || 3000;
+const PORT: Number = process.env.PORT ? parseInt(process.env.PORT) : 3000;
 
 const sslOptions = {
   key: fs.readFileSync(

@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import { DataSource } from "typeorm";
-import { User } from "./entity/user";
+import { User } from "./entity/User";
 import { DataBaseParams } from "../utils/types";
 
 export function createDataSource(dbEnv: DataBaseParams): DataSource {

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { AppDataSource } from "../server";
 import { log } from "console";
-import { User } from "../db-config/entity/user";
+import { User } from "../db-config/entity/User";
 import validateUser from "../utils/validators/userValidator";
 import { Encrypt } from "../utils/encryption/Encrypt";
 import saveAccount from "../utils/data/saveAccount";

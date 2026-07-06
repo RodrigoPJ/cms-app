@@ -1,15 +1,15 @@
 import { Request, Response } from "express";
 import { log } from "console";
-import { AppDataSource } from "../../database/db-config/data-source";
-import { ProjectContent } from "../../database/db-config/entity/ProjectContent";
+import { AppDataSource } from "../../../database/db-config/data-source";
+import { Content } from "../../../database/db-config/entity/Content";
 
 const deleteContent = async (req: Request, res: Response) => {
-  const { contentId } = req.body;
-  console.log("delete", contentId, req.body);
+  const { contentId } = req.params;
+  console.log("delete", contentId, req.params);
   if (typeof contentId === "string") {
     try {
       const deleteItem = await AppDataSource.getRepository(
-        ProjectContent
+        Content
       ).delete({
         id: contentId,
       });

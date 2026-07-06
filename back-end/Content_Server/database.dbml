@@ -1,20 +1,22 @@
-Table user {
-  id uuid [pk, ref: < project_item.accountId]
+Table account {
+  id uuid [pk, ref: < project.accountId]
   userName varchar [unique]
   fullName varchar
   dateCreated timestamp
   userType varchar
 }
 
-Table project_item {
-  id uuid [pk , ref: < project_content.projectItemId]
+Table project {
+  id uuid [pk , ref: < content.projectItemId]
   accountId uuid
   contentType varchar
   name varchar
   isActive boolean
+  created timestamp
+  published timestamp
 }
 
-Table project_content {
+Table content {
   id uuid [pk]
   type varchar
   title varchar

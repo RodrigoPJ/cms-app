@@ -4,12 +4,15 @@
          "es2021"
       ],
       "target": "es2021",
-      "module": "commonjs",
-      "moduleResolution": "node",
+      "module": "nodenext",
+      "moduleResolution": "nodenext",
+      "rootDir": "./src",
       "outDir": "./build",
       "emitDecoratorMetadata": true,
       "experimentalDecorators": true,
       "sourceMap": true,
-      "esModuleInterop":true
+      "esModuleInterop":true,
+      "noUnusedParameters": true,
+      "noUnusedLocals": true,
    }
 }
